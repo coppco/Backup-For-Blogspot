@@ -1,0 +1,37 @@
+# Header
+menu:
+  主页: /
+  所有文章: /archives
+  简书: http://www.jianshu.com/users/04289820b712/timeline
+  相册: /instagram
+
+# SubNav
+subnav:
+  github: "https://github.com/coppco"
+  weibo: "http://weibo.com/15105713500"
+  #rss: /atom.xml
+  # facebook: "/"
+  # google: "/"
+  # twitter: "/"
+  # linkedin: "/"
+
+rss: /atom.xml
+
+# Content
+excerpt_link: more
+fancybox: true
+
+# Miscellaneous
+
+favicon: /favicon.png
+
+avatar: /assets/blogImg/coppco.png
+share: true
+duoshuo: "coppco"
+tagcloud: true
+
+#是否开启“关于我”。
+#不开启——
+#aboutme: false
+#开启——
+aboutme: 只是一个小小的程序员。
