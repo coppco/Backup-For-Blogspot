@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-07-13T10:27:40.000Z</updated>
+  <updated>2016-07-14T12:45:45.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,86 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>第一个微博</title>
+    <link href="http://yoursite.com/2016/07/14/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%BE%AE%E5%8D%9A/"/>
+    <id>http://yoursite.com/2016/07/14/第一个微博/</id>
+    <published>2016-07-14T10:37:52.000Z</published>
+    <updated>2016-07-14T12:45:45.000Z</updated>
+    
+    <content type="html">&lt;p&gt;由于hexo使用的是markdown格式的文件,而我又不会使用markdown,所以第一篇微博就来学习一下markdown的使用和hexo的一些命令吧!&lt;/p&gt;
+&lt;h1 id=&quot;Markdown的基本语法&quot;&gt;&lt;a href=&quot;#Markdown的基本语法&quot; class=&quot;headerlink&quot; title=&quot;Markdown的基本语法&quot;&gt;&lt;/a&gt;Markdown的基本语法&lt;/h1&gt;&lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;&lt;strong&gt;1、分段&lt;/strong&gt;&lt;/strong&gt;&lt;/font&gt;:    两个回车  &lt;/p&gt;
+&lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;&lt;strong&gt;2、换行&lt;/strong&gt;&lt;/strong&gt;&lt;/font&gt;:    两个空格 + 回车&lt;/p&gt;
+&lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;&lt;strong&gt;3、标题&lt;/strong&gt;&lt;/strong&gt;&lt;/font&gt;:    可以使用#或者文字下一行使用两个=和两个-&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;方式1,使用# ~ ######文字, 来显示标题, #的个数表示几级标题,需要注意的是:#和文字之间需要有空格,而且在段落中使用是无效的。&lt;h4 id=&quot;四个&quot;&gt;&lt;a href=&quot;#四个&quot; class=&quot;headerlink&quot; title=&quot;四个&quot;&gt;&lt;/a&gt;四个&lt;/h4&gt;&lt;/li&gt;
+&lt;li&gt;方式2, 使用=和-&lt;h1 id=&quot;使用&quot;&gt;&lt;a href=&quot;#使用&quot; class=&quot;headerlink&quot; title=&quot;使用=&quot;&gt;&lt;/a&gt;使用=&lt;/h1&gt;&lt;h2 id=&quot;使用-1&quot;&gt;&lt;a href=&quot;#使用-1&quot; class=&quot;headerlink&quot; title=&quot;使用-&quot;&gt;&lt;/a&gt;使用-&lt;/h2&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;&lt;strong&gt;4、粗体和斜体&lt;/strong&gt;&lt;/strong&gt;&lt;/font&gt;:    _*一个包裹的是斜体, 两个包裹的是粗体。 &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;斜体&lt;/em&gt;  &lt;strong&gt;粗体&lt;/strong&gt;  &lt;em&gt;斜体&lt;/em&gt;  &lt;strong&gt;粗体&lt;/strong&gt;  &lt;/p&gt;
+&lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;&lt;strong&gt;5、引用&lt;/strong&gt;&lt;/strong&gt;&lt;/font&gt;:    通过在文字开头添加 &amp;gt; 来表示。  (当 &amp;gt; 和文字之间添加五个空格blank时,样式会变化,变成黑底)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;引用无空格  &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;引用五个格  
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;&lt;strong&gt;6、代码区域&lt;/strong&gt;&lt;/strong&gt;&lt;/font&gt;:    四个空格开头或者使用`把代码包住    (这个是~下面的符号,不是单引号)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- (void)applicationDidFinishLaunching:(NSNotification *)notification {
+[self connect];
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+[self disconnect];
+}
+
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)application {
+return YES;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;Swift&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;&lt;strong&gt;7、列表&lt;/strong&gt;&lt;/strong&gt;&lt;/font&gt;:    *   +   -是无序列表,1. 是有序列表, 注意后面都是有空格。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;无序*&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;无序+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;无序-&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;有序数字.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;&lt;strong&gt;8、链接Links&lt;/strong&gt;&lt;/strong&gt;&lt;/font&gt;:    Markdown中有两种方式，实现链接，分别为内联方式和引用方式。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;内联方式   不会的问题先问问[百度], 再问别人!(&lt;a href=&quot;http://www.baidu.com/)。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.baidu.com/)。&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;引用方式   欢迎访问我的&lt;a href=&quot;https://coppco.github.io/assets/blogImg/coppco.png&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;github&lt;/a&gt;和&lt;a href=&quot;http://www.jianshu.com/users/04289820b712/timeline/&quot; title=&quot;简书&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;简书&lt;/a&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;&lt;strong&gt;9、图片image&lt;/strong&gt;&lt;/strong&gt;&lt;/font&gt;:    图片和链接类似,有内联方式和引用方式, 地址可以是本地文件也可以是网络URL。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;内联方式使用,本地图片    &lt;img src=&quot;/assets/blogImg/coppco.png&quot; alt=&quot;本地头像&quot;&gt;&lt;/li&gt;
+&lt;li&gt;引用方式,使用网络图片   &lt;img src=&quot;https://coppco.github.io/assets/blogImg/coppco.png&quot; alt=&quot;网络图片&quot;&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;&lt;strong&gt;10、脚注&lt;/strong&gt;&lt;/strong&gt;&lt;/font&gt;:    实现方式如hello[^hello]&lt;br&gt;hello world&lt;a href=&quot;hi&quot;&gt;^hello world&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;&lt;strong&gt;11、下划线&lt;/strong&gt;&lt;/strong&gt;&lt;/font&gt;:    在空白行下方添加三条-横线&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&quot;hexo的一些命令&quot;&gt;&lt;a href=&quot;#hexo的一些命令&quot; class=&quot;headerlink&quot; title=&quot;hexo的一些命令&quot;&gt;&lt;/a&gt;hexo的一些命令&lt;/h1&gt;&lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;&lt;strong&gt;1、hexo new “文章名称”&lt;/strong&gt;&lt;/strong&gt;&lt;/font&gt;:    新建一个md文件,在 hexo/source/_posts/目录下&lt;/p&gt;
+&lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;&lt;strong&gt;2、hexo clean&lt;/strong&gt;&lt;/strong&gt;&lt;/font&gt;:    当source文件夹中文件改变的时候,这个操作可以清除生成的public文件夹&lt;/p&gt;
+&lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;&lt;strong&gt;3、hexo g&lt;/strong&gt;&lt;/strong&gt;&lt;/font&gt;:    重新生成静态文件夹public&lt;/p&gt;
+&lt;p&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;&lt;strong&gt;4、hexo s&lt;/strong&gt;&lt;/strong&gt;&lt;/font&gt;:    开启本地服务打开ttp://0.0.0.0:4000/预览&lt;/p&gt;
+&lt;p&gt;&lt;font color=&quot;red&quot;&gt;____5、hexo d:    部署到远程git上面, 主要是把生成的public文件夹上传到git&lt;/font&gt;&lt;/p&gt;
+&lt;h1 id=&quot;后记&quot;&gt;&lt;a href=&quot;#后记&quot; class=&quot;headerlink&quot; title=&quot;后记&quot;&gt;&lt;/a&gt;后记&lt;/h1&gt;&lt;p&gt;使用hexo+github搭建个人博客的时候,难免遇到使用不同的电脑写博客,我是这样解决的:把博客所在的目录也使用一个git仓库存储,这样一些资源、主题的配置可以得到备份. 以后使用不同的电脑就clone下来,当然环境node、hexo、git等都是需要安装的,然后进入博客文件夹使用 npm install  之后npm install hexo-deployer-git –save来配置远程git仓库,之后就可以飞了!!!!&lt;br&gt;第一次使用markdown写这个,还是比较生疏!&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;由于hexo使用的是markdown格式的文件,而我又不会使用markdown,所以第一篇微博就来学习一下markdown的使用和hexo的一些命令吧!&lt;/p&gt;
+&lt;h1 id=&quot;Markdown的基本语法&quot;&gt;&lt;a href=&quot;#Markdown的基本语法&quot; class=&quot;h
+    
+    </summary>
+    
+    
+      <category term="first" scheme="http://yoursite.com/tags/first/"/>
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
