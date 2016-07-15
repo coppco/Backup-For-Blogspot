@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>浅谈iOS中#if、#ifdef、#ifndef的使用误区 | coppco的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近看了好多Objective-C代码,发现很多人使用了#if、#ifdef、#idndef来解决适配的问题,但是却存在使用的误区,所以有感而发!对于这个可能大家都知道它是条件编译,即对代码选择性进行编译,相信项目中或多或少都有使用.
+而下面我举个栗子来说明它的一个使用误区:iOS8.0 以后新出的注册远程通知来说吧, iOS8.0 之前是这样的:
+
+UIRemoteNotificationTyp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈iOS中#if、#ifdef、#ifndef的使用误区">
+<meta property="og:url" content="http://yoursite.com/2016/07/15/浅谈iOS中-if、-ifdef、-ifndef的使用误区/index.html">
+<meta property="og:site_name" content="coppco的博客">
+<meta property="og:description" content="最近看了好多Objective-C代码,发现很多人使用了#if、#ifdef、#idndef来解决适配的问题,但是却存在使用的误区,所以有感而发!对于这个可能大家都知道它是条件编译,即对代码选择性进行编译,相信项目中或多或少都有使用.
+而下面我举个栗子来说明它的一个使用误区:iOS8.0 以后新出的注册远程通知来说吧, iOS8.0 之前是这样的:
+
+UIRemoteNotificationTyp">
+<meta property="og:updated_time" content="2016-07-15T10:21:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈iOS中#if、#ifdef、#ifndef的使用误区">
+<meta name="twitter:description" content="最近看了好多Objective-C代码,发现很多人使用了#if、#ifdef、#idndef来解决适配的问题,但是却存在使用的误区,所以有感而发!对于这个可能大家都知道它是条件编译,即对代码选择性进行编译,相信项目中或多或少都有使用.
+而下面我举个栗子来说明它的一个使用误区:iOS8.0 以后新出的注册远程通知来说吧, iOS8.0 之前是这样的:
+
+UIRemoteNotificationTyp">
+  
+    <link rel="alternative" href="/atom.xml" title="coppco的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?0b8e8ee87e4708173f00d9048c309301";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/coppco.png" class="js-avatar" style="width: 100%;height: 100%;opacity: 1;">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">coppco</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">记录iOS和Swift点点滴滴</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="http://www.jianshu.com/users/04289820b712/timeline">简书</a></li>
+				        
+							<li><a href="/instagram">相册</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/coppco" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/15105713500" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/First/" style="font-size: 20px;">First</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/坑点/" style="font-size: 10px;">坑点</a> <a href="/tags/杂谈/" style="font-size: 20px;">杂谈</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">只是一个小小的程序员。</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">coppco</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/assets/blogImg/coppco.png" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">coppco</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">记录iOS和Swift点点滴滴</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="http://www.jianshu.com/users/04289820b712/timeline">简书</a></li>
+		        
+					<li><a href="/instagram">相册</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/coppco" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/15105713500" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-浅谈iOS中-if、-ifdef、-ifndef的使用误区" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/15/浅谈iOS中-if、-ifdef、-ifndef的使用误区/" class="article-date">
+  	<time datetime="2016-07-15T07:51:52.000Z" itemprop="datePublished">2016-07-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      浅谈iOS中#if、#ifdef、#ifndef的使用误区
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Objective-C/">Objective-C</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/坑点/">坑点</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近看了好多Objective-C代码,发现很多人使用了#if、#ifdef、#idndef来解决适配的问题,但是却存在使用的误区,所以有感而发!对于这个可能大家都知道它是条件编译,即对代码选择性进行编译,相信项目中或多或少都有使用.</p>
+<p>而下面我举个栗子来说明它的一个使用误区:iOS8.0 以后新出的注册远程通知来说吧, iOS8.0 之前是这样的:</p>
+<blockquote>
+<font color="orange">UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;</font><br><font color="orange">[[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];</font>
+
+</blockquote>
+<p>而iOS8.0以后,是这样注册通知的:</p>
+<blockquote>
+<font color="orange">UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert categories:nil];</font><br><font color="orange">[[UIApplication sharedApplication] registerUserNotificationSettings:settings];</font><br><font color="orange">[[UIApplication sharedApplication] registerForRemoteNotifications];</font>
+
+</blockquote>
+<p>于是就看到有人使用类似的写法了:</p>
+<blockquote>
+<font color="orange">#import Availability.h<br>#ifdef __IPHONE_8_0<br>　　UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert categories:nil];<br>　　[[UIApplication sharedApplication] registerUserNotificationSettings:settings];<br>　　[[UIApplication sharedApplication] registerForRemoteNotifications];<br>#else<br>　　UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;<br>　　[[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];<br>#endif</font>
+
+
+</blockquote>
+<p>这里Availability.h是导入的一个系统头文件,里面有一些这样的宏.</p>
+<pre><code>#define __IPHONE_7_1     70100
+#define __IPHONE_8_0     80000
+#define __IPHONE_8_1     80100
+#define __IPHONE_8_2     80200
+#define __IPHONE_8_3     80300
+#define __IPHONE_8_4     80400
+#define __IPHONE_9_0     90000
+#define __IPHONE_9_1     90100
+#define __IPHONE_9_2     90200
+</code></pre><p>而条件编译就是根据不同的条件来选择性的编译某些代码,在Xcod中它和Xcode的编辑SDK版本有关系,在Targets—–Bulid Setting —- Base SDK 中可以看到选择编译的SDK版本,如果此时选择使用iOS 9.2版本编译打包ipa,那么安装在系统版本iOS 8.0以前的手机上就会crash. 原因:使用的是iOS 9.2 SDK编译的, __IPHONE_8_0肯定是定义过的,所以else后面的代码就不会参与编译, 在iOS8.0 以前的版本使用8.0以后的API引起crash.</p>
+<h1 id="总结-从这个栗子可以看出-条件编译只是在选择性的编译代码-它不能替代运行时判断-所以需要做适配的程序员一定要注意-条件编译不能完全替代运行时-有些判断还是需要的如"><a href="#总结-从这个栗子可以看出-条件编译只是在选择性的编译代码-它不能替代运行时判断-所以需要做适配的程序员一定要注意-条件编译不能完全替代运行时-有些判断还是需要的如" class="headerlink" title="总结:从这个栗子可以看出,条件编译只是在选择性的编译代码,它不能替代运行时判断,所以需要做适配的程序员一定要注意,条件编译不能完全替代运行时,有些判断还是需要的如:"></a><font color="red">总结:从这个栗子可以看出,条件编译只是在选择性的编译代码,它不能替代运行时判断,所以需要做适配的程序员一定要注意,条件编译不能完全替代运行时,有些判断还是需要的如:</font></h1><blockquote>
+<font color="orange">if ([UIDevice currentDevice].systemVersion.floatValue &gt;= 8.0) {<br>　//code<br>} else {<br>　//code<br>}</font>
+
+</blockquote>
+<h1 id="条件编译适用于一旦编译就不会变化的情况-或者使用条件编译解决使用低版本SDK编译时-高版本SDK里面API报错问题-例如-程序中NSLog很多-但是不希望发布release版本的时候打印-是可以使用条件编译的"><a href="#条件编译适用于一旦编译就不会变化的情况-或者使用条件编译解决使用低版本SDK编译时-高版本SDK里面API报错问题-例如-程序中NSLog很多-但是不希望发布release版本的时候打印-是可以使用条件编译的" class="headerlink" title="条件编译适用于一旦编译就不会变化的情况,或者使用条件编译解决使用低版本SDK编译时,高版本SDK里面API报错问题,例如:程序中NSLog很多,但是不希望发布release版本的时候打印,是可以使用条件编译的"></a><font color="red">条件编译适用于一旦编译就不会变化的情况,或者使用条件编译解决使用低版本SDK编译时,高版本SDK里面API报错问题,例如:程序中NSLog很多,但是不希望发布release版本的时候打印,是可以使用条件编译的</font></h1><blockquote>
+<p>#ifdef DEBUG<br>#define XHJLog(FORMAT, …) NSLog(@”%@:%d行   \n%@”, [[NSString stringWithUTF8String:<strong>FILE</strong>] lastPathComponent], <strong>LINE</strong>, [NSString stringWithFormat:FORMAT, ##<strong>VA_ARGS</strong>])<br>#else<br>#define XHJLog(FORMAT, …) nil<br>#endif</p>
+</blockquote>
+<h1 id="备注-有什么错误或者遗漏的地方请告知我-coppco-qq-com"><a href="#备注-有什么错误或者遗漏的地方请告知我-coppco-qq-com" class="headerlink" title="备注:有什么错误或者遗漏的地方请告知我,coppco@qq.com"></a>备注:有什么错误或者遗漏的地方请告知我,coppco@qq.com</h1>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/07/14/第一个微博/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">第一个微博</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="浅谈iOS中-if、-ifdef、-ifndef的使用误区" data-title="浅谈iOS中#if、#ifdef、#ifndef的使用误区" data-url="http://yoursite.com/2016/07/15/浅谈iOS中-if、-ifdef、-ifndef的使用误区/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"coppco"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 coppco
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: undefined,
+		animate: undefined,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: undefined
+	}
+</script>
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+  </div>
+</body>
+</html>
