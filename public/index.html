@@ -116,7 +116,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/First/" style="font-size: 20px;">First</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/坑点/" style="font-size: 10px;">坑点</a> <a href="/tags/杂谈/" style="font-size: 20px;">杂谈</a>
+						<a href="/tags/First/" style="font-size: 15px;">First</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/坑点/" style="font-size: 15px;">坑点</a> <a href="/tags/杂谈/" style="font-size: 20px;">杂谈</a>
 					</div>
 				</section>
 				
@@ -179,6 +179,89 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-Cocoapods-2016-7-18安装使用淘宝镜像安装错误" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/18/Cocoapods-2016-7-18安装使用淘宝镜像安装错误/" class="article-date">
+  	<time datetime="2016-07-18T01:04:24.000Z" itemprop="datePublished">2016-07-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/18/Cocoapods-2016-7-18安装使用淘宝镜像安装错误/">Cocoapods 2016-7-18安装使用淘宝镜像安装错误</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>14年年底装的黑苹果最近太卡了,然后系统版本又不支持最新的Xcode,所以决定新装一个mac OS 10.10系统, 黑苹果安装最麻烦的就是驱动了,具体安装步骤这里就不赘述了.<br>安装完系统,怎么能少了Cocoapods这个神器呢, 安装网上的步骤一步一步Ruby使用淘宝镜像,但是到了最后安装cocoapods的时候<code>sudo gem install cocoapods</code><br>报错了,错误如下:证书验证失败</p>
+<blockquote>
+<p>Error fetching <a href="https://ruby.taobao.org" target="_blank" rel="external">https://ruby.taobao.org</a>:<br>SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed (<a href="https://rubygems-china.oss-cn-hangzhou.aliyuncs.com/specs.4.8.gz" target="_blank" rel="external">https://rubygems-china.oss-cn-hangzhou.aliyuncs.com/specs.4.8.gz</a>)</p>
+</blockquote>
+<p>最后网上搜索了一下:解决方法就是使用Ruby默认源,最后安装成功,至于为什么使用淘宝镜像会失败,原因未知,这里只是解决办法:不使用淘宝终端,打开终端依次输入下面命令:</p>
+<ul>
+<li>移除现有Ruby淘宝镜像</li>
+</ul>
+<blockquote>
+<p>gem sources –remove <a href="https://ruby.taobao.org/" target="_blank" rel="external">https://ruby.taobao.org/</a></p>
+</blockquote>
+<ul>
+<li>使用Ruby默认源</li>
+</ul>
+<blockquote>
+<p>gem sources -a <a href="https://rubygems.org/" target="_blank" rel="external">https://rubygems.org/</a></p>
+</blockquote>
+<ul>
+<li>验证新源是否替换成功</li>
+</ul>
+<blockquote>
+<p>gem sources -l</p>
+</blockquote>
+<p>如果终端显示</p>
+<blockquote>
+<p><strong><em> CURRENT SOURCES </em></strong></p>
+<p><a href="https://rubygems.org/" target="_blank" rel="external">https://rubygems.org/</a></p>
+</blockquote>
+<p>即为成功了, 最后再次执行<code>sudo gem install cocoapods</code>即可安装成功</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/坑点/">坑点</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂谈/">杂谈</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-浅谈iOS中-if、-ifdef、-ifndef的使用误区" class="article article-type-post" itemscope itemprop="blogPost">
   

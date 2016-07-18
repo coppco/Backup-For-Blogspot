@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-07-15T10:21:01.000Z</updated>
+  <updated>2016-07-18T01:25:05.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,57 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Cocoapods 2016-7-18安装使用淘宝镜像安装错误</title>
+    <link href="http://yoursite.com/2016/07/18/Cocoapods-2016-7-18%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%E6%B7%98%E5%AE%9D%E9%95%9C%E5%83%8F%E5%AE%89%E8%A3%85%E9%94%99%E8%AF%AF/"/>
+    <id>http://yoursite.com/2016/07/18/Cocoapods-2016-7-18安装使用淘宝镜像安装错误/</id>
+    <published>2016-07-18T01:04:24.000Z</published>
+    <updated>2016-07-18T01:25:05.000Z</updated>
+    
+    <content type="html">&lt;p&gt;14年年底装的黑苹果最近太卡了,然后系统版本又不支持最新的Xcode,所以决定新装一个mac OS 10.10系统, 黑苹果安装最麻烦的就是驱动了,具体安装步骤这里就不赘述了.&lt;br&gt;安装完系统,怎么能少了Cocoapods这个神器呢, 安装网上的步骤一步一步Ruby使用淘宝镜像,但是到了最后安装cocoapods的时候&lt;code&gt;sudo gem install cocoapods&lt;/code&gt;&lt;br&gt;报错了,错误如下:证书验证失败&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Error fetching &lt;a href=&quot;https://ruby.taobao.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://ruby.taobao.org&lt;/a&gt;:&lt;br&gt;SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed (&lt;a href=&quot;https://rubygems-china.oss-cn-hangzhou.aliyuncs.com/specs.4.8.gz&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://rubygems-china.oss-cn-hangzhou.aliyuncs.com/specs.4.8.gz&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;最后网上搜索了一下:解决方法就是使用Ruby默认源,最后安装成功,至于为什么使用淘宝镜像会失败,原因未知,这里只是解决办法:不使用淘宝终端,打开终端依次输入下面命令:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;移除现有Ruby淘宝镜像&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;gem sources –remove &lt;a href=&quot;https://ruby.taobao.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://ruby.taobao.org/&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;使用Ruby默认源&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;gem sources -a &lt;a href=&quot;https://rubygems.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://rubygems.org/&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;验证新源是否替换成功&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;gem sources -l&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如果终端显示&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt; CURRENT SOURCES &lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://rubygems.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://rubygems.org/&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;即为成功了, 最后再次执行&lt;code&gt;sudo gem install cocoapods&lt;/code&gt;即可安装成功&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;14年年底装的黑苹果最近太卡了,然后系统版本又不支持最新的Xcode,所以决定新装一个mac OS 10.10系统, 黑苹果安装最麻烦的就是驱动了,具体安装步骤这里就不赘述了.&lt;br&gt;安装完系统,怎么能少了Cocoapods这个神器呢, 安装网上的步骤一步一步Ruby使用淘
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="http://yoursite.com/tags/%E6%9D%82%E8%B0%88/"/>
+    
+      <category term="坑点" scheme="http://yoursite.com/tags/%E5%9D%91%E7%82%B9/"/>
+    
+  </entry>
   
   <entry>
     <title>浅谈iOS中#if、#ifdef、#ifndef的使用误区</title>
@@ -67,11 +118,11 @@
     </summary>
     
     
+      <category term="坑点" scheme="http://yoursite.com/tags/%E5%9D%91%E7%82%B9/"/>
+    
       <category term="iOS" scheme="http://yoursite.com/tags/iOS/"/>
     
       <category term="Objective-C" scheme="http://yoursite.com/tags/Objective-C/"/>
-    
-      <category term="坑点" scheme="http://yoursite.com/tags/%E5%9D%91%E7%82%B9/"/>
     
   </entry>
   
