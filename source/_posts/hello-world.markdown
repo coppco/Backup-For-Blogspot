@@ -4,8 +4,9 @@ title: "Hello World"
 date: 2016-07-13 19:00
 comments: true
 tags: 
-	- 杂谈 
 	- First
+	- 杂谈
+	- 新尝试
 ---
 第一次尝试搭建Hexo + Github个人博客,中间经历好多坑,终于把这个博客搭建起来了。
 

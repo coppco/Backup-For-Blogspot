@@ -11,7 +11,7 @@ tags:
 
 
 最近看了好多Objective-C代码,发现很多人使用了#if、#ifdef、#idndef来解决适配的问题,但是却存在使用的误区,所以有感而发!对于这个可能大家都知道它是条件编译,即对代码选择性进行编译,相信项目中或多或少都有使用.
-
+<!--more-->
 而下面我举个栗子来说明它的一个使用误区:iOS8.0 以后新出的注册远程通知来说吧, iOS8.0 之前是这样的:
 
 ><font color=orange>UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;</font>
