@@ -65,7 +65,7 @@ RACDisposable *disposable = [signal subscribeNext:^(id x) {
 ```
 <font size=4><font color=red>RACSubject</font>:信号提供者,自己可以当信号,又能订阅信号.</font>  
 
-* 在实际开发中可以用来代替代理
+* 使用RACSubject来代替代理,设置成属性, 当想让其他类执行的时候就发送数据,  其他类就拿到这个属性订阅信号.这个时候就不用写协议和delegate了.
 
 ```
 //一、创建信号
@@ -105,4 +105,69 @@ RACReplaySubject *replay = [RACReplaySubject subject];
 
 ```
 
-# <font color=orange>ReactiveCocoa的在实际开发中的使用</font>
+<font size=4><font color=red>RACTuple</font>:元组类,类似NSArray,用来包装值.</font>
+```
+RACTuple *tuple = [RACTuple tupleWithObjects:@"1", @"2", @"3", nil];
+NSString *str = tuple[0];
+//RACTupleUnpack宏:用来解析RACTuple类型
+RACTupleUnpack(NSString *key1, NSString *key2,NSString *key3) = tuple;
+NSLog(@"%@-%@-%@", key1, key2, key3);
+```
+<font size=4><font color=red>RACSequence</font>:RAC集合类,用来代替NSArray和NSDictionary,可以使用它来快速遍历数组和字典.</font>
+
+```
+//数组
+NSArray *arr = @[@"1",@"2", @"3", @"4"];
+//RAC集合
+RACSequence *sequence = arr.rac_sequence;
+//把集合转成信号
+RACSignal *signal = sequence.signal;
+//订阅集合信号,内部会自动遍历所有的元素发出去
+[signal subscribeNext:^(id x) {
+    NSLog(@"%@", x); //打印1,2,3,4
+}];
+
+//连起来写
+[@[@"1", @"3"].rac_sequence.signal subscribeNext:^(id x) {
+    NSLog(@"%@", x);//打印1,3
+}];
+```
+
+# <font color=orange>ReactiveCocoa的在实际开发中的常见用法</font>
+* 代替代理:使用RACSubject代替代理,还可以使用rac_signalForSelector:@selector()方法把调用这个方法转换成信号
+* 代替KVO
+```
+[self rac_observeKeyPath:@"frame" options:(NSKeyValueObservingOptionNew) observer:nil
+    block:^(id value, NSDictionary *change, BOOL causedByDealloc, BOOL affectedOnlyLastComponent) {
+    //code
+}];
+//或者
+[[self rac_valuesForKeyPath:@"frame" observer:nil] subscribeNext:^(id x) {
+    //code
+}];
+```
+* 监听事件
+```
+UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
+[[button rac_signalForControlEvents:(UIControlEventTouchUpInside)] subscribeNext:^(id x) {
+    //code
+}];
+```
+
+* 代替通知
+```
+[[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIKeyboardWillShowNotification 
+    object:nil] subscribeNext:^(id x) {
+    //code
+}];
+```
+* 监听文本框
+```
+UITextField *textfield = [UITextField new];
+[textfield.rac_textSignal subscribeNext:^(id x) {
+    //code
+}];
+```
+
+
+
