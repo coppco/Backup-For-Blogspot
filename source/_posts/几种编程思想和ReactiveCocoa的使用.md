@@ -168,6 +168,88 @@ UITextField *textfield = [UITextField new];
     //code
 }];
 ```
+* 处理同一个界面有多个请求接口,当所有接口都有数据的时候才处理一些事情,使用rac_liftSelector方法
+```
+- (void)moreAPI {
+    RACSignal *sellSignal =  [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        //网络请求
+        [subscriber sendNext:@"获取动求购信息"];
+        return  nil;
+    }];
 
+    RACSignal *buySignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        //网络请求
+        [subscriber sendNext:@"获取动求购信息"];
+        return  nil;
+    }];
 
+    //数组用来存放 信号
+    //当数组中的所有信号都发送数据的时候,才会执行selector
+    //该方法的参数个数必须和数组中信号个数一致
+    [self rac_liftSelector:@selector(updateUIWithSellData: buyData:) withSignals:sellSignal, buySignal, nil];
+}
+//这个方法的参数就是信号发送的数据
+- (void)updateUIWithSellData:(NSString *)sell buyData:(NSString *)buy {
+    NSLog(@"%@====%@", sell, buy);
+}
+```
+# <font color=orange>ReactiveCocoa中常见的宏</font>
+* RAC(TARGET, [KEYPATH, [NIL_VALUE]]):用于给某个对象的某个属性绑定。
+```
+//输入框的文本和描述text绑定
+RAC(self.descriptL, text) = self.nameL.rac_textSignal;
+```
+* RACObserve(self, name):监听某个对象的某个属性,返回的是信号, 可以发送信号。
+```
+[RACObserve(self, view.frame) subscribeNext:^(id x) {
+    NSLog(@"%@", x);
+}];
+```
+* @weakify(Obj)和@strongify(Obj),一般两个都是配套使用,解决循环引用问题.
+* RACTuplePack：把数据包装成RACTuple（元组类）
+* RACTupleUnpack：把RACTuple（元组类）解包成对应的数据。
 
+# <font color=orange>ReactiveCocoa实际使用</font>
+### 过滤
+```
+//过滤使用filter来过滤 当输入框长度>=3的时候才会打印,可以直接修改block的参数类型,
+[[self.nameL.rac_textSignal filter:^BOOL(NSString *text) {
+    return text.length >= 3;
+}] subscribeNext:^(id x) {
+    NSLog(@"%@", x);
+}];
+```
+### Map:用于把源信号内容映射成新的内容
+```
+//使用map来改变输入数据的类型,输入框输入的是文本,改变为NSNumber类型
+[[[self.nameL.rac_textSignal map:^id(NSString *value) {
+    return @(value.length);
+}] filter:^BOOL(NSNumber *value) {
+    return [value integerValue] >= 3;
+}] subscribeNext:^(id x) {
+    NSLog(@"%@", x);
+}];
+```
+
+### combineLatest:将多个信号合并起来，并且拿到各个信号的最新的值,必须每个合并的signal至少都有过一次sendNext，才会触发合并的信号。reduce聚合:用于信号发出的内容是元组，把信号发出元组的值聚合成一个值
+```
+//登录按钮和 用户名和密码的长度绑定:  使用combineLatest和reduce
+RAC(self.loginB, enabled) = [RACSignal combineLatest:@[self.nameL.rac_textSignal,
+    self.passwordL.rac_textSignal] reduce:^id (NSString *name, NSString *password){
+        return @(name.length >= 6 && password.length >= 6);
+}];
+```
+```
+//使用  @weakify(self) 和 @strongify(self) 解决循环引用问题
+@weakify(self);
+RAC(self.descriptL, text) = [RACSignal combineLatest:@[self.nameL.rac_textSignal,
+    self.passwordL.rac_textSignal] reduce:^id (NSString *name, NSString *password){
+    @strongify(self);
+    if (name.length == 0 && password.length == 0) {
+        return @"\t使用ReactiveCocoa使用户名和密码的输入框内容和下面用于显示的文本、登录按钮绑定.
+    \n\t当用户名和密码都大于等于6位的时候,按钮才能按.\n\t文本展示的内容是两个输入框的内容";
+    }
+    self.loginB.enabled = YES;
+    return [name stringByAppendingString:password];
+}];
+```
