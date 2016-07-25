@@ -14,6 +14,26 @@ tags:
 # 开源库
 <font size=4>[Alamofire](https://github.com/Alamofire/Alamofire):Swift版本的AFNetworking</font>
 <font size=4>[SnapKit](https://github.com/SnapKit/SnapKit):Swift版本的Masonry,AutoLayout自动布局</font>
+
+* __<font color= red>简单使用:使用前先把view添加到父控件, 用法基本和Masonry相同</font>__
+```
+self.addSubview(self.titleL)
+titleL.snp_makeConstraints(closure: { (make) -> Void in
+make.left.equalTo(30)
+make.right.equalTo(-30)
+//设置优先级priorityLow()
+make.bottom.equalTo(imageV.snp_top).offset(-50).priorityLow()
+make.top.greaterThanOrEqualTo(self).offset(84).priorityHigh()
+})
+```
+* __<font color= red>除了equalTo()还有lessThanOrEqualTo()和greaterThanOrEqualTo()</font>__
+* __<font color= red>设置优先级  priorityLow()等</font>__
+* __<font color= red>比例 multipliedBy()和dividedBy(), 此时equal()里面的参数必须是自己本身的控件属性如:snp_width</font>__
+* __<font color= red>snp_updateConstraints() 更新约束</font>__
+* __<font color= red>snp_remakeConstraints 重新设置约束</font>__
+* __<font color= red>snp_removeConstraints() 移除约束</font>__
+
+
 <font size=4>[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON):JSON的处理</font>
 
 
@@ -59,3 +79,19 @@ HJLog(self.classForCoder)                       //方法2:使用实例.classForC
 HJLog(self.dynamicType)                        //方法3:使用实例.dynamicType
 ```
 效果图:![获取类型](http://oak4eha4y.bkt.clouddn.com/%E8%8E%B7%E5%8F%96%E7%B1%BB%E5%9E%8B.png)
+
+
+__<font size=4 color=red>3. Swift闭包中解决循环引用问题</font>__
+`方法1:使用OC类似的方法  weak var weakself = self`
+`方法2:使用unowned,此时对象不能为nil`
+`方法3:使用weak,此时对象可以为nil`
+使用方法2和方法3的时候,在闭包的参数列表前面使用[unowned self, weak button],多个对象使用逗号,隔开
+```
+window?.rootViewController = HJGuideController(closure: {[unowned self, weak window] () -> Void in
+    //weak var weakself = self  //方法1
+    self.window?.rootViewController = HJTabBarController()
+    self.window?.makeKeyAndVisible()
+})
+```
+
+
