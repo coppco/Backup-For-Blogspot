@@ -71,14 +71,17 @@ func HJLog(items: Any..., file:String = __FILE__, line:Int = __LINE__, function:
 
 __<font size=4 color=red>2. 在Swift中获取实例的类型,除了使用Objective-C中的方法,还可以使用</font>__
 `方法1:使用类名.self`
-`方法2:使用实例.classForCoder, 只要是NSObject对象都可以使用`
-`方法3:使用实例.dynamicType, 但是在Swift中dynamicType是一个关键字`
+`方法2:使用类名.classForCoder(),只要是NSObject子类都可以使用`
+`方法3:使用实例.classForCoder, 只要是NSObject对象都可以使用`
+`方法4:使用实例.dynamicType, 但是在Swift中dynamicType是一个关键字`
+
 ```
 HJLog(HJTabBarController.self)                   //方法1:使用类名.self
-HJLog(self.classForCoder)                       //方法2:使用实例.classForCoder
-HJLog(self.dynamicType)                        //方法3:使用实例.dynamicType
+HJLog(HJTabBarController.classForCoder())       //方法2:使用类名.classForCoder()
+HJLog(self.classForCoder)                       //方法3:使用实例.classForCoder
+HJLog(self.dynamicType)                        //方法4:使用实例.dynamicType
 ```
-效果图:![获取类型](http://oak4eha4y.bkt.clouddn.com/%E8%8E%B7%E5%8F%96%E7%B1%BB%E5%9E%8B.png)
+效果图:![获取类型](http://oak4eha4y.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-02%20%E4%B8%8A%E5%8D%8811.24.07.png)
 
 
 __<font size=4 color=red>3. Swift闭包中解决循环引用问题</font>__
