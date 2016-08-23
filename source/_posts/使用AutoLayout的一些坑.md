@@ -25,7 +25,7 @@ SnapKit.LayoutConstraint:0x7fb743d03d00@/View/View.swift#121 PictureView:0x7fb74
 # <font color=orange>UITableView和UICollectionView会默认添加两个约束就是UIView-Encapsulated-Layout-Width 和UIView-Encapsulated-Layout-Hight保证大小适中。</font>
 # 我在使用的时候,cell中的一个图片如果设置为固定的size就不会出现上述警告, 但是一旦根据图片的大小设置约束就会出现上述警告,这是因为系统设置的约束和我们动态设置的约束有冲突导致的.
 
-解决方法: 使自己创建的约束优先级高点或者低点
+解决方法1: 使自己创建的约束优先级高点或者低点
 ```
 bottomBar.snp_makeConstraints(closure: { (make) -> Void in
     //主要是设置bottomBar的bottom和contentView的bottom相同来决定cell的高度, 同时设置优先级为高或者低,
@@ -36,6 +36,11 @@ bottomBar.snp_makeConstraints(closure: { (make) -> Void in
     make.top.greaterThanOrEqualTo(self.pictureV.snp_bottom).offset(paddingV)
     make.top.greaterThanOrEqualTo(self.videoV.snp_bottom).offset(paddingV)
 })
+```
+
+解决方法2: 把cell的autoresizingMask设置为None（UIViewAutoresizingNone）
+```
+cell.autoresizingMask = UIViewAutoresizingNone
 ```
 
 # 下面介绍一些调试约束问题的方法
