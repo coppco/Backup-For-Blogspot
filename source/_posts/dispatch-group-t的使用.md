@@ -8,6 +8,7 @@ tags:
     - Swift
     - Objective-C
     - GCD
+    - 坑点
 ---
 
 
@@ -53,7 +54,7 @@ dispatch_group_async(group, queue) {
     getData2(group)
 }
 
-//这里还可以设置超时时间,设置为永远DISPATCH_TIME_FOREVER,可能有点问题
+//这里还可以设置等待时间,设置为永远DISPATCH_TIME_FOREVER, 是永远等待,可能会卡线程
 dispatch_group_wait(group, 30)
 dispatch_group_notify(group, dispatch_get_main_queue()) {
     //code 根据得到的数据判断是否操作

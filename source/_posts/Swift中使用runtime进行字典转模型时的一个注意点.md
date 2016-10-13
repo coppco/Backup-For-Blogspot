@@ -23,3 +23,5 @@ let properties = class_copyPropertyList(className, &count) //属性列表
 * <font color=black size=4>继承于NSObject的类,默认都是添加了__@objc__,可以使用OC中runtime来获取属性列表</font>
 * <font color=black size=4>加了__@objc__标识的方法、属性无法保证都会被运行时调用，因为Swift会做静态优化。要想完全被动态调用，必须使用__dynamic__修饰。使用dynamic修饰将会隐式的加上@objc标识</font>
 * <font color=red size=4>若方法的参数、属性类型为Swift特有(如Character、Tuple、Bool)、无法映射到Objective-C的类型，则此函数、属性无法添加__dynamic__修饰或__@objc__（会编译错误）</font>
+
+# 后记 最近看到一个不是使用KVC的字典转模型的一个三方框架HandyJSON,有兴趣的可以去看看.[传送门](https://github.com/alibaba/HandyJSON)
