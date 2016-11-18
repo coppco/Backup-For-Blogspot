@@ -24,6 +24,7 @@ while (1) {
 }
 NSLog(@"5");
 ```
+<!--more-->
 打印结果如下(有的小伙伴打印会出现1 4): 
 ![打印结果](http://oak4eha4y.bkt.clouddn.com/dispatch_sync%E6%B5%8B%E8%AF%95.png)
 
