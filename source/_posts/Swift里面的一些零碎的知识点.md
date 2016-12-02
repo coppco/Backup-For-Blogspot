@@ -25,3 +25,6 @@ PS:如果是<font color=red>NSObject或其子类</font>也可以使用classForCo
 `@discardableResult`
 `func createButton() -> UIButton{}`
 `或者不添加关键字使用_ = createButton()来忽略`
+</br>
+**<font color=orange>3. Swift里面使用Float, Double,CGFloat,FloatingPoint,NSDecimal,Float80数据类型的时候,会有一个NaN值(Not a Number, 不是一个数字), 这个时候可以使用实例方法isNaN来判断</font>**
+` if value.isNaN { return }`
