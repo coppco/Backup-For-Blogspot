@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: Java语言介绍
 comments: true
@@ -7,7 +7,7 @@ tags:
 	- Java
 ---
 
-# Java语言平台
+# <font color=orange>Java语言平台</font>
 * J2SE(Java 2 Platform Standard Edition)标准版
   * 是为开发普通桌面和商务应用程序提供的解决方案,该技术体系是其他两者的基础，可以完成一些桌面应用程序的开发
 * J2ME(Java 2 Platform Micro Edition)小型版
@@ -17,17 +17,17 @@ tags:
 
 <!--more-->
 
-# Java的跨平台性
+# <font color=orange>Java的跨平台性</font>
 
 * 通过在不同操作系统来运行Java虚拟机(JVM Java Virtual Machine), 由JVM来负责Java程序在该系统中的运行
 
-# JRE和JDK
+# <font color=orange>JRE和JDK</font>
 * JRE(Java Runtime Environment) Java运行环境
   * 包括Java虚拟机和Java所需的核心类库
 * JDK(Java Development Kit) Java开发工具包
   * 包括Java开发工具(编译工具javac.exe和打包工具jar.exe等)和JRE
 
-# JDK安装路径下的目录解释
+# <font color=orange>JDK安装路径下的目录解释</font>
 
 * bin目录：该目录用于存放一些可执行程序。
   * 如javac.exe（java编译器）、java.exe(java运行工具)，jar.exe(打包工具)和
@@ -41,7 +41,7 @@ tags:
 
 
 
-# Java开发工具
+# <font color=orange>Java开发工具</font>
 * notepad    window系统记事本
 * Editplus/Notepad++
 * Eclipse
