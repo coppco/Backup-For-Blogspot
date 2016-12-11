@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Java语言基础--(进制、原反补码、基本数据类型、常量、变量、运算符)
+title: Java语言基础02---进制、原反补码、基本数据类型、常量、变量、运算符
 comments: true
 date: 2016-08-04 16:06:35
 tags:
@@ -83,6 +83,10 @@ tags:
 	- 布尔型
 		- boolean 只有true和false, Java中没有明确指定它的大小
 - 引用数据类型
+	- 数组
+	- 类
+	- 接口
+	- 枚举
 
 __Java中整数默认类型是int, 如果赋值给long类型的大数最好后面添加L(或小写l), 浮点数默认是double类型,如果浮点数要赋值给float,需要在后面添加F(或小写f).如:float f = 12.3f; long x = 8888888888L;__
 

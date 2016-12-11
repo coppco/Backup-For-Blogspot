@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Java语言基础--(数组)
+title: Java语言基础04---数组、内存分区
 comments: true
 date: 2016-08-07 13:13:09
 tags:
