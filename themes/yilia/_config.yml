@@ -1,4 +1,4 @@
-# Header
+﻿# Header
 menu:
   主页: /
   所有文章: /archives
@@ -35,3 +35,8 @@ tagcloud: true
 #aboutme: false
 #开启——
 aboutme: 只是一个小小的程序员。
+
+#表格
+markdown: redcarpet
+redcarpet:
+    extensions: ["fenced_code_blocks", "tables", "highlight", "with_toc_data", "strikethrough", "underline"]
