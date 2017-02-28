@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: Java语言基础11---Scanner、String
 comments: true
@@ -8,7 +8,7 @@ tags:
 ---
 
 
-## Scanner
+## <font color=orange>Scanner</font>
 一个可以使用正则表达式来解析基本类型和字符串的简单文本扫描器.OC和Swift里面对应的分别是NSScanner和Scanner.
 
 <!--more-->
@@ -25,7 +25,7 @@ tags:
 		2. 都录入成字符串
 
 
-## String
+## <font color=orange>String</font>
 String类代表字符串, Java程序中所有的字符串字面量(如"abc")都作为此类的实例.字符串常量存放在方法区里面的常量池.
 
 * 构造方法

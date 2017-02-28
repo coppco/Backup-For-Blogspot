@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: Java语言基础09---Eclipse的使用
 comments: true
@@ -9,7 +9,7 @@ tags:
 	- IDE
 ---
 
-## IDE
+## <font color=orange>IDE</font>
 
 IDE是集成开发环境(Integrated Development Environment)
 
@@ -28,7 +28,7 @@ IDE是集成开发环境(Integrated Development Environment)
 	* Xcode
 <!--more-->
 
-## Eclipse界面介绍和设置
+## <font color=orange>Eclipse界面介绍和设置</font>
 * 视窗 : 每一个基本的窗体被称为视窗
 	* PackageExplorer, 包资源管理器: 显示项目结构、包、类以及资源
 	* Outline, 大纲视窗: 显示类的结构, 方便查找、识别和修改
@@ -87,7 +87,7 @@ IDE是集成开发环境(Integrated Development Environment)
 * 选中类名   F3 或者 Ctrl + 鼠标点击 : 查看源码
 * Ctrl + Shift + t : 查找具体的类
 * Ctrl + o : 查找具体类的具体方法
-* Ctrl + 1 : 根据右边生成左边的数据类型, 生成方法
+* Ctrl + 1 : 快速修复, 也可以生成方法
 * Ctrl + d : 删除代码
 * Alt + Shift + m :　抽取方法
 * Alt + Shift + r : 改名
@@ -99,6 +99,8 @@ IDE是集成开发环境(Integrated Development Environment)
 	* m : delegate方法
 	* h : 生成hashCode 和 equals方法
 	* s : 生成toString方法
+* 其他
+	* 写下/\* 后 按回车会生成JavaDoc注释
 
 ### jar
 * jar是多个class文件的压缩包

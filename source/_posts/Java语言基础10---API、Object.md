@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: Java语言基础10---Java中常见API、Object
 comments: true
@@ -7,12 +7,12 @@ tags:
 	- Java
 ---
 
-## API
+## <font color=orange>API</font>
 API(Application Programming Interface) : 应用程序编程接口.Java提供给我们使用的类, 这些类将底层的实现封装了起来.
 
 <!--more-->
 
-## Object
+## <font color=orange>Object</font>
 Object是类层次结构的根类, 每个类都使用Object作为超类, 所有对象都实现了这个类的方法.
 
 * 构造方法Object()
