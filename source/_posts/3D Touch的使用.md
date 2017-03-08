@@ -73,8 +73,8 @@ if ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0) {
 1️⃣、 控制器应遵守UIViewControllerPreviewingDelegate协议,并且先判断当前设备是否支持3DTouch操作, 然后进行注册.
 ```
 if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {//3DTouch可用
-    //注册协议, sourceView是监听的那个视图
-    [self registerForPreviewingWithDelegate:self sourceView:self.view];
+    //注册协议, sourceView是监听的那个视图, 可以对cell进行监听
+    [self registerForPreviewingWithDelegate:self sourceView:cell];
 }
 ```
 2️⃣、实现UIViewControllerPreviewingDelegate的代理方法
@@ -84,12 +84,13 @@ if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable
     UIViewController *vc = [[UIViewController alloc] init];
     vc.view.backgroundColor = [UIColor redColor];
     //设置预览控制器大小
-    vc.preferredContentSize = CGSizeMake(200, 200);
+    //vc.preferredContentSize = CGSizeMake(200, 200);
     CGFloat h = 50;
     CGFloat y = (self.view.height - h) * 0.5;
-    //sourceRect就是不被虚化的区域, 就是这个cell的时候, 点击的cell不被虚化
-    CGRect sourceRect = CGRectMake(0, y, self.view.width, h);
-    previewingContext.sourceRect = sourceRect;
+    //[previewingContext sourceView]可以拿到对应的cell；
+    //NSIndexPath *indexPath = [_tableView indexPathForCell:(UITableViewCell* )[previewingContext sourceView]];
+    //设置不被虚化范围
+    //previewingContext.sourceRect = sourceRect;
     return vc;
 }
 ```
