@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 第一个微博
+title: Markdown的使用和Hexo命令
 comments: true
-date: 2016-07-14 18:37:52
+date: 2015-10-14 18:37:52
 tags:
     - First
     - 杂谈
@@ -111,7 +111,9 @@ tags:
   + 内层列表项目
   + 内层列表项目
 - 外层列表项目
+
   <font color=red>____8、链接Links____</font>:    Markdown中有两种方式，实现链接，分别为内联方式和引用方式。
+
 * 内联方式   
   `不会的问题请先[百度一下](www.baidu.com),再请教别人!`
   <font color=green>__预览__:</font>
@@ -127,6 +129,7 @@ tags:
   [2]: http://www.jianshu.com/users/04289820b712/timeline/&quot;简书&quot;
 
 <font color=red>____9、图片image____</font>:    图片和链接类似,有内联方式和引用方式, 地址可以是本地文件也可以是网络URL。
+
 *  内联方式使用,本地图片   
   `![本地头像](/assets/blogImg/coppco.png)`
   <font color=green>__预览__:</font>

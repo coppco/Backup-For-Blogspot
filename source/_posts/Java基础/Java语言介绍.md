@@ -39,6 +39,8 @@ tags:
 * lib目录：lib是library的缩写，意为 Java 类库或库文件，是开发工具使用的归档包文件。
 * src.zip文件：src.zip为src文件夹的压缩文件，src中放置的是JDK核心类的源代码，通过该文件可以查看Java基础类的源代码。
 
+# <font color=orange>JDK、JRE的下载</font>
+[官网下载地址](https://www.oracle.com/downloads/index.html)
 
 
 # <font color=orange>Java开发工具</font>

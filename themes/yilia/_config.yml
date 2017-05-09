@@ -1,9 +1,11 @@
-﻿# Header
+# Header
 menu:
   主页: /
   所有文章: /archives
-  简书: http://www.jianshu.com/users/04289820b712/timeline
-  相册: /instagram
+  iOS: /tags/iOS
+  Java: /tags/Java
+  #简书: http://www.jianshu.com/users/04289820b712/timeline
+  #相册: /instagram
 
 # SubNav
 subnav:

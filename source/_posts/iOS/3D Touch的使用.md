@@ -2,10 +2,11 @@
 layout: post
 title: 3D Touch的使用
 comments: true
-date: 2016-04-07 15:53:09
+date: 2016-10-07 15:53:09
 tags:
     - Objective-C
     - Xcode
+    - iOS
 ---
 3D Touch，其原理上是增加了一个压力的感触，通过区分轻按和重按来进行不同的用户交互。它只能在iPhone 6s, iOS 9.0系统以上才能使用.
 ## <font color=orange>一、Home Screen Quick Action使用</font>
