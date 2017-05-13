@@ -67,7 +67,11 @@ IDE是集成开发环境(Integrated Development Environment)
 
 ### Eclipse内容辅助键的使用
 
-* alt + /   起到提示作用,提高编码效率
+* 快速提示(提示作用,提高编码效率)
+    * Windows
+        * Alt + /
+    * Mac
+        * Option + /
 	* 输入一些关键字可以自动导入包、代码的自动补齐
 	* 和Xcode里面的自动提示差不多,Xcode里面是Esc快捷键, 不过Xcode里面是自动提示的,这里需要使用这个快捷键.
 	* 也可以自定义提示
@@ -75,32 +79,93 @@ IDE是集成开发环境(Integrated Development Environment)
 		* Xcode里面也可以自定义代码块
 
 ### eclipse的快捷键
-* Ctrl + n : 新建
-* Ctrl + Shift + f : 格式化代码
+* 新建
+    * Windows
+        * Ctrl + N
+    * Mac
+        * Command + N
+* 格式化代码
+    * Windows
+        * Ctrl + Shift + F
+    * Mac
+        * Command + Shift + F
 	* PS : 有时候按了无效是因为 输入法的快捷键冲突导致的, 可以修改输入法的快捷键.
 	* 如搜狗输入法修改如下 : ![去掉快捷键](http://oak4eha4y.bkt.clouddn.com/formatterCodeFail.png)
-* Ctrl + Shift + o : 导入包
-* Ctrl + / : 添加/取消单行注释
-* Ctrl + Shift + /, Ctrl + Shift + \ : 添加/取消多注释
-* 选中代码块  Alt + 上/下箭头 : 代码上下移动
-* Ctrl + Alt + 上/下箭头 : 向上/下复制一行
-* 选中类名   F3 或者 Ctrl + 鼠标点击 : 查看源码
-* Ctrl + Shift + t : 查找具体的类
-* Ctrl + o : 查找具体类的具体方法
-* Ctrl + 1 : 快速修复, 也可以生成方法
-* Ctrl + d : 删除代码
-* Alt + Shift + m :　抽取方法
-* Alt + Shift + r : 改名
-* Alt + Shift + s : 自动生成构造方法和set/get方法
-	* c : 空参构造
-	* o : 有参构造
-	* r : set/get方法
-	* v : 重写父类方法
-	* m : delegate方法
-	* h : 生成hashCode 和 equals方法
-	* s : 生成toString方法
+* 导入修正包
+    * Windows
+        * Ctrl + Shift + O
+    * Mac
+        * Command + Shift + O
+* 添加/取消单行注释
+    * Windows
+        * Ctrl + /
+    * Mac
+        * Command + /
+* 添加/取消多行注释
+    * Windows
+        * Ctrl + Shift + /(添加) 和 Ctrl + Shift + \(取消)
+    * Mac
+        * Ctrl + Command + /(添加) 和 Ctrl + Command + \ (取消)
+* 选中代码, 使代码上下移动
+    * Windows
+        *   Alt + 上/下箭头
+    * Mac
+        * Option + 上/下箭头
+* 向上/下复制一行
+    * Windows
+        * Ctrl + Alt + 上/下箭头
+    * Mac
+        * Option + Command + 上/下箭头
+* 查看源码
+    * Windows
+        * 选中类名F3 或者 Ctrl + 鼠标点击
+    * Mac
+        * 选中类名Fn + F3 或者 Command + 鼠标点击
+* 查找具体的类
+    * Windows
+        *  Ctrl + Shift + T
+    * Mac
+        * Command + Shift + T
+
+* 查找具体类的具体方法
+    * Windows
+        * Ctrl + O 
+    * Mac
+        * Command + O
+* 给出建议, 快速修复, 也可以生成方法
+    * Windows
+        * Ctrl + 1(一)
+    * Mac
+        * Command + 1(一)
+* 删除代码
+    * Windows
+        * Ctrl + D
+    * Mac
+        * Command + D
+* 抽取方法
+    * Windows
+        * Alt + Shift + M
+    * Mac
+        * Option + Command + M
+* 改名
+    * Windows
+        * Alt + Shift + R
+    * Mac
+        * Option + Command + R
+* 自动生成构造方法和set/get方法
+    * Windows
+        * Alt + Shift + S
+    * Mac
+        * Command + Shift + S
+	* 再次按C : 空参构造
+	* 再次按O : 有参构造
+	* 再次按R : set/get方法
+	* 再次按V : 重写父类方法
+	* 再次按M : delegate方法
+	* 再次按H : 生成hashCode 和 equals方法
+	* 再次按S : 生成toString方法
 * 其他
-	* 写下/\* 后 按回车会生成JavaDoc注释
+	* 写下/\* 后 按回车会生成多行注释
 
 ### jar
 * jar是多个class文件的压缩包
