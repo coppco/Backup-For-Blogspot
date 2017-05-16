@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: Java语言基础09---Eclipse的使用
 comments: true
@@ -91,6 +91,11 @@ IDE是集成开发环境(Integrated Development Environment)
         * Command + Shift + F
 	* PS : 有时候按了无效是因为 输入法的快捷键冲突导致的, 可以修改输入法的快捷键.
 	* 如搜狗输入法修改如下 : ![去掉快捷键](http://oak4eha4y.bkt.clouddn.com/formatterCodeFail.png)
+* 代码缩进
+	* Windows
+		* 选中代码块, 使用tab缩进
+	* Mac
+		* 选中代码块, 使用tab缩进
 * 导入修正包
     * Windows
         * Ctrl + Shift + O

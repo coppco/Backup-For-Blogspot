@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: Java语言基础11---Scanner、String
 comments: true
@@ -88,7 +88,7 @@ String str = new String(arr); //abc
 		System.out.println(s1.length());//6
 		System.out.println(s2.length());//7
 		System.out.println(s3.length());//0
-	* char charAr(int index) : 获取指定位置的字符
+	* char charAt(int index) : 获取指定位置的字符
 		* 注意不要越界
 	* int indexOf(int ch) : 返回指定字符在此字符串中第一次出现的索引
 		* 如果字符串中不存在该字符就会返回-1

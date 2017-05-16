@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: Java语言基础12---StringBuffer、StringBulider、Arrays、Integer等包装类
 comments: true
@@ -30,7 +30,7 @@ StringBuffer继承于Object的final类, 线程安全的可变字符序列, 一�
 	System.out.println(sb.capacity());//16
 
 ### 常用方法, 操作的都是StringBuffer对象本身
-* public StringBuffer append(xxx, xxx) : 把任意类型添加到字符串缓冲区里面
+* public StringBuffer append(xxx xxx) : 把任意类型添加到字符串缓冲区里面
 	* 只会创建一个对象, 每次append都会往缓冲区添加字符, 操作的是原字符串缓冲区
 * public StringBuffer insert(int index, xxx xxx) : 往指定位置插入任意类型数据
 	* 注意会越界
