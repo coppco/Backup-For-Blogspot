@@ -26,12 +26,15 @@ tags:
 3. 修改SDKSettings文件, 重启Xcode即可
 >   /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/SDKSettings.plist
     * 注意拷贝进去几个文件夹就新增几个字段, 而且要按从小到大的顺序排列
+    * 另外有的系统可能无法修改, 可以先把文件拷贝出来, 修改后再覆盖进去(需要输入管理员密码鉴定)
 ![真机测试报错](http://oak4eha4y.bkt.clouddn.com/SDKSetting.png)
 4. 最后Deploymeng Target最低可以选择iOS7.0, 并且在iOS7.0的手机上面也可以真机了.
 ![真机测试报错](http://oak4eha4y.bkt.clouddn.com/DeploymentTarget_7.0.png)
+5. 百度云下载密码:6g6j[下载地址](https://pan.baidu.com/s/1o7TJ6zw)
 
 # <font color=orange>二、为Xcode8添加iPhone 4S模拟器
 1. 方式1可以通过Xcode------偏好设置------Components------下载对应的Simlator(Xcode8 可以下载的Simlator SDK最低版本是iOS 8.1, 而且基本上因为墙的缘故会很慢!)
 2. 手动下载安装, 将下载好的Simlator SDK放入下面的目录
 >   Finder------右键------前往文件夹
     /Library/Developer/CoreSimulator/Profiles/Runtimes/
+3. 百度云下载密码:cs7e[下载地址](https://pan.baidu.com/s/1gf7Tzs3)

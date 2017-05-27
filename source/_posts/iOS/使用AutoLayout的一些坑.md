@@ -2,7 +2,7 @@
 layout: post
 title: 使用AutoLayout的一些坑
 comments: true
-date: 2016-08-14 14:55:43
+date: 2016-05-14 14:55:43
 tags:
     - iOS
     - AutoLayout
@@ -13,6 +13,16 @@ tags:
     - 坑点
     - 三方框架的使用
 ---
+
+# <font color=orange>使用Masonry和SnapKit的注意事项</font>
+* 首先需要先添加到父视图在设置约束, 不然会崩溃
+* 两个视图相互添加约束的时候需要注意它们要有共同的大容器
+* 使用Masonry和SnapKit要做动画的时候
+* 首先更改约束(mas_update或者mas_remake)
+* 然后调用[view layoutIfNeeded];
+>   [UIView animateWithDuration:0.25 delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+&nbsp;&nbsp;&nbsp;&nbsp;[view layoutIfNeeded];
+}];
 
 最近使用SnapKit来给UITableViewCell添加约束, 以实现自动布局, 虽然最终结果正确,但是控制台有恼人的警告, 遂网上搜索了一般最终解决了!
 ```
