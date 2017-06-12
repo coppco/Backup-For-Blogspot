@@ -2,7 +2,7 @@
 layout: post
 title: Java语言基础09---Eclipse的使用
 comments: true
-date: 2016-08-12 20:52:52
+date: 2016-08-16 20:52:52
 tags:
 	- Java
 	- Elicpse
@@ -152,6 +152,11 @@ IDE是集成开发环境(Integrated Development Environment)
         * Alt + Shift + M
     * Mac
         * Option + Command + M
+* 抽取变量
+    * Windows
+        * Alt + Shift + L
+    * Mac
+        * Option + Command + L
 * 改名
     * Windows
         * Alt + Shift + R

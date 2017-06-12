@@ -1,8 +1,8 @@
-﻿---
+---
 layout: post
 title: Java语言基础16---异常、File类、I/O流
 comments: true
-date: 2016-08-24 14:57:52
+date: 2016-09-06 14:57:52
 tags:
 	- Java
 ---
@@ -284,7 +284,7 @@ read()返回值和write的写入值都是int类型, Java在读写的时候都会
 		}
 	}
 	
-	//JDK1.7新写法
+	//JDK1.7新写法, 只有实现了AutoCloseable接口的可以这样写, 在使用后会自动close()方法来关闭流.
 	public static void newCopy(String source, String dest) throws IOException {
 		try (
 				//这里面只能写自动关闭的类, 实现了接口: AutoCloseable
@@ -340,7 +340,7 @@ read()返回值和write的写入值都是int类型, Java在读写的时候都会
 	* String readLine() 通过下列字符之一即可认为某行已终止：换行 ('\n')、回车 ('\r') 或回车后直接跟着换行。
 		* 如果已经到达流的末尾返回null, 否则返回这一行内容
 * BufferedWriter
-	* newLine() 写入一个行分隔符。行分隔符字符串由系统属性 line.separator 定义，并且不一定是单个新行 ('\n') 符。 
+	* newLine() 写入一个行分隔符。行分隔符字符串由系统属性 line.separator 定义,  它是跨平台的，并且不一定是单个新行 ('\n') 符。 
 
 
 	BufferedReader reader = new BufferedReader(new FileReader("xx.txt"));
@@ -464,7 +464,7 @@ RandomAccessFile既可以读流也可以写流.
 * void seek(long pos) 设置到此文件开头测量到的文件指针偏移量，在该位置发生下一个读取或写入操作。 
 
 ### Properties配置文件
-Properties是一个Map集合.
+Properties是一个Map集合.它可以使用put(key, value)、get(key)、getProperty(key)、setProperty(key, value)等方法.也有特有的方法.
 * load()方法可以从一个输入流获取数据, 文件中使用=或者:来描述键值对
 	* void load(InputStream inStream) 从输入流中读取属性列表（键和元素对）。 
 	* void load(Reader reader) 按简单的面向行的格式从输入字符流中读取属性列表（键和元素对）。

@@ -2,7 +2,7 @@
 layout: post
 title: Java语言基础07---多态、abstract、接口
 comments: true
-date: 2016-08-11 11:08:48
+date: 2016-08-13 11:08:48
 tags:
 	- Java
 ---

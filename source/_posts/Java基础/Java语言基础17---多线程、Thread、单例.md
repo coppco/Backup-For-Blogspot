@@ -2,7 +2,7 @@
 layout: post
 title: Java语言基础17---多线程、Thread、单例
 comments: true
-date: 2016-08-25 09:36:03
+date: 2016-09-10 09:36:03
 tags:
 	- Java
 ---
@@ -10,9 +10,10 @@ tags:
 线程是执行程序的路径, 一个进程中可以包含多天进程. 多线程并发执行可以提高程序的效率.
 
 <!--more-->
+
 JVM的启动是多线程的, 至少启动了垃圾回收线程和主线程.
 * 并行
-	* 多个任务同时执行, 需要多多核CPU
+	* 多个任务同时执行, 需要多核CPU
 * 并发
 	* 多个任务需要运行, 而同时只运行一个, CPU来回切换任务
 
@@ -20,8 +21,8 @@ JVM的启动是多线程的, 至少启动了垃圾回收线程和主线程.
 ## <font color=orange>Thread</font>
 每个线程都有一个优先级，高优先级线程的执行优先于低优先级线程。
 创建新执行线程有两种方法, 都可以使用匿名内部类来实现.
-* 将类声明为 Thread 的子类。该子类应重写 Thread 类的 run 方法。然后子类对象调用start()方法开启线程.
-* 声明实现 Runnable 接口的类。该类然后实现 run 方法。通过Thread的构造方法传入runnable对象, 调用Thread对象的start()方法.
+* 将类声明为 Thread 的子类。该子类应重写 Thread 类的 run 方法。然后子类对象调用<font color=red>start()</font>方法开启线程.
+* 声明实现 Runnable 接口的类。该类然后实现 run 方法。通过Thread的构造方法传入runnable对象, 调用Thread对象的<font color=red>start()</font>方法.
 * 实现Callable接口, 实现call()方法, 不常用
 
 
@@ -312,7 +313,7 @@ Condition newCondition() 返回用来与此 Lock 实例一起使用的 Condition
 
 ### ThreadGroup
 ThreadGroup是线程组, 它可以对一批线程进行分类管理, 默认情况下: 所有线程都属于主线程组.
-* 通过线程对象获取他所属于的组, public final ThreadGroup getThreadGroup()
+* public final ThreadGroup getThreadGroup() 通过线程对象获取他所属于的组, 默认都是main
 * void setDaemon(boolean daemon) 更改此线程组的后台程序状态。 
 *  void setMaxPriority(int pri) 设置线程组的最高优先级。 
 
@@ -324,6 +325,7 @@ JDK5新增了一个Executors工厂类来产生线程池，有如下几个方法
 * 这些方法的返回值是ExecutorService对象，该对象表示一个线程池，可以执行Runnable对象或者Callable对象代表的线程。它提供了如下方法
 * Future<?> submit(Runnable task)
 * <T> Future<T> submit(Callable<T> task)
+    * 可以使用Callable和线程池实现多线程
 
 	
 	ExecutorService pool = Executors.newFixedThreadPool(2);

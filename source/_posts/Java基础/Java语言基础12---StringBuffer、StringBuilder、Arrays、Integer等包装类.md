@@ -2,7 +2,7 @@
 layout: post
 title: Java语言基础12---StringBuffer、StringBulider、Arrays、Integer等包装类
 comments: true
-date: 2016-08-15 10:30:07
+date: 2016-08-20 10:30:07
 tags:
 	- Java
 ---
