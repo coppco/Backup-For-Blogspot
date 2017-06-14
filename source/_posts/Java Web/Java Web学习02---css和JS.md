@@ -128,11 +128,12 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
     * 控制cookies，包括创建和修改等.
     * 基于Node.js技术进行服务器端编程.
 * <font size=3 color=orange>HTML引入JS的方式</font>
-    * 方式1: 可以在`<script></script>标签里面书写JS`, 一般放在head中.
+    * 方式1: 在单独文件中定义JS代码. 使用`<script></script>`的src属性来引入.
+        * <font color=red>一但使用了src属性, 那么script标签体中代码将不会执行</font>
+    * 方式2: 可以在`<script></script>标签里面书写JS`, 一般放在head中.
     >   <script type="text/javascript"&gt;
-        //JScode
-        </script&gt;
-    * 方式2: 在单独文件中定义JS代码. 使用`<script></script>`的src属性来引入.
+    //JScode
+    </script&gt;
 * <font size=3 color=orange>EMCAScript里面的语法</font>
     * 区分大小写
         * 与 Java 一样，变量、函数名、运算符以及其他一切东西都是区分大小写的。
@@ -180,7 +181,7 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
 * <font size=3 color=orange>EMCAScript里面的数据类型</font>
     * 原始类型
         * 存储在栈（stack）中的简单数据段，也就是说，它们的值直接存储在变量访问的位置。
-        * ECMAScript 有 5 种原始类型(primitive type)，即 Undefined(未初始化)、Null(空)、Boolean(布尔)、Number(数字) 和 String(字符串).
+        * ECMAScript 有 5 种原始类型(primitive type)，即 Undefined(未初始化)、Null(空)、Boolean(布尔)、Number(数字) 和 String(字符串. 使用单/双引号括起来的都是).
         * 通过<font size=3 color=red>typeof</font>运算符可以判断一个值或者变量是否属于原始类型.
             >   var sTemp = "test string";
             alert (typeof sTemp);    //输出 "string"
@@ -190,9 +191,56 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
             &emsp;number - 如果变量是 Number 类型的
             &emsp;string - 如果变量是 String 类型的
             &emsp;object - 如果变量是一种引用类型或 Null 类型的, 现在，null 被认为是对象的占位符.
+        * <font color=orange>原始类型中的String也是伪对象, 可以调用String对象里面的方法.</font>
     * 引用类型
         * 存储在堆（heap）中的对象，也就是说，存储在变量处的值是一个指针（point），指向存储对象的内存处。
         * var o = new Object(); 这种语法与 Java 语言的相似，不过当有不止一个参数时，ECMAScript 要求使用括号。如果没有参数，如以下代码所示，括号可以省略var o = new Object;<font size=4 color=red>尽管括号不是必需的，但是为了避免混乱，最好使用括号.</fong>
+        * Object 对象, ECMAScript 中的所有对象都由这个对象继承而来.
+            * Object 对象具有下列属性：
+                * constructor 对创建对象的函数的引用（指针）。对于 Object 对象，该指针指向原始的 Object() 函数。
+                * Prototype 对该对象的对象原型的引用。对于所有的对象，它默认返回 Object 对象的一个实例。
+            * Object 对象还具有几个方法：
+                * hasOwnProperty(property) 判断对象是否有某个特定的属性。必须用字符串指定该属性。（例如，o.hasOwnProperty("name")）
+                * IsPrototypeOf(object) 判断该对象是否为另一个对象的原型。
+                * PropertyIsEnumerable 判断给定的属性是否可以用 for...in 语句进行枚举。
+                * ToString() 返回对象的原始字符串表示。对于 Object 对象，ECMA-262 没有定义这个值，所以不同的 ECMAScript 实现具有不同的值。
+                * ValueOf() 返回最适合该对象的原始值。对于许多对象，该方法返回的值都与 ToString() 的返回值相同。
+        * Boolean 对象, 是Boolean 原始类型的引用类型
+            * Boolean 对象将覆盖 Object 对象的 ValueOf() 方法，返回原始值，即 true 和 false。ToString() 方法也会被覆盖，返回字符串 "true" 或 "false"
+            * 最好还是使用 Boolean 原始值，避免发生Boolen对象和Boolen原始值比较时出现错误.
+            >   var oFalseObject = new Boolean(false);
+            var bResult = oFalseObject && true;	//输出 true
+        * Number 对象
+            * toFixed() 方法返回的是具有指定位数小数的数字的字符串表示
+            >   var oNumberObject = new Number(68);
+            alert(oNumberObject.toFixed(2));  //输出 "68.00"
+            * toExponential() 方法返回的是用科学计数法表示的数字的字符串形式
+            >   var oNumberObject = new Number(68);
+            alert(oNumberObject.toExponential(1));  //输出 "6.8e+1"
+            * toPrecision() 方法根据最有意义的形式来返回数字的预定形式或指数形式。
+            >   var oNumberObject = new Number(68);
+            alert(oNumberObject.toPrecision(1));  //输出 "7e+1"
+            * toFixed()、toExponential() 和 toPrecision() 方法都会进行舍入操作，以便用正确的小数位数正确地表示一个数。
+            * 与 Boolean 对象相似，Number 对象也很重要，不过应该少用这种对象，以避免潜在的问题。只要可能，都使用数字的原始表示法。
+        * String 对象
+            * 常用方法
+                * charAt()	返回在指定位置的字符。
+                * charCodeAt()	返回在指定的位置的字符的 Unicode 编码。
+                * concat()	连接字符串。
+                * indexOf()	检索字符串。
+                * lastIndexOf()	从后向前搜索字符串。
+                * link()	将字符串显示为链接。
+                * localeCompare()	用本地特定的顺序来比较两个字符串。
+                * match()	找到一个或多个正在表达式的匹配。
+                * replace()	替换与正则表达式匹配的子串。
+                * search()	检索与正则表达式相匹配的值。
+                * slice()	提取字符串的片断，并在新的字符串中返回被提取的部分。
+                * substr()	从起始索引号提取字符串中指定数目的字符.
+                * substring()	提取字符串中两个指定的索引号之间的字符。
+                *  toLocaleLowerCase()	把字符串转换为小写。	
+                * toLocaleUpperCase()	把字符串转换为大写。	
+                * toLowerCase()	把字符串转换为小写。	
+                * toUpperCase()	把字符串转换为大写。
 * <font size=3 color=orange>ECMAScript 类型转换</font>
     * 转换成字符串
         * Boolean 值、Number值和字符串的原始值都有toString() 方法, 会把对应的值转为字符串.
@@ -275,6 +323,11 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
 |Number(50)|50|
 
 * <font size=3 color=orange>ECMAScript 运算符</font>
+    * instanceof 运算符
+        * 在使用 typeof 运算符时采用引用类型存储值会出现一个问题，无论引用的是什么类型的对象，它都返回 "object"。ECMAScript 引入了另一个 Java 运算符 instanceof 来解决这个问题。
+        * instanceof 运算符与 typeof 运算符相似，用于识别正在处理的对象的类型。与 typeof 方法不同的是，instanceof 方法要求开发者明确地确认对象为某特定类型。
+        >   var oStringObject = new String("hello world");
+        alert(oStringObject instanceof String);	//输出 "true"
     * 一元运算符
         * <font color=orange>delete</font>
             * delete运算符: 删除对以前定义的对象属性或方法的引用.
@@ -470,34 +523,34 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
 * <font size=3 color=orange>ECMAScript 语句</font>	
 	* if语句， 和Java中一样
 	>    if (i > 30) {
-  	alert("大于 30");
+  	&emsp;alert("大于 30");
 	} else if (i < 0) {
-  	alert("小于 0");
+  	&emsp;alert("小于 0");
 	} else {
-  	alert("在 0 到 30 之间");
+  	&emsp;alert("在 0 到 30 之间");
 	}
 	* 迭代语句又叫循环语句
 		* do-while 语句
 		>   var i = 0;
 		do {
-		i += 2;
+		&emsp;i += 2;
 		} while (i < 10);
 
 		* while语句
 		>   var i = 0;
 		while (i < 10) {
-	 	i += 2;
+	 	&emsp;i += 2;
 		}
 
 		* for语句
 		>    iCount = 6;
 		for (var i = 0; i < iCount; i++) {
-  		alert(i);
+  		&emsp;alert(i);
 		}
 
 		* for-in语句
 		>    for (sProp in window) {
-  		alert(sProp);
+  		&emsp;alert(sProp);
 		}
 	* 标签语句，以便以后调用
 	>    start : i = 5;
@@ -512,50 +565,143 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
 			var iNum = 0;
 			outermost:
 			for (var i=0; i<10; i++) {
- 			for (var j=0; j<10; j++) {
-    		if (i == 5 && j == 5) {
-    		break outermost;
-  			}
-  			iNum++;
-  			}
+ 			&emsp;for (var j=0; j<10; j++) {
+    		&emsp;&emsp;if (i == 5 && j == 5) {
+    		&emsp;&emsp;&emsp;break outermost;
+  			&emsp;&emsp;}
+  			&emsp;&emsp;iNum++;
+  			&emsp;}
 			}
 			alert(iNum);	//输出 "55"
 			//continus
 			var iNum = 0;
 			outermost:
 			for (var i=0; i<10; i++) {
-  			for (var j=0; j<10; j++) {
-    		if (i == 5 && j == 5) {
-    		continue outermost;
-  			}
-  			iNum++;
-  			}
+  			&emsp;for (var j=0; j<10; j++) {
+    		&emsp;&emsp;if (i == 5 && j == 5) {
+    		&emsp;&emsp;&emsp;continue outermost;
+  			&emsp;&emsp;}
+  			&emsp;&emsp;iNum++;
+  			&emsp;}
 			}
 			alert(iNum);	//输出 "95"
 	* with语句， 用于设置代码在特定对象中的作用域。
 	>    var sMessage = "hello";
 	with(sMessage) {
-  	alert(toUpperCase());	//输出 "HELLO"
+  	&emsp;alert(toUpperCase());	//输出 "HELLO"
 	}
 	//在这个例子中，with 语句用于字符串，所以在调用 toUpperCase() 方法时，解释程序将检查该方法是否是本地函数。如果不是，它将检查伪对象 sMessage，看它是否为该对象的方法。然后，alert 输出 "HELLO"，因为解释程序找到了字符串 "hello" 的 toUpperCase() 方法。
 	with 语句是运行缓慢的代码块，尤其是在已设置了属性值时。大多数情况下，如果可能，最好避免使用它
 	* switch语句， 可以用来比较字符串，而Java是在JDK1.7才可以,还能用不是常量的值说明情况。
 	>    var BLUE = "blue", RED = "red", GREEN  = "green";
 	switch (sColor) {
-  	case BLUE: alert("Blue");
-    break;
-  	case RED: alert("Red");
-    break;
-  	case GREEN: alert("Green");
-    break;
- 	default: alert("Other");
+  	&emsp;case BLUE: alert("Blue");
+    &emsp;break;
+  	&emsp;case RED: alert("Red");
+    &emsp;break;
+  	&emsp;case GREEN: alert("Green");
+    &emsp;break;
+ 	&emsp;default: alert("Other");
 	}
 * <font size=3 color=orange>ECMAScript 函数</font>
-	* 声明：关键字 function、函数名、一组参数，以及置于括号中的待执行代码, 即使函数确实有值，也不必明确地声明它的返回值类型。
-	>    function sayHi(sName, sMessage) {
-  	alert("Hello " + sName + sMessage);
-	}
-	* 函数在执行过 return 语句后立即停止代码。因此，return 语句后的代码都不会被执行。
-
-
-	
+    * 函数概述
+        * 声明：关键字 function、函数名、一组参数，以及置于括号中的待执行代码, 即使函数确实有值，也不必明确地声明它的返回值类型。
+        >    function sayHi(sName, sMessage) {
+        &emsp;alert("Hello " + sName + sMessage);
+        }
+        * 函数在执行过 return 语句后立即停止代码。因此，return 语句后的代码都不会被执行。
+    * arguments对象
+        * 在函数代码中，使用特殊对象 arguments，开发者无需明确指出参数名，就能访问它们
+        >   function sayHi() {
+        &emsp;if (arguments[0] == "bye") {
+        &emsp;&emsp;return;
+        &emsp;}
+        &emsp;alert(arguments[0]);
+        }
+        //也可以这样定义
+        var sayHi = function() {
+        &emsp;if (arguments[0] == "bye") {
+        &emsp;&emsp;return;
+        &emsp;}
+        &emsp;alert(arguments[0]);
+        }
+        * 检测参数个数
+            * 引用属性 arguments.length 即可
+    * Function函数
+        * 函数实际上是功能完整的对象
+        >   function sayHi(sName, sMessage) {
+        &emsp;alert("Hello " + sName + sMessage);
+        }
+        //上面等价于
+        var sayHi = 
+        new Function("sName", "sMessage", "alert(\"Hello \" + sName + sMessage);");
+        * 尽管可以使用 Function 构造函数创建函数，但最好不要使用它，因为用它定义函数比用传统方式要慢得多。不过，所有函数都应看作 Function 类的实例。
+        * Function 对象的 length 属性, 可以获取函数期望的参数个数.
+        * Function对象的方法
+            * Function 对象也有与所有对象共享的 valueOf() 方法和 toString() 方法。这两个方法返回的都是函数的源代码，在调试时尤其有用。
+* <font size=3 color=orange>HTML DOM 对象(Document 对象, 文档对象)</font>
+    * <font color=orange>Document 对象</font>,每个载入浏览器的 HTML 文档都会成为 Document 对象。Document 对象使我们可以从脚本中对 HTML 页面中的所有元素进行访问。
+        * Document 对象常用属性
+            * cookie 设置或返回与当前文档有关的所有 cookie。
+            * domain 返回当前文档的域名。
+            * title 返回当前文档的标题。
+            * URL 返回当前文档的 URL。
+         * Document 对象方法
+            * getElementById()	返回对拥有指定 id 的第一个对象的引用。
+                * innerHTML 获取HTML 元素的标签体中的内容.
+                * innerText 获取元素的value值
+            * getElementsByName()	返回带有指定名称的对象集合。
+            * getElementsByTagName()	返回带有指定标签名的对象集合
+            * write() 向文档写 HTML 表达式 或 JavaScript 代码。
+            * writeln()	等同于 write() 方法，不同的是在每个表达式之后写一个换行符。
+    * <font color=orange>Event 对象</font>, 代表事件的状态，比如事件在其中发生的元素、键盘按键的状态、鼠标的位置、鼠标按钮的状态。事件通常与函数结合使用，函数不会在事件发生前被执行！
+        * 常用事件
+            * onclick	当用户点击某个对象时调用的事件句柄。
+            * ondblclick	当用户双击某个对象时调用的事件句柄。
+            * onblur	元素失去焦点。
+            * onfocus	元素获得焦点。
+            * onsubmit	确认按钮被点击, 加在form表单上面, onsubmit = "return 函数名" , 这个函数必须是返回true或者false.
+            * onload	一张页面或一幅图像完成加载。
+        * <font color=orange>JS事件和函数的绑定</font>
+            * 方式1: 通过标签的事件属性 `<xxx onclick="函数名(参数)"></xxx>`
+            >   //定义js函数
+            function show(message) {
+            &emsp;alert(message);
+            }
+            //通过onclick事件绑定
+            `<input type="button" value="点击试试" onclick="show('哈哈')" />`	
+            * 方式2: 给元素派发事件
+                * 先获取元素, 然后通过.onclick = function 函数名(参数) {...}或者函数名
+                * <font color=red>这种方式需要注意: 因为HTML是注释型语言, 会逐条执行, 如果执行获取元素标签无法获取元素, 就会报错 </font>
+                    * 可以把获取元素的代码放在html的结尾
+                    * 也可以在body的onload事件中执行该代码.
+                >   document.getElementById('haha').onclick = function login() {
+                &emsp;alert('登录');
+                }
+                //等价于 先定义函数, 后赋值
+                var login = function() {
+                &emsp;alert('登录');
+                }
+                document.getElementById('haha').onclick = login;
+    * <font color=orange>Style 对象</font>
+        * 使用 Style 对象属性的语法：
+        >   document.getElementById("id").style.property="值"
+        * 可以修改背景(Background)、边框(Border)和边距(Margin)、布局(Layout)、列表(List)、杂项()、定位(Positioning)、打印(Printing)、滚动条(Scrollbar)、表格(Table)、文本(Text)、规范
+        * style对象的属性是css的属性去掉-, 后面的首首字母大写
+* <font size=3 color=orange>BOM 对象(Browser 对象, 浏览器对象)</font>
+    * 一般每个浏览器都5个对象
+        * window: 窗口
+        * location: 定位信息(地址栏)
+        * history: 历史记录
+        * navigator: 浏览器的信息
+        * screen: 客户端屏幕的信息
+    * <font color=orange>Window 对象</font>表示浏览器中打开的窗口, <font color=red>如果文档包含框架（frame 或 iframe 标签），浏览器会为 HTML 文档创建一个 window 对象，并为每个框架创建一个额外的 window 对象。</font>
+        * 常用方法
+            * alert()	显示带有一段消息和一个确认按钮的警告框。
+            * clearInterval()	取消由 setInterval() 设置的 timeout。
+            * clearTimeout()	取消由 setTimeout() 方法设置的 timeout。
+            * close()	关闭浏览器窗口。
+            * confirm()	显示带有一段消息以及确认按钮和取消按钮的对话框。
+            * print()	打印当前窗口的内容。
+            * setInterval()	按照指定的周期（以毫秒计）来调用函数或计算表达式。(重复执行)
+            * setTimeout()	在指定的毫秒数后调用函数或计算表达式。(只执行一次)
