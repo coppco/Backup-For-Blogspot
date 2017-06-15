@@ -130,6 +130,8 @@ HTML指的是超文本标记语言 (Hyper Text Markup Language),不是一种编�
 			* 某些不想可见的表单
 * select标签:下拉选择框
 	* name: 表单名称
+    * multiple: 可以让select选项同时显示, 多选
+    * size: 可以设置一次显示几个
 * option标签:下拉选择项
 	* selected属性: 默认选择项
 	* value: 提交值

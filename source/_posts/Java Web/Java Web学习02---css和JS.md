@@ -195,7 +195,7 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
     * 引用类型
         * 存储在堆（heap）中的对象，也就是说，存储在变量处的值是一个指针（point），指向存储对象的内存处。
         * var o = new Object(); 这种语法与 Java 语言的相似，不过当有不止一个参数时，ECMAScript 要求使用括号。如果没有参数，如以下代码所示，括号可以省略var o = new Object;<font size=4 color=red>尽管括号不是必需的，但是为了避免混乱，最好使用括号.</fong>
-        * Object 对象, ECMAScript 中的所有对象都由这个对象继承而来.
+        * <font color=orange>Object 对象</font>, ECMAScript 中的所有对象都由这个对象继承而来.
             * Object 对象具有下列属性：
                 * constructor 对创建对象的函数的引用（指针）。对于 Object 对象，该指针指向原始的 Object() 函数。
                 * Prototype 对该对象的对象原型的引用。对于所有的对象，它默认返回 Object 对象的一个实例。
@@ -205,12 +205,12 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
                 * PropertyIsEnumerable 判断给定的属性是否可以用 for...in 语句进行枚举。
                 * ToString() 返回对象的原始字符串表示。对于 Object 对象，ECMA-262 没有定义这个值，所以不同的 ECMAScript 实现具有不同的值。
                 * ValueOf() 返回最适合该对象的原始值。对于许多对象，该方法返回的值都与 ToString() 的返回值相同。
-        * Boolean 对象, 是Boolean 原始类型的引用类型
+        * <font color=orange>Boolean 对象</font>, 是Boolean 原始类型的引用类型
             * Boolean 对象将覆盖 Object 对象的 ValueOf() 方法，返回原始值，即 true 和 false。ToString() 方法也会被覆盖，返回字符串 "true" 或 "false"
             * 最好还是使用 Boolean 原始值，避免发生Boolen对象和Boolen原始值比较时出现错误.
             >   var oFalseObject = new Boolean(false);
             var bResult = oFalseObject && true;	//输出 true
-        * Number 对象
+        * <font color=orange>Number 对象</font>
             * toFixed() 方法返回的是具有指定位数小数的数字的字符串表示
             >   var oNumberObject = new Number(68);
             alert(oNumberObject.toFixed(2));  //输出 "68.00"
@@ -222,7 +222,7 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
             alert(oNumberObject.toPrecision(1));  //输出 "7e+1"
             * toFixed()、toExponential() 和 toPrecision() 方法都会进行舍入操作，以便用正确的小数位数正确地表示一个数。
             * 与 Boolean 对象相似，Number 对象也很重要，不过应该少用这种对象，以避免潜在的问题。只要可能，都使用数字的原始表示法。
-        * String 对象
+        * <font color=orange>String 对象</font>
             * 常用方法
                 * charAt()	返回在指定位置的字符。
                 * charCodeAt()	返回在指定的位置的字符的 Unicode 编码。
@@ -241,6 +241,17 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
                 * toLocaleUpperCase()	把字符串转换为大写。	
                 * toLowerCase()	把字符串转换为小写。	
                 * toUpperCase()	把字符串转换为大写。
+        * <font color=orange>Array 对象</font>用于在单个的变量中存储多个值, 数组是可变的, 可以存放任意值.
+            * 创建 Array 对象的语法：
+            >   var arr1 = new Array();//长度为0
+            var arr2 = new Array(size); //指定长度
+            var arr3 = new Array(element0, element0, ..., elementn);//指定元素
+            var arr4 = ["a", "b", "c"];//非官方写法
+            * 常用属性
+                * length	设置或返回数组中元素的数目。
+                * 访问大于或者等于它长度的会是undefined
+            * 常用方法
+                * 
 * <font size=3 color=orange>ECMAScript 类型转换</font>
     * 转换成字符串
         * Boolean 值、Number值和字符串的原始值都有toString() 方法, 会把对应的值转为字符串.
@@ -637,10 +648,17 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
         new Function("sName", "sMessage", "alert(\"Hello \" + sName + sMessage);");
         * 尽管可以使用 Function 构造函数创建函数，但最好不要使用它，因为用它定义函数比用传统方式要慢得多。不过，所有函数都应看作 Function 类的实例。
         * Function 对象的 length 属性, 可以获取函数期望的参数个数.
+        * 函数的参数也可以传入this或this.属性值, 表示当前的元素(当前DOM对象), 那么会把该元素作为参数传递进入, 这样可以不用通过document.getElementByxxx获取元素了
         * Function对象的方法
             * Function 对象也有与所有对象共享的 valueOf() 方法和 toString() 方法。这两个方法返回的都是函数的源代码，在调试时尤其有用。
 * <font size=3 color=orange>HTML DOM 对象(Document 对象, 文档对象)</font>
-    * <font color=orange>Document 对象</font>,每个载入浏览器的 HTML 文档都会成为 Document 对象。Document 对象使我们可以从脚本中对 HTML 页面中的所有元素进行访问。
+    * <font color=orange>Document 对象</font>,每个载入浏览器的 HTML 文档都会成为 Document 对象。Document 对象使我们可以从脚本中对 HTML 页面中的所有元素进行访问, 每个元素标签组成了一个树形结构.
+        * 节点
+            * 文档节点: documen
+            * 元素节点: element
+                * appendChild() 可以添加子元素
+            * 属性节点; attribute
+            * 文本节点: text
         * Document 对象常用属性
             * cookie 设置或返回与当前文档有关的所有 cookie。
             * domain 返回当前文档的域名。
@@ -648,12 +666,16 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
             * URL 返回当前文档的 URL。
          * Document 对象方法
             * getElementById()	返回对拥有指定 id 的第一个对象的引用。
-                * innerHTML 获取HTML 元素的标签体中的内容.
-                * innerText 获取元素的value值
-            * getElementsByName()	返回带有指定名称的对象集合。
-            * getElementsByTagName()	返回带有指定标签名的对象集合
+            * getElementsByName()	返回带有指定名称的对象集合, 需要给元素添加name属性
+            * getElementsByClassName()	返回带有指定名称的对象集合,需要给元素添加class属性
+            * getElementsByTagName()	返回带有指定标签名的对象集合, 如获取所有的div
             * write() 向文档写 HTML 表达式 或 JavaScript 代码。
             * writeln()	等同于 write() 方法，不同的是在每个表达式之后写一个换行符。
+            * 可以获取/设置标签体的属性
+                * innerHTML 获取HTML 元素的标签体中的内容.
+                * innerText 获取/设置元素的文本值
+                * value 获取/设置value值
+                * style 获取/设置标签体的样式
     * <font color=orange>Event 对象</font>, 代表事件的状态，比如事件在其中发生的元素、键盘按键的状态、鼠标的位置、鼠标按钮的状态。事件通常与函数结合使用，函数不会在事件发生前被执行！
         * 常用事件
             * onclick	当用户点击某个对象时调用的事件句柄。
@@ -662,6 +684,19 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
             * onfocus	元素获得焦点。
             * onsubmit	确认按钮被点击, 加在form表单上面, onsubmit = "return 函数名" , 这个函数必须是返回true或者false.
             * onload	一张页面或一幅图像完成加载。
+            * onchange 当改变的时候
+            * onunload 用户退出事件
+            * onbeforeunload 用户即将退出事件
+        * 了解的方法
+            * preventDefault()	通知浏览器不要执行与事件关联的默认动作, 事件不会执行
+            * 对于IE浏览器设置returnValue属性也可以, 如果设置了该属性，它的值比事件句柄的返回值优先级高。把这个属性设置为 fasle，可以取消发生事件的源元素的默认动作。
+            >   function showAlert(event) {
+            &emsp;var event = event || window.event; //兼容性问题, IE浏览器有自己的event, 通过window.event获取, 那么参数里面的就是空
+            &emsp;event. preventDefault();
+            }
+            * stopPropagation()	 不再派发事件。
+                * 当父元素有点击事件, 而子事件也有点击事件, 如果不阻止, 那么点击子元素, 父元素的点击事件也会触发. 这是可以在子元素的点击事件上面使用此方法, 阻止事件继续派发.
+                * 对于IE浏览器设置cancelBubble属性也可以,	如果事件句柄想阻止事件传播到包容对象，必须把该属性设为 true。
         * <font color=orange>JS事件和函数的绑定</font>
             * 方式1: 通过标签的事件属性 `<xxx onclick="函数名(参数)"></xxx>`
             >   //定义js函数
@@ -696,6 +731,7 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
         * navigator: 浏览器的信息
         * screen: 客户端屏幕的信息
     * <font color=orange>Window 对象</font>表示浏览器中打开的窗口, <font color=red>如果文档包含框架（frame 或 iframe 标签），浏览器会为 HTML 文档创建一个 window 对象，并为每个框架创建一个额外的 window 对象。</font>
+        * 通过window可以获取其他几个BOM对象.
         * 常用方法, window方法可以省略window，直接使用方法。
             * alert()	显示带有一段消息和一个确认按钮的警告框。
             * clearInterval()	取消由 setInterval() 设置的 timeout。
