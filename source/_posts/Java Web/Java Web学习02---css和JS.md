@@ -696,12 +696,37 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
         * navigator: 浏览器的信息
         * screen: 客户端屏幕的信息
     * <font color=orange>Window 对象</font>表示浏览器中打开的窗口, <font color=red>如果文档包含框架（frame 或 iframe 标签），浏览器会为 HTML 文档创建一个 window 对象，并为每个框架创建一个额外的 window 对象。</font>
-        * 常用方法
+        * 常用方法, window方法可以省略window，直接使用方法。
             * alert()	显示带有一段消息和一个确认按钮的警告框。
             * clearInterval()	取消由 setInterval() 设置的 timeout。
             * clearTimeout()	取消由 setTimeout() 方法设置的 timeout。
+            * open() 打开浏览器窗口
             * close()	关闭浏览器窗口。
             * confirm()	显示带有一段消息以及确认按钮和取消按钮的对话框。
+            * prompt() 带输入框的弹出框
             * print()	打印当前窗口的内容。
             * setInterval()	按照指定的周期（以毫秒计）来调用函数或计算表达式。(重复执行)
+	        	* code可以放函数名， 不加引号
+	        	* 函数名加引号， 必须带（）
+	        	* 也可以放新创建的function， 有点像Java中匿名内部类
             * setTimeout()	在指定的毫秒数后调用函数或计算表达式。(只执行一次)
+	* <font color=orange>Location 对象</font>
+		* Location 对象包含有关当前 URL 的信息。
+		* Location 对象是 Window 对象的一个部分，可通过 window.location 属性来访问。
+		* 常用方法
+			* assign() 加载新的文档。 
+			* reload() 重新加载当前文档。 
+			* replace() 用新的文档替换当前文档。 
+		* 常用属性
+			* href 设置或返回完整的 URL。 
+				* 修改href可以实现页面跳转,也可以省略href直接修改location
+			* host 设置或返回主机名和当前 URL 的端口号。 
+			* port 设置或返回当前 URL 的端口号。 
+	* <font color=orange>Location 对象</font>， 它包含用户（在浏览器窗口中）访问过的 URL
+		* History 对象属性
+			* length 返回浏览器历史列表中的 URL 数量。 
+		* History 对象方法
+			* back() 加载 history 列表中的前一个 URL。 
+			* forward() 加载 history 列表中的下一个 URL。 
+			* go() 加载 history 列表中的某个具体页面。 
+			>   history.go(-2) //后退两次
