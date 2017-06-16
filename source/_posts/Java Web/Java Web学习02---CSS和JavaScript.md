@@ -1,8 +1,11 @@
 layout: java
-title: Java Web学习02---CSS和JS
+title: Java Web学习02---CSS和JavaScript
 date: 2016-09-25 10:19:29
 tags:
-	- Java
+    - Java
+    - CSS
+    - HTML
+    - JavaScript
 ---
 css是层叠样式表, 是对html进行样式修饰的语言, 多个css对同一个html修饰, 使用优先级别高的.JavaScript可以使网页动起来.可以在[w3c](http://www.w3school.com.cn/)上面学习.
 <!--more-->
@@ -191,7 +194,7 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
             &emsp;number - 如果变量是 Number 类型的
             &emsp;string - 如果变量是 String 类型的
             &emsp;object - 如果变量是一种引用类型或 Null 类型的, 现在，null 被认为是对象的占位符.
-        * <font color=orange>原始类型中的String也是伪对象, 可以调用String对象里面的方法.</font>
+        * <font color=orange>原始类型中的String、Boolen、Number都是伪对象, 可以调用String对象里面的方法.</font>
     * 引用类型
         * 存储在堆（heap）中的对象，也就是说，存储在变量处的值是一个指针（point），指向存储对象的内存处。
         * var o = new Object(); 这种语法与 Java 语言的相似，不过当有不止一个参数时，ECMAScript 要求使用括号。如果没有参数，如以下代码所示，括号可以省略var o = new Object;<font size=4 color=red>尽管括号不是必需的，但是为了避免混乱，最好使用括号.</fong>
@@ -223,6 +226,8 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
             * toFixed()、toExponential() 和 toPrecision() 方法都会进行舍入操作，以便用正确的小数位数正确地表示一个数。
             * 与 Boolean 对象相似，Number 对象也很重要，不过应该少用这种对象，以避免潜在的问题。只要可能，都使用数字的原始表示法。
         * <font color=orange>String 对象</font>
+            * 常用属性
+                * length 字符串长度
             * 常用方法
                 * charAt()	返回在指定位置的字符。
                 * charCodeAt()	返回在指定的位置的字符的 Unicode 编码。
@@ -235,6 +240,7 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
                 * replace()	替换与正则表达式匹配的子串。
                 * search()	检索与正则表达式相匹配的值。
                 * slice()	提取字符串的片断，并在新的字符串中返回被提取的部分。
+                * split() 切个字符串, 返回字符串数组
                 * substr()	从起始索引号提取字符串中指定数目的字符.
                 * substring()	提取字符串中两个指定的索引号之间的字符。
                 *  toLocaleLowerCase()	把字符串转换为小写。	
@@ -259,6 +265,52 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
                 * concat() 链接两个或更多的数组,并返回结果
                 * sort() 对数组进行排序
                 * reverse() 对数组进行反转
+        * <font color=orange>Date 对象</font>, 用于处理日期和时间
+            * 常用方法
+                * getTime()	返回 1970 年 1 月 1 日至今的毫秒数。
+                * parse()	返回1970年1月1日午夜到指定日期（字符串）的毫秒数。
+                * setTime()	以毫秒设置 Date 对象。
+                * toLocaleString()	根据本地时间格式，把 Date 对象转换为字符串。
+        * <font color=orange>Math 对象</font>, 用于执行数学任务
+            * 常用属性
+                * PI 
+                * E 
+            * 常用方法
+                * ceil(x)	对数进行上舍入。
+                * floor(x)	对数进行下舍入。
+                * abs(x)	返回数的绝对值。
+                * max(x,y)	返回 x 和 y 中的最高值。	
+                * min(x,y)	返回 x 和 y 中的最低值。
+                * random()	返回 0 ~ 1 之间的随机数。
+                * round(x)	把数四舍五入为最接近的整数。
+        * <font color=orange>RegExp 对象</font>, 表示正则表达式，它是对字符串执行模式匹配的强大工具。
+            * 直接量语法
+            >   /pattern/attributes
+            //注意不需要带引号(单引号、双引号)
+            * 创建 RegExp 对象的语法：
+            >   new RegExp(pattern, attributes);
+            //参数 pattern 是一个字符串，指定了正则表达式的模式或其他正则表达式。
+            //参数 attributes 是一个可选的字符串，包含属性 "g"、"i" 和 "m"，分别用于指定全局匹配、区分大小写的匹配和多行匹配。ECMAScript 标准化之前，不支持 m 属性。如果 pattern 是正则表达式，而不是字符串，则必须省略该参数
+            * RegExp 对象方法
+                * test	检索字符串中指定的值。返回 true 或 false。
+                * exec	检索字符串中指定的值。返回找到的值，并确定其位置。
+            * 支持正则表达式的 String 对象的方法
+                * search	检索与正则表达式相匹配的值。
+                * match	找到一个或多个正则表达式的匹配。
+                * replace	替换与正则表达式匹配的子串。'
+                * split	把字符串分割为字符串数组。
+            * 网上整理的:[正则表达式](http://114.xixik.com/regex/)
+        * <font color=orange>全局函数</font>, 全局属性和函数可用于所有内建的 JavaScript 对象。
+            * 常用方法
+                * decodeURI()	解码某个编码的 URI。
+                * encodeURI()	把字符串编码为 URI。
+                * isFinite()	检查某个值是否为有穷大的数。
+                * isNaN()	检查某个值是否是数字。
+                * Number()	把对象的值转换为数字。
+                * parseFloat()	解析一个字符串并返回一个浮点数。
+                * parseInt()	解析一个字符串并返回一个整数。
+                * <font color=red>eval()	计算 JavaScript 字符串，并把它作为脚本代码来执行。</font>
+                * String()	把对象的值转换为字符串。
 * <font size=3 color=orange>ECMAScript 类型转换</font>
     * 转换成字符串
         * Boolean 值、Number值和字符串的原始值都有toString() 方法, 会把对应的值转为字符串.
@@ -659,13 +711,13 @@ JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基�
         * Function对象的方法
             * Function 对象也有与所有对象共享的 valueOf() 方法和 toString() 方法。这两个方法返回的都是函数的源代码，在调试时尤其有用。
 * <font size=3 color=orange>HTML DOM 对象(Document 对象, 文档对象)</font>
+    * 节点
+        * 文档节点: documen
+        * 元素节点: element
+        * appendChild() 可以添加子元素
+        * 属性节点; attribute
+        * 文本节点: text
     * <font color=orange>Document 对象</font>,每个载入浏览器的 HTML 文档都会成为 Document 对象。Document 对象使我们可以从脚本中对 HTML 页面中的所有元素进行访问, 每个元素标签组成了一个树形结构.
-        * 节点
-            * 文档节点: documen
-            * 元素节点: element
-                * appendChild() 可以添加子元素
-            * 属性节点; attribute
-            * 文本节点: text
         * Document 对象常用属性
             * cookie 设置或返回与当前文档有关的所有 cookie。
             * domain 返回当前文档的域名。

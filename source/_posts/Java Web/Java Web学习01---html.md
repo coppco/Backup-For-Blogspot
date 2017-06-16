@@ -2,7 +2,8 @@ layout: java
 title: Java Web学习01---HTML
 date: 2016-09-20 08:46:42
 tags:
-	- Java
+    - Java
+    - HTML
 ---
 
 ## <font color=orange>HTML</font>
@@ -155,7 +156,8 @@ HTML指的是超文本标记语言 (Hyper Text Markup Language),不是一种编�
 	* link标签, 引入网页的css文件
 	* title标签, 网页的标题
 	* script标签: 引入JavaScript地址
-* 特殊字符
+* 特殊字符在HTML需要转义
+    * 网上整理的:[HTML转义字符](http://114.xixik.com/character/)
 	* `&nbsp;`  -->	空格
     * `&gt;`	-->		大于号&gt;
     * `&lt;`	-->		小于号&lt;
