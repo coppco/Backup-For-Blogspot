@@ -2,10 +2,10 @@
 
 menu:
   主页: /
-  所有文章: /archives
+  #所有文章: /archives
   iOS: /tags/iOS
   Java: /tags/Java
-  #学习MarkDown和Hexo的使用:/tags/Markdown
+  #学习MarkDown和Hexo的使用: /tags/Markdown
 
 # SubNav
 subnav:
@@ -54,7 +54,7 @@ reward_wording: '谢谢你请我喝咖啡'
 # 支付宝二维码图片地址，跟你设置头像的方式一样。比如：/assets/img/alipay.jpg
 alipay: "http://oak4eha4y.bkt.clouddn.com/alipay.png"
 # 微信二维码图片地址
-weixin: 
+weixin: "http://oak4eha4y.bkt.clouddn.com/weixin.png"
 
 # Miscellaneous
 baidu_analytics: ''
@@ -93,7 +93,7 @@ style:
 # slider的设置
 slider:
   # 是否默认展开tags板块
-  showTags: true
+  showTags: false
 
 # 智能菜单
 # 如不需要，将该对应项置为false
@@ -101,7 +101,7 @@ slider:
 #smart_menu:
 #  friends: false
 smart_menu:
-  innerArchive: false
+  innerArchive: '所有文章'
   friends: false
   aboutme: '关于我'
 

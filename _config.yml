@@ -72,3 +72,23 @@ deploy:
   repo: https://github.com/coppco/coppco.github.io.git
   branch: master
   message: 更新
+
+#主题添加所有文章
+jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
