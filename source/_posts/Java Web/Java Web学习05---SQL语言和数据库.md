@@ -18,6 +18,14 @@ SQL(Structured Query Language)语言是1974年由Boyce和Chamberlin提出的一�
     * SQL语句可以单行或多行书写，以分号结尾
     * MySQL数据库的SQL语句不区分大小写，建议使用大写
     * 语句中值最好使用引号(推荐使用单引号), 如果是int类型可以省略不写.
+    * 使用语句时如果出现说明,  可以使用`-- 说明`, 这个不出现在查看建表语句中(中间有空格).
+    >   //例如:
+    -- 创建用户表(这里是说明)
+    create table if not exists User(
+        &emsp;&emsp;uid int primary key auto_increment,
+        &emsp;&emsp;username varchar(20) not null unique,
+        &emsp;&emsp;password varchar(20) not null
+    );
 * SQL分类, 以后最常用的就是DDL、DML、DQL
     * <font color=orange>数据定义语言</font>：简称DDL(Data Definition Language)，用来定义数据库对象：数据库，表，列等，例如创建、删除、修改数据库和表结构等；
         * 对数据库的操作
@@ -28,7 +36,7 @@ SQL(Structured Query Language)语言是1974年由Boyce和Chamberlin提出的一�
                 * 格式:`drop database 数据库名称;`
             * <font color=orange>修改数据库</font>
                 * 修改数据库编码或者校对规则
-                    * 格式:`alter database 数据库名称  character set 编码 collate 校对规则`
+                    * 格式:`alter database 数据库名称  character set 编码 collate 校对规则;`
             * 常见的命令
                 * <font color=orange>查看所有数据库</font>
                     * 格式:` show databases;`
@@ -36,17 +44,17 @@ SQL(Structured Query Language)语言是1974年由Boyce和Chamberlin提出的一�
                     * 格式:`show create database 数据库名称;`
                 * <font color=orange>查看字符集和校对规则</font>
                     * 格式:`show character set;`
-        * 对表的操作
+        * 对表的操作(需要先选择数据库)
             * <font color=orange>切换数据库</font>
                 * 格式:`use 数据库名称;`
             * <font color=orange>查看当前所在的数据库</font>    
                 * 格式: `select database();`
             * <font color=orange>查看当前数据库的所有表</font>
-                * 格式: `show tables`
+                * 格式: `show tables;`
             * <font color=orange>查看表结构</font>
-                * 格式: `desc 表名称`
+                * 格式: `desc 表名称;`
             * <font color=orange>查看建表语句</font>
-                * 格式: `show create table 表名称`
+                * 格式: `show create table 表名称;`
             * <font color=orange>创建表</font>
                 * 格式: `create table 表名(字段描述 ,字段描述 ,....);`
                 * 字段描述格式: `字段名称  字段类型  [字段约束]`
@@ -69,6 +77,19 @@ SQL(Structured Query Language)语言是1974年由Boyce和Chamberlin提出的一�
                 * <font color=orange>删除表</font>
                     * 格式: `drop table 表名;` 
                     * 例如: `drop table user;` 
+            * <font color=orange>给字段、表添加注释, 使用`comment`</font>
+                * 创建时添加
+                >   create table if not exists User(
+                    &emsp;&emsp;uid int primary key auto_increment comment '用户id',
+                    &emsp;&emsp;username varchar(20) not null comment '用户名',
+                    &emsp;&emsp;password varchar(20) not null comment '密码',
+                    &emsp;&emsp;valid int(1) not null default 1 comment '是否可用 0 不可用, 1 可用'
+                ) comment = '用户表';
+                * 创建后修改注释
+                    * 表
+                    >   alter table 表名 comment='这是表的注释';  
+                    * 字段
+                    >   alter table 表名 modify '字段名' datetime default null comment '这是字段的注释' ;
     * <font color=orange>数据操作语言</font>：简称DML(Data Manipulation Language)，用来对数据库中表的记录进行更新，例如：增、删、改表记录；
         * 插入数据
             * <font color=orange>不指定插入列</font>
@@ -90,6 +111,11 @@ values(1,'shijin','1234','male','shijin@126.com',null,null);`
                 * 2、临时解决方法: `set character_set_client=gbk,character_set_connection=gbk,character_set_results=gbk;`
                     * 重启mysql服务器后恢复
                 * 3、Windows永久解决方法: 在安装目录下面修改<font color=orange>`my.ini`</font>, 修改`default-character-set=编码值`后, 重启MySQL即可.
+                * 4、在mac上默认是没有配置文件的，需要到`/usr/local/mysql/support-files`目录下将mysql配置文件模板`my-default.cnf`拷贝到`/etc`下，并将文件名改成`my.cnf`. 在`my.cnf`中找到`[client]`和`[mysqld]`分别添加下面两句话
+                >   [client]
+                default-character-set=utf8
+                [mysqld]
+                character-set-server=utf8
         * <font color=orange>更新数据</font>
             * 格式: `update 表名 set 字段名1='字段值1', 字段名2='字段值2', ..... [where 条件];`
             * 如果不添加where条件, 那么默认会修改表中所有行的值,  加where之后只会修改符合条件的值.
@@ -102,8 +128,10 @@ values(1,'shijin','1234','male','shijin@126.com',null,null);`
                 * 会把整个表删除, 删除后表不存在了
             * `delete from 表名;`
                 * 属于DML语句, 删除表中数据, 是一条一条删除的, 效率较低
+                * 插入数据口, 如果主键自增, 从最后一条数据的主键+1开始.
             * `truncate [table] 表名;`
                 * 输入DDL语句, truncate是将表结构销毁,再重新创建表结构,数据多的时候,效率高.
+                * 插入数据后, 如果主键自增, 从1开始
     * <font color=orange>数据查询语言</font>：简称DQL(Data Query Language)，用来查询数据库中表的记录。
         * <font color=orange>select基本查询</font>
             * <font color=orange>查询指定列</font>
@@ -117,7 +145,9 @@ values(1,'shijin','1234','male','shijin@126.com',null,null);`
                 * 格式: `select distinct 字段 from 表名;`
                 * distinct的作用是去除重复
             * <font color=orange>使用别名</font>
-                * 使用`as 别名`可以给表中的字段、表设置别名.
+                * 使用`as '别名'`可以给表中的字段、表设置别名, 别名也可以使用`~`下面的符号括起
+                    * 如果别名中没有空格可以省略单引号或者`~`下面的符号括起.
+                    * 如果别名中有空格需要别名整体添加`'`或`~`下面的符号括起.
                 >   `select name as 书名,price as 价格,category as 类别,pnum as 数量 from products order by pnum desc;`
             * <font color=orange>在查询中可以直接对列进行运算</font>
                 * <font color=orange>ifnull函数</font>
@@ -129,7 +159,7 @@ values(1,'shijin','1234','male','shijin@126.com',null,null);`
             * 格式: `select 字段  from 表名  where 条件;`或`update 表名 set 字段名 = 'value'  where 条件;`
             * <font color=orange>where条件种类:</font>
                 * 1、<font color=orange>比较运算符</font>
-                    * `>`、`>=`、`<`、`<=`、`=`、`!=`
+                    * `>`、`>=`、`<`、`<=`、`=`、`!=不等于`、`<>不等于`
                 * 2、<font color=orange>逻辑运算符</font>
                     * `and`、`or`、`not`
                         * `表达式1 and 表达式2`、`表达式1 or 表达式2`
@@ -158,7 +188,7 @@ values(1,'shijin','1234','male','shijin@126.com',null,null);`
                     * 计算字段值的长度
                     * 例如: `select * from products where length(name) = 6; ` //name值长度为6
                 * 8、<font color=orange>多个字段(包含一个字段)操作</font>
-                    * `+`、`-`、`*`、`/`等
+                    * `+`、`-`、`*`、`/`、`%`等
                         * 例如:`select * from products where price*pnum > 10000;`
         * <font color=orange>order by排序</font>
             * 我们从数据库中查询出的数据经常需要根据某些字段进行排序，可以使用order by关键字,后面跟的就是要排序的列,order by 子句是select的最后的一个子句。
@@ -175,8 +205,8 @@ values(1,'shijin','1234','male','shijin@126.com',null,null);`
             * <font color=orange>max(字段)</font>：计算指定列的最大值，如果指定列是字符串类型，那么使用字符串排序运算；
             * <font color=orange>min(字段)</font>：计算指定列的最小值，如果指定列是字符串类型，那么使用字符串排序运算；
             * <font color=orange>avg(字段)</font>：计算指定列的平均值，如果指定列类型不是数值类型，那么计算结果为0；
-            * round(值, 保留几位小数)
-                * 例如:select round(sum(pnum*price)/sum(pnum),2) '平均价格' from products;
+                * round(值, 保留几位小数)
+                    * 例如:select round(sum(pnum*price)/sum(pnum),2) '平均价格' from products;
         * <font color=orange>group by分组</font>
             * 分组查询是指使用group by字句对查询信息进行分组,例如：我们要统计出products表中所有分类商品的总数量,这时就需要使用group by 来对products表中的商品根据category进行分组操作.
                 * 分组后我们在对每一组数据进行统计。
@@ -221,12 +251,17 @@ MySQL中常用的约束有主键约束,非空约束,唯一约束,外键约束.
             );
             alter table user add primary key(id);//创建表完成后, 设置主键
         * 一般主键id为int的时候,还习惯配合<font color=orange>`auto_increment`</font>使用,使主键自增.插入数据的时候,id列可以不写,写的时候写null,让数据库维护id.
+            * 被修饰的字段类型支持自增, int
+            * 被修饰的字段必须是一个key,  primary key
         >   create table user(
         &emsp;&emsp;id int primary key auto_increment, //设置自增
         &emsp;&emsp;username varchar(20)
         );
+        * 删除主键
+            * `alter table 表名 drop primary key;`
     * <font color=orange>唯一约束(unique)</font>
         * 被修饰的字段不能重复,但是对null值不起作用.
+        * 当有多个字段作为主键时, 称为联合主键, 都一样才认为是一条记录.
         * 几种常用方式(和主键约束使用方式一样)
             * 1、定义表，声明字段时，定义唯一约束.特点：unique 只能修饰一个字段
             > create table user(
@@ -251,43 +286,49 @@ MySQL中常用的约束有主键约束,非空约束,唯一约束,外键约束.
         >   create table user(
         &emsp;&emsp;id int,
         &emsp;&emsp;username varchar(20)  not null default 'xu'
-        );
+        ); 
+    * <font color=orange>外键约束</font>
+        * 一般用来描述表与表之间的关系, 在下面的数据库设计中介绍.
 * SQL中的类型和对应的Java类型
 
 |Java中的数据类型|MySQL中的数据类型|备注|
 |:---:|:---:|:---:|
 |byte | tinyint||
 |short | smallint||
-|int|int||
-|long	bigint||
+|int|int(★)||
+|long|	bigint||
 |float|float||
 |double	|double|	double(m,d) m数字长度，d精度及小数位,double(5,2)表示它的最大值是：999.99|
-|String	|char 或 varchar()|	char固定长度的字符串.默认255,如果存储的字符没有达到指定长度，mysql将会在其后面用空格补足到指定长度；varchar可变长度的字符串,长度可以由我们自己指定，它能保存数据长度的最大值是65535，如果存储的字符没有达到指定的长度，不会补足到指定长度；|
-|java.sql.Timestamp	|timestamp|	时间戳,格式'YYYY-MM-DD HH:MM:SS'.若设置为空,将该列设置为当前的日期和时间|
-||datetime|	时间,日期,格式'YYYY-MM-DD HH:MM:SS'|
-|大数据 Blob |	tinyblob 255B  blob  64kb  ongblob  4gb |  |
-|大文本 Clob | tinytext 255B  text  64kb   longtext  4gb | |
+|String	|char 或 varchar()(★MySQL中特有)|	char固定长度的字符串.默认255,如果存储的字符没有达到指定长度，mysql将会在其后面用空格补足到指定长度；varchar可变长度的字符串,长度可以由我们自己指定，它能保存数据长度的最大值是65535，如果存储的字符没有达到指定的长度，不会补足到指定长度；|
+|java.sql.Timestamp	|timestamp(★)|	时间戳,格式'YYYY-MM-DD HH:MM:SS'.若设置为空,将该列设置为当前的日期和时间|
+||datetime(★)|	时间,日期,格式'YYYY-MM-DD HH:MM:SS'|
+|二进制 Blob |	tinyblob 255B  blob  64kb  ongblob  4gb |  |
+|长文本 Clob | tinytext 255B  text  64kb   longtext  4gb | |
 |java.sql.Date|	date	|日期,格式为yyyy-MM-dd|
 |java.sql.Time	|time	|时间,格式为hh:mm:ss|
 
 
-## <font color=orange>关系型数据库</font>
-关系数据库(Relationship DataBase Management System 简写:RDBMS) ，描述是建立在关系模型基础上的数据库，借助于集合代数等数学概念和方法来处理数据库中的数据。说白了就是描述实体与实体之间的关系的数据库.例如用户购物下订单,订单包含商品.他们之间的关系可以通过E-R图表示.
-* 常见的关系型数据库
-    * <font color=orange>Oracle数据库</font>
-        * 收费的大型数据库.Oracle公司的产品.Oracle收购SUN公司，收购MYSQL.
-    * <font color=orange>SQL Server数据库</font>
-        * 微软公司产品 ,收费的中型的数据库.
-    * <font color=orange>DB2数据库</font>
-        * IBM公司的数据库产品,收费的.银行系统中.
-    * <font color=orange>Sybase数据库</font>
-        * 已经淡出历史舞台.提供了一个非常专业数据建模的工具PowerDesigner.
-    * <font color=orange>MySQL数据库</font>
-        * 开源免费的数据库，小型的数据库.已经被Oracle收购了.MySQL6.x版本也开始收费.
-    * <font color=orange>SQLite	</font>
-        * 嵌入式的小型数据库,应用在手机端.
-        * iOS常用的SQLite三方库: FMDB
-* Java相关的数据库：MySQL，Oracle．
+## <font color=orange>数据库</font>
+* 关系数据库
+    * 关系数据库(Relationship DataBase Management System 简写:RDBMS) 描述是建立在关系模型基础上的数据库，借助于集合代数等数学概念和方法来处理数据库中的数据。说白了就是描述实体与实体之间的关系的数据库.例如用户购物下订单,订单包含商品.他们之间的关系可以通过E-R图表示.
+    * 常见的关系型数据库
+        * <font color=orange>Oracle数据库</font>
+            * 收费的大型数据库.Oracle公司的产品.Oracle收购SUN公司，收购MYSQL.
+        * <font color=orange>SQL Server数据库</font>
+            * 微软公司产品 ,收费的中型的数据库.
+        * <font color=orange>DB2数据库</font>
+            * IBM公司的数据库产品,收费的.银行系统中.
+        * <font color=orange>Sybase数据库</font>
+            * 已经淡出历史舞台.提供了一个非常专业数据建模的工具<font color=orange>PowerDesigner</font>.
+        * <font color=orange>MySQL数据库</font>
+            * 开源免费的数据库，小型的数据库.已经被Oracle收购了.MySQL6.x版本也开始收费.
+        * <font color=orange>SQLite	</font>
+            * 嵌入式的小型数据库,应用在手机端.
+            * iOS常用的SQLite三方库: FMDB
+    * Java相关的数据库：MySQL，Oracle．
+    * .Net、C++一般使用SQL Server.
+* 非关系型数据库
+    * 存放的是对象如: `redis`、`NO-sql(not only sql)`
 
 ## <font color=orange>MySQL</font>
 * [社区版下载地址](http://downloads.mysql.com/archives/community/)
@@ -362,8 +403,75 @@ MySQL中常用的约束有主键约束,非空约束,唯一约束,外键约束.
             * 运行`mysqladmin -u root -p password 新密码`, 输入旧的MySQL密码
                 * 但是提示`Access denied for user 'root'@'localhost`, 这是因为权限问题, 修改一次密码即可
             * 再次运行上面修改密码的代码即可.
-    * 查询当前数据库编码
+    * <font color=orange>查询当前数据库编码, 解决插入乱码问题</font>
         * `show variables like "char%"`
+        * 临时统一设置: `set names utf8;`
+        * 临时逐条设置解决方法: `set character_set_client=gbk,character_set_connection=gbk,character_set_results=gbk;`
+            * 临时设置后, 重启mysql服务器后恢复
+        * Windows永久解决方法: 在安装目录下面修改<font color=orange>`my.ini`</font>, 修改`default-character-set=编码值`后, 重启MySQL即可.
+        * 在Mac上默认是没有配置文件的，需要到`/usr/local/mysql/support-files`目录下将mysql配置文件模板`my-default.cnf`拷贝到`/etc`下，并将文件名改成`my.cnf`. 在`my.cnf`中找到`[client]`和`[mysqld]`分别添加下面两句话
+        >   [client]
+        default-character-set=utf8
+        [mysqld]
+        character-set-server=utf8
     * 设置数据库编码
         * `create database test2 character set UTF8;`
+
+
     
+## <font color=orange>数据库表设计</font>
+* 系统设计中，实体之间的关系有三种:一对一，一对多，多对多. 而表与表之间关系是通过外键来维护的. 
+    * 一对多
+        * 一方, 我们一般称为一表、主表.  
+        * 多方, 我们一般称为多表、从表.
+        * <font color=orange>外键</font>: 为了表示它们的关系, 我们一般会在多表中增加一个字段, 字段名称自定义(一般使用主表名称_id), 字段类型和主表的主键保持一致, 那么这个字段称为外键, 它可以保证数据的完整性和有效性.
+            * 添加外键格式: `alter table 从表名称 add foreign key(外键名称) references 主表名称(主键);`
+            * 删除外键格式: `alter table 表1, 表2 drop foreign key 外键名称` 
+        * 外键特点
+            * 主表中不能删除从表中已引用的数据
+            * 从表中不能添加主表中不存在的数据 
+            * 外键可以为null
+    * 多对多
+        * 实际开发中, 一般引入一张中间表, 中间表中存放两张表中的主键, 一般还会将两张表的主键设置为这张中间表的联合主键, 将多对多拆分为两个一对多.
+    * 一对一
+        * 可以使用外键来约束
+        * 可以将两张表合并成一张表
+* <font color=orange>多表查询(★)</font>
+    * 笛卡尔积: 多张表无条件的联合查询, 没有任何意义
+        * 格式: `select 表1.字段名, 表2.字段名 from a, b;` , 其中字段名可以用`*`表示全部字段.
+        * 查询的结果是两个表行数的积.
+    * <font color=orange>内连接</font>
+        * <font color=orange>显式的内连接</font>: `select 表1.字段名, 表2.字段名 from 表1 [inner] join 表2 on 表1和表2的连接条件;` 
+        * <font color=orange>隐式的内连接</font>: `select 表1.字段名, 表2.字段名 from 表1, 表2 where 表1和表2的连接条件;`  
+    * <font color=orange>外连接</font>
+        * <font color=orange>左外连接</font> 
+            * 格式:  `select 表1.字段名, 表2.字段名 from 表1 left [outer] join 表2 on 表1和表2的连接条件;`   
+            * 先展示join左边的表的所有数据, 然后根据连接条件查询join右边的表, 符合条件的展示, 不符合的以null显示.
+        * <font color=orange>右外连接:</font>
+            * 格式:  `select 表1.字段名, 表2.字段名 from 表1 right [outer] join 表2 on 表1和表2的连接条件;`  
+            * 先展示join右边的表的所有数据, 然后根据连接条件查询join左边的表, 符合条件的展示, 不符合的以null显示.
+        * 左、右外连接可以相互转换
+    * <font color=orange>子查询</font>
+        * 在sql语言中，当一个查询是另一个查询的条件时，称之为子查询.
+        * <font color=orange>单行单列子查询</font>
+            * 格式: `select * from orders where user_id=(select id from user where username='张三');`
+        * <font color=orange>单列多行子查询</font>
+            * 可以使用`in`、`any`、`all`操作
+                * in (value1, value2, value3): 是查询里面的值.
+                * &gt;any：大于子查询中的最小值。
+                * &gt;all：  大于子查询中的最大值。
+                * <any：小于子查询中的最大值。
+                * <all：  小于子查询中的最小值。
+                * !=any或<&gt;any：不等于子查询中的任意值。
+                * !=all或<&gt;all：不等于子查询中的所有值。
+                * =any：等于子查询中任意值。
+                >   select * from user where `id` !=all (select DISTINCT `user_id` from orders where `user_id` is NOT NULL);
+        * <font color=orange>多行多列子查询</font>
+            * 这个子查询就是返回一个表, 然后通过条件关联即可, 子查询的结果作为临时表
+            >   select \* from user u ,(select * from orders where price>300) o where o.user_id=u.id;//给表起别名
+            * 也可以不使用子查询, 使用内连接
+            >   select * from user u,orders o where o.price>300 and o.user_id =u.id; 
+
+## <font color=red>Warning</font>
+SQL语言里面的外键约束、unique约束不是一定的, 也可以通过Java程序来控制, 而且添加了外键约束对于开发测试来说很不好.
+delete语言也很少使用, 删除一般分为物理删除(delete)和逻辑删除(查询不到, 一般在表中添加一个字段, 来控制是否有效),  一般使用逻辑删除.

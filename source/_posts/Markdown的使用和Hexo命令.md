@@ -13,24 +13,29 @@ tags:
 由于hexo使用的是markdown格式的文件,而我又不会使用markdown,所以第一篇微博就来学习一下markdown的使用和hexo的一些命令吧!
 <!--more-->
 # Markdown的基本语法
-<font color=red>____1、分段____</font>:    两个回车  
-<font color=red>____2、换行____</font>:    两个空格 + 回车
-<font color=red>____3、标题____</font>:    可以使用#或者文字下一行使用==或--
-* 方式1,使用# ~ ###### 文字,注意\#与文字中间有空格
-  `# 1级标题`  
-  `## 2级标题 ` 
-  `### 3级标题`  
-  `#### 4级标题`  
-  `##### 5级标题`  
-  `###### 6级标题`
-  <font color=green>__预览__:</font>
+<font color=red>__1、分段__</font>: 两个回车
+<font color=red>__2、换行__</font>: 两个空格 + 回车
+<font color=red>__3、标题__</font>: 可以使用`#`或者文字下一行使用`==`或`--`
+
+方式1: 使用`# ~ ###### 文字`,注意`#`与文字中间有空格
+
+`# 1级标题`  
+`## 2级标题 ` 
+`### 3级标题`  
+`#### 4级标题`  
+`##### 5级标题`  
+`###### 6级标题`
+<font color=green>__预览__:</font>
+
 # 1级标题
 ## 2级标题
 ### 3级标题
 #### 4级标题
 ##### 5级标题
 ###### 6级标题
-* 方式2, 使用=和-
+
+方式2, 使用`=`和`-`
+
   `使用==`
   `==`
   `使用--`
@@ -41,7 +46,7 @@ tags:
   ​
   使用--
   --
-  <font color=red>____4、粗体和斜体____</font>:    \_\*一个包裹的是斜体, 两个包裹的是粗体。 
+  <font color=red>__4、粗体和斜体__</font>:    `_`或`*`一个包裹的是斜体, 两个包裹的是粗体。 
   `_斜体_`  
   `__粗体__`  
   `*斜体*`  
@@ -49,7 +54,7 @@ tags:
   <font color=green>__预览__:</font>
   _斜体_  __粗体__  *斜体*  **粗体**  
 
-<font color=red>____5、引用____</font>:    通过在文字开头添加 > 来表示。  (当 > 和文字之间添加五个空格blank时,样式会变化,变成黑底)
+<font color=red>__5、引用__</font>:    通过在文字开头添加 > 来表示。  (当 > 和文字之间添加五个空格blank时,样式会变化,变成黑底)
 `>引用无空格`
 `>     引用五个空格`
 `>引用文字`
@@ -68,18 +73,18 @@ tags:
 >>引用文字  
 >>引用文字
 
-<font color=red>____6、代码区域____</font>:    四个空格开头或者使用\`把代码包住    (这个是~下面的符号,不是单引号)  
+<font color=red>__6、代码区域__</font>:    四个空格开头或者使用(这个符号是~下面的符号,不是单引号)把代码包住.
 `    代码前面四个空格`
 <font color=green>__预览__:</font>
-    - (void)applicationDidFinishLaunching:(NSNotification *)notification {
+    - (void)applicationDidFinishLaunching:(NSNotification \*)notification {
     [self connect];
     }
     
-    - (void)applicationWillTerminate:(NSNotification *)notification {
+    - (void)applicationWillTerminate:(NSNotification \*)notification {
     [self disconnect];
     }
     
-    - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)application {
+    - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication \*)application {
     return YES;
     }
 
@@ -92,72 +97,81 @@ tags:
 代码
 ```
 
-<font color=red>____7、列表____</font>:    \*   \+   \-是无序列表,1. 是有序列表, 注意后面都是有空格。   
-`* 无序*`
-`+ 无序+`
-`- 无序-`
-`1. 有序数字.`
+<font color=red>__7、列表__</font>:    \*   \+   \-是无序列表,1. 是有序列表, 注意后面都是有空格。   
+
+`* 无序`
+`+ 无序`
+`- 无序`
+`1. 有序数字`
 `- 外层列表`
   `+ 内层列表+前面有两个空格`
   `+ 内层列表+前面有两个空格`
 `- 外层列表`
+
 <font color=green>__预览__:</font>
-* 无序*
-+ 无序+
-- 无序-
-1. 有序1.  
+
+* 无序
++ 无序
+- 无序
+1. 有序  
 - 外层列表项目
   + 内层列表项目
   + 内层列表项目
   + 内层列表项目
 - 外层列表项目
 
-  <font color=red>____8、链接Links____</font>:    Markdown中有两种方式，实现链接，分别为内联方式和引用方式。
+  <font color=red>__8、链接Links__</font>:    Markdown中有两种方式，实现链接，分别为内联方式和引用方式。
 
 * 内联方式   
-  `不会的问题请先[百度一下](www.baidu.com),再请教别人!`
+`不会的问题请先[百度一下](https://www.baidu.com),再请教别人!`
   <font color=green>__预览__:</font>
-  不会的问题请先[百度一下](www.baidu.com),再请教别人!
+  不会的问题请先[百度一下](https://www.baidu.com),再请教别人!
 
 * 引用方式   
   `欢迎访问我的[github][1]和[简书][2]。`
-  `[1]: https://github.com/coppco/        "github"`
-  `[2]: http://www.jianshu.com/users/04289820b712/timeline/   "简书"`
-  <font color=green>__预览__:</font>
-  欢迎访问我的[github][1]和[简书][2]。
-  [1]: https://github.com/coppco/&quot;github&quot;
-  [2]: http://www.jianshu.com/users/04289820b712/timeline/&quot;简书&quot;
+  `[1]: https://github.com/coppco`
+  `[2]: http://www.jianshu.com/users/04289820b712/timeline`
+  
+<font color=green>__预览__:</font>
 
-<font color=red>____9、图片image____</font>:    图片和链接类似,有内联方式和引用方式, 地址可以是本地文件也可以是网络URL。
+欢迎访问我的[github][1]和[简书][2]。
+[1]: https://github.com/coppco
+[2]: http://www.jianshu.com/users/04289820b712/timeline
 
-*  内联方式使用,本地图片   
-  `![本地头像](/assets/blogImg/coppco.png)`
-  <font color=green>__预览__:</font>
-  ![本地头像](/assets/blogImg/coppco.png)
-*  引用方式,使用网络图片   
+ <font color=red>__9、图片image__</font>:    图片和链接类似,有内联方式和引用方式, 地址可以是本地文件也可以是网络URL。
+
+方式1: 内联方式, 本地图片
+    `![本地头像](/assets/blogImg/coppco.png)`
+    <font color=green>__预览__:</font>
+    ![本地头像](/assets/blogImg/coppco.png)
+
+方式2: 引用方式,使用网络图片   
   `![网络图片][1]`
-  `[1]: https://coppco.github.io/assets/blogImg/coppco.png`
-  <font color=green>__预览__:</font>
+  `[1]: https://coppco.github.io/assets/blogImg/coppco.png` 
+
+<font color=green>__预览__:</font>
+
   ![网络图片][1]
 [1]: https://coppco.github.io/assets/blogImg/coppco.png
-<font color=red>____10、脚注____</font>:    
-`这里是脚注[^这里是脚注]`
-`[^这里是脚注]: 在这里`
+
+<font color=red>__10、脚注(好像大部分markdown都不支持)__</font>:    
+`正文[^1]文字`
+`[^1]: 脚注内容`
+
 <font color=green>__预览__:</font>
-这里是脚注[^这里是脚注]
 
+ 正文[^1]文字
+ [^1]: 脚注内容
 
-<font color=red>____11、分割线____</font>:    
+<font color=red>__11、分割线__</font>:    
 `---`
 `***`
 `~~文字删除线~~`
 <font color=green>__预览__:</font>
----
-***
 ~~文字删除线~~
 
 
-<font color=red>____12、转义字符____</font>:   一些特殊字符如 \*  \[ \>等前面添加\\
+<font color=red>__12、转义字符__</font>:   一些特殊字符如 \*  \[ \>等前面添加\\
 `\\`
     \\\`
 `\*`
@@ -183,19 +197,19 @@ tags:
 \-
 \.
 \!
-<font color=red>____13、小型文字____</font>:   
+<font color=red>__13、小型文字__</font>:   
 `<small>文本内容</small>`
 <font color=green>__预览__:</font>
 <small>文本内容</small>
 
-<font color=red>____14、文章在列表中的时候,它后面的不会显示,在详情页面才会全部显示____</font>:
+<font color=red>__14、文章在列表中的时候,它后面的不会显示,在详情页面才会全部显示__</font>:
 `在合适的位置添加<!--more-->即可,在它前面的会显示,后面的只会在详情显示`
 
-<font color=red>____15、markdown使用表格____</font>:
+<font color=red>__15、markdown使用表格__</font>:
 
 	//其中第二行表示对齐方式,  默认、左对齐、居中、右对齐
 	|标题1|标题2|标题3|标题4|
-	|- - -|:- - -|:- - -:|- - -:|
+	|---|:---|:---:|---:|
 	|行1-1|行1-2|行1-3|行1-4|
 	|行2-1|行2-2|行2-3|行3-4|
 
@@ -203,11 +217,11 @@ tags:
 
 
 |标题1|标题2|标题3|标题4|
-|- - -|:- - -|:- - -:|- - -:|
+|---|:---|:---:|---:|
 |行1-1|行1-2|行1-3|行1-4|
 |行2-1|行2-2|行2-3|行3-4|
 
-<font color=red>____16、添加一些空格,如在\>引用里面添加空格____</font>:
+<font color=red>__16、添加一些空格,如在\>引用里面添加空格__</font>:
 
 `半方大的空白&ensp;或&#8194;`
 `全方大的空白&emsp;或&#8195;`
@@ -220,11 +234,11 @@ tags:
 不断行的空白格&nbsp;或&#160;
 
 # hexo的一些命令
-<font color=red>____1、hexo new "文章名称"____</font>:    新建一个md文件,在 hexo/source/_posts/目录下
-<font color=red>____2、hexo clean____</font>:    当source文件夹中文件改变的时候,这个操作可以清除生成的public文件夹
-<font color=red>____3、hexo g____</font>:    重新生成静态文件夹public
-<font color=red>____4、hexo s____</font>:    开启本地服务打开[http://0.0.0.0:4000/](http://0.0.0.0:4000/)预览(可以在\node_modules\hexo-server\index.js里面修改默认ip和端口:{log: false,ip: '127.0.0.1',port: '4400'})
-<font color=red>____5、hexo d____</font>:    部署到远程git上面, 主要是把生成的public文件夹上传到git
+<font color=red>__1、hexo new "文章名称"__</font>:    新建一个md文件,在 hexo/source/_posts/目录下
+<font color=red>__2、hexo clean__</font>:    当source文件夹中文件改变的时候,这个操作可以清除生成的public文件夹
+<font color=red>__3、hexo g__</font>:    重新生成静态文件夹public
+<font color=red>__4、hexo s__</font>:    开启本地服务打开[http://0.0.0.0:4000/](http://0.0.0.0:4000/)预览(可以在\node_modules\hexo-server\index.js里面修改默认ip和端口:{log: false,ip: '127.0.0.1',port: '4400'})
+<font color=red>__5、hexo d__</font>:    部署到远程git上面, 主要是把生成的public文件夹上传到git
 
 # 后记
 使用hexo+github搭建个人博客的时候,难免遇到使用不同的电脑和操作系统来写博客,我是这样解决的:把博客所在的目录也使用一个git仓库存储,这样一些资源、主题的配置可以得到备份. 以后使用不同的电脑就clone下来,当然环境node、hexo、git等都是需要安装的.  下面是备份整体目录后, 换电脑或者操作系统后的操作~~~
@@ -256,4 +270,3 @@ Mac下:
 
 备注: 详情参考这里---->[国内优秀npm镜像推荐及使用](http://riny.net/2014/cnpm/)
 第一次使用markdown写这个,还是比较生疏!
-[^这里是脚注]: 在这里

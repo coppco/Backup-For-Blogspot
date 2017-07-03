@@ -101,6 +101,16 @@ IDE是集成开发环境(Integrated Development Environment)
         * Ctrl + Shift + O
     * Mac
         * Command + Shift + O
+* 变为大写
+    * Windows
+        * Ctrl + Shift + X
+    * Mac
+        * Command + Shift + X
+* 变为小写
+    * Windows
+        * Ctrl + Shift + Y
+    * Mac
+        * Command + Shift + Y
 * 添加/取消单行注释
     * Windows
         * Ctrl + /
@@ -121,6 +131,16 @@ IDE是集成开发环境(Integrated Development Environment)
         * Ctrl + Alt + 上/下箭头
     * Mac
         * Option + Command + 上/下箭头
+* 向上添加空行
+    * Windows
+        * Ctrl  + Shift + Enter
+    * Mac
+        * Ctrl  + Shift + Enter
+* 向下添加空行
+    * Windows
+        * Shift + Enter
+    * Mac
+        * Shift + Enter
 * 查看源码
     * Windows
         * 选中类名F3 或者 Ctrl + 鼠标点击
@@ -142,6 +162,11 @@ IDE是集成开发环境(Integrated Development Environment)
         * Ctrl + 1(一)
     * Mac
         * Command + 1(一)
+* 快速为函数返回值生成变量
+    * Windows
+        * Ctrl + 2 后 按 L
+    * Mac
+        * Command + 2 后 按 L
 * 删除代码
     * Windows
         * Ctrl + D
@@ -157,6 +182,11 @@ IDE是集成开发环境(Integrated Development Environment)
         * Alt + Shift + L
     * Mac
         * Option + Command + L
+* 块编辑
+    * Windows
+        * Alt + Shift + A
+    * Mac
+        * Option + Command + A
 * 改名
     * Windows
         * Alt + Shift + R
