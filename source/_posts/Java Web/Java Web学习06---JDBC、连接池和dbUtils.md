@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Java Web学习06---JDBC、连接池
+title: Java Web学习06---JDBC、连接池和dbUtils
 comments: true
 date: 2016-12-10 18:14:25
 tags:
@@ -224,3 +224,23 @@ dbutils是apache组织的一个工具类, jdbc框架.
         * 4、使用QueryRunner对象执行SQL语句
             * 4.1、query(...) 执行查询语句
             * 4.2、update(...) 支持更新、删除等语句
+	* 核心类和接口
+		* QueryRunner： 用于操作SQL语句
+			* new QueryRunner（DataSource ds）;
+				* 使用该方法创建的， 会帮我们创建语句执行者、释放资源
+			*　常用方法
+				* query（）； 执行查询语句
+				* update（）； 执行更新、删除语句
+		* DbUtils： 释放资源、控制事物
+			* close（）： 抛出异常
+			* queryClose（）： 内部处理异常
+		* ResultSetHandler： 封装结果集， 接口
+			* 它有9个实现类	
+				* ArrayHandler：将查询结果的第一条封装成数组返回。
+				* ArrayListHandler：将查询结果的每一条记录封装成数组， 然后将数组放入list中返回。
+				* BeanHandler（★）： 将查询结果的第一条封装成指定Bean对象返回。
+				* BeanListHandler（★）： 将查询结果的每一条封装成Bean对象， 然后放入List中返回。
+				* ColumnListHandler： 将查询结果的一列放入List中返回。
+				* MapHandler：将查询结果的第一条记录封装成Map集合返回， 字段名为key， 值为value。
+				* MapListHandler（★）： 将查询结果的每一条记录封装成Map集合， 字段名为key， 值为value， 然后把Map放入List中返回。
+				* ScalarHandler（★）： 针对于聚合函数， 
