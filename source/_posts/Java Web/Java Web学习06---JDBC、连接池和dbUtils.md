@@ -214,7 +214,7 @@ JDBC关系图
                 c3p0.password:123456
                 //配置好配置文件后, 直接使用下面即可
                 ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();//使用默认配置
-                ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource("costom");//自定义配置, 如果没找到会使用默认的
+                ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource("custom");//自定义配置, 如果没找到会使用默认的
 * <font color=orange>dbutils</font>
 dbutils是apache组织的一个工具类, jdbc框架.
     * 使用步骤
