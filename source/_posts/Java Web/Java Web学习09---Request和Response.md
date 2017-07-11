@@ -4,7 +4,6 @@ title: Java Web学习09---Request和Response
 comments: true
 date: 2017-01-15 17:16:48
 tags:
-
 	- Java
 	- HTTP
 	- Request
@@ -45,13 +44,23 @@ tags:
 			* content-type: 设置文件mime类型, 设置响应流的编码方式,以及浏览器打开是的编码方式.
 			* content-disposition: 文件下载使用 
 	* 响应体
-* 重定向一般步骤
-	* 1、设置状态码
+* 重定向实现
+	* 方式1
+		* 1、设置状态码
 	
-	>	response.setStatus(302);
+		>	response.setStatus(302);
 	
-	* 2、设置location
+		* 2、设置location
 	
-	>	response.addHeader("location", "https://www.baidu.com");
+		>	response.addHeader("location", "https://www.baidu.com");
+			
+	* 方式２
 	
-	
+	>	response.sendRedirect("https://www.baidu.com");
+* 定时刷新实现
+	* 方式1
+		* 通过html的meta标签实现
+		>    <meta http-equiv="refresh" content="3;url=/">
+	* 方式2
+		* 通过response设置header实现
+		>    response.addHeader("refresh", "3;url=/");
