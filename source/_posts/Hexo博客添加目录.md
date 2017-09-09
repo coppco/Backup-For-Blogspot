@@ -15,6 +15,8 @@ tags:
 
 ## 文章目录功能
 
+* 2017-09-07更新, 主题作者更新了,支持了TOC目录.
+
 ### 添加CSS样式
 打开`themes\yilia\source`下的main.xxxx.css文件, 将下面的代码加入其中: 
 
@@ -75,3 +77,11 @@ toc: true
 
 
 以上CSS文件和JS代码来源于[查看](http://lawlite.me/)
+
+## 另外修改一个头像的问题
+我的头像可能太小, 导致圆弧内显示不全, 太难看了.
+打开`themes/yilia/source/main.xxx.css`
+搜索`.profilepic img`, 添加两个属性 `width:100%;height:100%;`
+```
+.profilepic img{border-radius:300px;opacity:1;width:100%;height:100%;-webkit-transition:all .2s ease-in}.left-col
+```
