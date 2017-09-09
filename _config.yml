@@ -71,7 +71,7 @@ deploy:
   type: git
   repo: https://github.com/coppco/coppco.github.io.git
   branch: master
-  message: 更新
+  message: updates
 
 #主题添加所有文章
 jsonContent:

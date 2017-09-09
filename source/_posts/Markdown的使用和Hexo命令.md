@@ -267,6 +267,7 @@ Markdown 支持有序列表和无序列表。
 \`\`\`java
 代码
 \`\`\`
+[语言具体参考](http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html)
 
 ```java
 pubilc static void main(String[] args) {
@@ -433,7 +434,7 @@ _   底线
 <h5 id='1.1.1'> 三级目录 </h5>
 ```
 
-## 修改源码方式, 请查看另外一篇[文章](/2016/07/09/Hexo博客添加目录)!
+## 修改源码方式, 请查看另外一篇[文章](/2016/07/09/为yilia博客添加目录)!
 
 ## PS: 最近主题作者支持了TOC 2017-07-09
 

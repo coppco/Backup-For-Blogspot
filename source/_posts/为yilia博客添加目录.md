@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 为hexo博客添加目录
+title: 为yilia博客添加目录
 comments: true
 date: 2016-07-09 16:41:52
 toc: true
@@ -15,7 +15,7 @@ tags:
 
 ## 文章目录功能
 
-* 2017-09-07更新, 主题作者更新了,支持了TOC目录.
+* 2017-07-09更新, 主题作者更新了,支持了TOC目录, 
 
 ### 添加CSS样式
 打开`themes\yilia\source`下的main.xxxx.css文件, 将下面的代码加入其中: 
