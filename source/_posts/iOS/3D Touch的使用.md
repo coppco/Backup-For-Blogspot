@@ -30,7 +30,8 @@ UIApplicationShortcutItemUserInfo 设置信息字典(用于传值)
 
 ### <font color=purple>2、动态设置</font>
 在AppDelegate中didFinishLaunchingWithOptions方法中设置3DTouch的桌面的快捷方式按钮（UIApplicationShortcutItem／UIMutableApplicationShortcutItem）, 注意UIApplicationShortcutItem的type是为了识别哪个按钮被点击的.
-```
+
+```objectivec
 //iOS 9以后才能使用
 if ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0) {
     //不存在的时候去添加
@@ -44,8 +45,9 @@ if ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0) {
     }
 }
 ```
-在- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler方法中获取到执行的事件. 
-```
+
+在- (void)application:(UIApplication \*)application performActionForShortcutItem:(UIApplicationShortcutItem \*)shortcutItem completionHandler:(void (^)(BOOL))completionHandler方法中获取到执行的事件. 
+```objectivec
 //App图标的3D Touch事件, willFinishLaunchingWithOptions和didFinishLaunchingWithOptions返回true才会执行
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0) {
