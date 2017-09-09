@@ -94,7 +94,7 @@ changyan_conf: false
 disqus: false
 
 #5、Gitment
-gitment_owner: 14049724       #你的 GitHub ID
+gitment_owner: coppco       #你的 GitHub ID
 gitment_repo: 'coppco.github.io'            #存储评论的 repo
 gitment_oauth:
   client_id: '1cf3f0bb1ea48663d970'           #client ID
