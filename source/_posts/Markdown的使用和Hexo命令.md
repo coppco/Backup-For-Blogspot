@@ -3,6 +3,7 @@ layout: post
 title: Markdown的使用和Hexo命令
 comments: true
 date: 2015-10-14 18:37:52
+toc: false
 tags:
     - First
     - 杂谈
@@ -432,6 +433,9 @@ _   底线
 <h5 id='1.1.1'> 三级目录 </h5>
 ```
 
+## 修改源码方式, 请查看另外一篇[文章](/2016/07/09/Hexo博客添加目录)!
+
+## PS: 最近主题作者支持了TOC 2017-07-09
 
 <h1 id='2' style='color: orange'> 2、 hexo的一些命令 </h1>
 <font color=red>__1、hexo new "文章名称"__</font>:    新建一个md文件,在 hexo/source/_posts/目录下, 里面的内如你也可以根据内容新建文件夹分类
