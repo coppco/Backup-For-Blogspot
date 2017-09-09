@@ -9,6 +9,7 @@ tags:
     - Objective-C
     - Swift
     - 资料整理
+    - IDE
 ---
 
 最近新安装了Xcode8, 但是发现Deployment Target最低是8.0, 虽然可以手动改为7.0, 但是真机测试的时候还是不能完成, 而且模拟器最低版本也是为iPhone 5的 iOS 8.0, 不能使用iPhone 4s设备进行模拟器测试.

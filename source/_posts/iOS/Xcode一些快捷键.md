@@ -9,6 +9,7 @@ tags:
     - Objective-C
     - Swift
     - 杂谈
+    - IDE
 ---
 # 工欲善其事必先利其器
 现在iOS开发,大部分都是使用Xcode工具开发了,这里就是记录一下,从事iOS几年来的一些Xcode快捷键和Mac一些命令.

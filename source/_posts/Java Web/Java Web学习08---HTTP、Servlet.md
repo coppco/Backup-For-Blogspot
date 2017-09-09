@@ -6,6 +6,7 @@ date: 2017-01-10 06:20:53
 tags:
 
 	- Java
+	- HTTP
 	- Servlet
 ---
 HTTP协议：超文本传输协议（HTTP，HyperText Transfer Protocol)是互联网上应用最为广泛的一种网络协议。所有的WWW文件都必须遵守这个标准。

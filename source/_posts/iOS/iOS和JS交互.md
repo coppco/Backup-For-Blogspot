@@ -129,6 +129,7 @@ NSString \*title = value.toString;
 &emsp;&emsp;UIAlertView \*alertView = [[UIAlertView alloc] initWithTitle:@"收到JS返回值" message:title delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
 &emsp;&emsp;[alertView show];
 };
+//上面也可以通过在block里面执行: `NSArray *args = [JSContext currentArguments];` 获取参数
 //有返回值和参数的写法
 jsContext[@"add"] =   ^NSInteger(NSInteger a, NSInteger b) {
 &emsp;&emsp;return a + b;

@@ -157,4 +157,19 @@ tags:
 	>	public Enumeration<String> getAttributeNames();
 	* 移除参数
 	>	public void removeAttribute(String name);
-	
+* <font color=orange>请求转发如果是表单时, 重复提交问题</font>
+	* 请求转发之后刷新网页会提示重复提交, 解决办法有
+		* 使用重定向
+		* 使用令牌机制
+* <font color=orange>BeanUtils的使用</font>
+	* BeanUtils是Apache提供的一个工具类, 它可以快速封装一个对象
+	* 使用步骤
+		* 导入`commons-beanutils-xxx.jar`和`commons-logging-xxx.jar`包
+		* 使用`BeanUtils.populate(Object bean, Map<> map)`即可.
+* <font color=orange>请求转发和重定向的区别</font>
+	* 重定向发送两次请求, 请求转发只发送一次请求
+	* 重定向地址发起变化, 请求转发地址不会变化
+	* 重定向是客户端发送, 请求转发是服务器内部发送
+	* 重定向不存在域对象, 请求转发可以使用request域对象
+	* 重定向是Response的方法, 请求转发是Request的方法.
+	* 重定向可以访问站外资源, 请求转发只能访问服务器内部资源

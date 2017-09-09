@@ -111,7 +111,7 @@ values(1,'shijin','1234','male','shijin@126.com',null,null);`
                 * 2、临时解决方法: `set character_set_client=gbk,character_set_connection=gbk,character_set_results=gbk;`
                     * 重启mysql服务器后恢复
                 * 3、Windows永久解决方法: 在安装目录下面修改<font color=orange>`my.ini`</font>, 修改`default-character-set=编码值`后, 重启MySQL即可.
-                * 4、在mac上默认是没有配置文件的，需要到`/usr/local/mysql/support-files`目录下将mysql配置文件模板`my-default.cnf`拷贝到`/etc`下，并将文件名改成`my.cnf`. 在`my.cnf`中找到`[client]`和`[mysqld]`分别添加下面两句话
+                * 4、在mac上默认是没有配置文件的，需要到`/usr/local/mysql/support-files`目录下将mysql配置文件模板`my-default.cnf`拷贝到`/etc`下，并将文件名改成`my.cnf`. 在`my.cnf`中找到`[client]`和`[mysqld]`分别添加下面两句话. 或者运行`find / -iname "*.cnf" -print`查找.cnf文件
                 >   [client]
                 default-character-set=utf8
                 [mysqld]
@@ -127,11 +127,24 @@ values(1,'shijin','1234','male','shijin@126.com',null,null);`
             * `drop table 表名;`
                 * 会把整个表删除, 删除后表不存在了
             * `delete from 表名;`
-                * 属于DML语句, 删除表中数据, 是一条一条删除的, 效率较低
+                * 属于DML语句, 删除表中数据
+                		* MySQL中 delete速度慢
+                		* ORACLE中 delete速度快
                 * 插入数据口, 如果主键自增, 从最后一条数据的主键+1开始.
+                * 可以回滚
+                * 不会释放空间
+                * ORACLE中可以闪回(flashback)
+                * delete会产碎片
+                		* ORACLE中可以使用: `alert table 表名 move;`去除碎片
             * `truncate [table] 表名;`
-                * 输入DDL语句, truncate是将表结构销毁,再重新创建表结构,数据多的时候,效率高.
+                * 输入DDL语句, truncate是将表结构销毁,再重新创建表结构
+                    * MySQL中 truncate速度快
+                		* ORACLE中 truncate速度慢(因为undo数据, 还原数据)
                 * 插入数据后, 如果主键自增, 从1开始
+                * 不能回滚
+                * 可以释放空间
+                * ORACLE中不能闪回
+                * truncate不会产生碎片
     * <font color=orange>数据查询语言</font>：简称DQL(Data Query Language)，用来查询数据库中表的记录。
         * <font color=orange>select基本查询</font>
             * <font color=orange>查询指定列</font>
@@ -154,6 +167,8 @@ values(1,'shijin','1234','male','shijin@126.com',null,null);`
                 * 在对数值类型的列做运算的时候，如果做运算的列的值为null的时，运算结果都为null，为了解决这个问题可以使用ifnull函数. 
                 * 格式:`ifnull(字段,0)`
                 * 例如: `select name,ifnull(price,0)+10 from products;` //在查询结果, 价格的基础上+10
+            * 连接函数
+            	* `select concat('hello', ' world');`
         * <font color=orange>where语句</font>
             * where语句用于条件查询或者修改等
             * 格式: `select 字段  from 表名  where 条件;`或`update 表名 set 字段名 = 'value'  where 条件;`
@@ -180,6 +195,8 @@ values(1,'shijin','1234','male','shijin@126.com',null,null);`
                         * 2、`_`: 匹配个数, 几个`_`即代表几个数, 相当于length操作
                             * `like '_'` 值为1个字符
                             * `like '__'` 值为2个字符
+						* like中使用转义字符
+							* 使用`escape`定义转义字符: `select * from user where name like '%\_%' escape '\';`
                 * 6、<font color=orange>null值操作</font>
                     * `is null;` 判断为空 
                     * `is not null;` 判断不为空 
@@ -190,12 +207,24 @@ values(1,'shijin','1234','male','shijin@126.com',null,null);`
                 * 8、<font color=orange>多个字段(包含一个字段)操作</font>
                     * `+`、`-`、`*`、`/`、`%`等
                         * 例如:`select * from products where price*pnum > 10000;`
+                * 9、<font color=orange>limit</font>: 对查询结果限制数量, 经常用来做分页
+                    * 如果使用一个参数, 表示返回最大的记录数目
+                        * 格式: `select * from account where id > 100 limit 100;`检索前100条记录, 相当于 `select * from account where id > 100 limit 0,100;`
+                    * 如果给定两个参数，第一个参数指定第一个返回记录行的偏移量，第二个参数指定返回记录行的最大数目。
+                        * 格式: `select * from account where id > 100 limit 100,100;`从第101条开始, 检索100条记录
+                    * 有的数据库支持: 如果给定两个参数，第二个参数是`-1`, 那么表示从偏移量位置检索到结束
+                        * 格式: `select * from account where id > 100 limit 100,-1;`从第101条开始, 检索到结束
+            * 查询时间
+            	* MySQL中使用: `select now();`
+            	* Oracle中使用: `select sysdate from dual;`
+            		* 没有时间, 需要使用: `select to_char(sysdate, '格式') from dual;`
+            		* 例如: `select to_char(sysdate, 'yyyy-MM-dd HH:mm:ss') from dual;`
         * <font color=orange>order by排序</font>
-            * 我们从数据库中查询出的数据经常需要根据某些字段进行排序，可以使用order by关键字,后面跟的就是要排序的列,order by 子句是select的最后的一个子句。
+            * 我们从数据库中查询出的数据经常需要根据某些字段进行排序，可以使用order by 关键字(可以是列名, 表达式, 别名, 序号(从1开始)),后面跟的就是要排序的列,order by 子句是select的最后的一个字句
             * asc 升序 (默认)
             * desc 降序
             * 例如: `select * from products [where 条件] order by pnum desc;` //按照pnum倒叙排序
-            * 例如: `select * from products order by pnum asc,price desc;` // 先按pnum升序, 如果pnum相同后再按price排序.
+            * 例如: `select * from products order by pnum asc,price desc;` // 先按pnum升序, 如果pnum相同后再按price倒序.      
         * <font color=orange>聚集函数</font>
             * 查询都是横向查询，它们都是根据条件一行一行的进行判断，而使用聚合函数查询是纵向查询，<font color=red>它是对一列的值进行计算，然后返回一个单一的值；另外聚合函数会忽略空值.</font>
             * 格式: `select 聚集函数 from 表名 [where 条件];`
@@ -371,6 +400,9 @@ MySQL中常用的约束有主键约束,非空约束,唯一约束,外键约束.
             * 本地登录可以省略主机地址,  没有密码直接回车即可
     * 启动mysql服务命令 `net start mysql`
     * 关闭mysql服务命令 `net stop mysql`
+    * Linux启动mysql: `systemctl start mysqld.service`
+    * Linux重启mysql: `systemctl restart mysqld.service`
+    * Linux关闭mysql: `systemctl stop mysqld.service`
     * 设置和修改密码
         * Windows
             * 1、停止MySQL服务器: Windows下命令行运行`services.msc`, 找到并停止运行MySQL服务
@@ -403,6 +435,16 @@ MySQL中常用的约束有主键约束,非空约束,唯一约束,外键约束.
             * 运行`mysqladmin -u root -p password 新密码`, 输入旧的MySQL密码
                 * 但是提示`Access denied for user 'root'@'localhost`, 这是因为权限问题, 修改一次密码即可
             * 再次运行上面修改密码的代码即可.
+    * <font color=red>备份和还原数据库</font>, 除了可以使用图形化数据库工具以外还可以使用命令来操作
+    	* 备份: `mysqldump -u用户名 -p数据库密码 数据库名称>备份路径`
+    	* 还原
+    		* 方式1: 无需登录数据库
+    			* 1、需要手动创建数据库
+    			* 2、`mysql -u用户名 -p数据库密码 bak1<备份路径`
+    		* 方式2: 需要登录数据库
+    			* 1、登录需要还原的数据库
+    			* 2、创建并使用数据库
+    			* 3、使用`source 备份路径`命令
     * <font color=orange>查询当前数据库编码, 解决插入乱码问题</font>
         * `show variables like "char%"`
         * 临时统一设置: `set names utf8;`
@@ -475,3 +517,12 @@ MySQL中常用的约束有主键约束,非空约束,唯一约束,外键约束.
 ## <font color=red>Warning</font>
 SQL语言里面的外键约束、unique约束不是一定的, 也可以通过Java程序来控制, 而且添加了外键约束对于开发测试来说很不好.
 delete语言也很少使用, 删除一般分为物理删除(delete)和逻辑删除(查询不到, 一般在表中添加一个字段, 来控制是否有效),  一般使用逻辑删除.
+
+## <font color=red> Tips </font>
+当有多个输入框, 进行多调价查询的时候, 因为查询的关键字个数不确定, 所以查询条件不好控制, 这个时候可以通过小技巧来写.
+* 多个条件同时满足条件
+	* 先使用 `where 1 = 1` 条件, 关键字非空再拼接 条件 ` and xxx like(=) ?` 
+	* 例如: `select * from account where 1 = 1( and user = admin)( and password = 123456)`
+* 多个条件满足一个即可
+	* 线使用 `where 1 != 1` 条件, 关键字非空再拼接 条件 ` or xxx like(=) ?`
+	* 例如: `select * from account where 1 != 1( or user = admin)( or password = 123456)`
