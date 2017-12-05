@@ -128,14 +128,14 @@ values(1,'shijin','1234','male','shijin@126.com',null,null);`
                 * 会把整个表删除, 删除后表不存在了
             * `delete from 表名;`
                 * 属于DML语句, 删除表中数据
-                		* MySQL中 delete速度慢
-                		* ORACLE中 delete速度快
+                	* MySQL中 delete速度慢
+                	* ORACLE中 delete速度快
                 * 插入数据口, 如果主键自增, 从最后一条数据的主键+1开始.
                 * 可以回滚
                 * 不会释放空间
                 * ORACLE中可以闪回(flashback)
                 * delete会产碎片
-                		* ORACLE中可以使用: `alert table 表名 move;`去除碎片
+                	* ORACLE中可以使用: `alert table 表名 move;`去除碎片
             * `truncate [table] 表名;`
                 * 输入DDL语句, truncate是将表结构销毁,再重新创建表结构
                     * MySQL中 truncate速度快

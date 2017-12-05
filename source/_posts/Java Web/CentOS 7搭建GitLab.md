@@ -2,6 +2,7 @@
 layout: post
 title: CentOS 7搭建GitLab
 comments: true
+toc: true
 date: 2017-07-07 17:06:02
 tags:
 	- Java
@@ -10,6 +11,7 @@ tags:
 	- GitLab
 	- git
 	- 资料整理
+	- 持续集成
 ---
 
 &emsp;&emsp;CentOS 是一个基于Red Hat Linux 提供的可自由使用源代码的企业级Linux发行版本。CentOS是开源的, 完全免费的, 最新版本是CentOS 7。CentOS是Community Enterprise Operating System的缩写。
@@ -26,7 +28,7 @@ tags:
 	* [码云](https://git.oschina.net)
 
 ## <font color=orange>GitLab的安装</font>
-* 支持的Linux系统
+* 支持的[Linux系统](https://about.gitlab.com/installation/)
 	* Omnibus package installation (recommended)(综合包安装(推荐))
 		* Ubuntu
 		* Debian
@@ -42,17 +44,19 @@ tags:
 
 * 1、系统防火墙中打开HTTP、SSH访问和邮件系统(如果不使用postfix, 可以不安装postfix)
 ```
-#打开ssh
-sudo yum install curl policycoreutils openssh-server openssh-clients 
+#安装ssh
+sudo yum install curl openssh-server openssh-clients -y
 #ssh开机启动
 sudo systemctl enable sshd 
 #开启ssh
 sudo systemctl start sshd 
-#安装右键系统
-sudo yum install postfix
+#安装policycoreutils-python(10.x以后版本需要)
+sudo yum install policycoreutils policycoreutils-python -y
+#安装邮件系统
+sudo yum install postfix -y
 #开机启动 
 sudo systemctl enable postfix 
-#开启右键系统
+#开启邮件系统
 sudo systemctl start postfix 
 #开启http访问
 sudo firewall-cmd --permanent --add-service=http
@@ -82,9 +86,9 @@ gpgkey=https://packages.gitlab.com/gpg.key
 	* 方式3: 直接下载rpm包, 进行安装
 
 ```
-wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el7/gitlab-ce-8.8.5-ce.0.el7.x86_64.rpm
+wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el7/gitlab-ce-9.3.0-ce.0.el7.x86_64.rpm
 
-rpm -ivh gitlab-ce-8.8.5-ce.0.el7.x86_64.rpm
+rpm -ivh gitlab-ce-9.3.0-ce.0.el7.x86_64.rpm
 ```
 
 * 4、读取配置文件并安装
@@ -98,10 +102,12 @@ rpm -ivh gitlab-ce-8.8.5-ce.0.el7.x86_64.rpm
 ```
 external_url '192.168.1.188:8888'
 ```
-	* 5.2、修改unicorn端口, 默认使用`80`和`8080`, 如果被占用可以修改
+	* 5.2、修改unicorn端口, 默认使用`80`和`8080`, 如果被占用可以修改, 也不能修改为9090, 该端口是普罗米修斯监控的默认端口.
 ``` 
 unicorn['listen'] = '127.0.0.1'
 unicorn['port'] = 18080
+#和上面的端口一样
+gitlab_workhorse['auth_backend'] = "http://localhost: 18080"
 ```
 	* 5.3、修改默认仓库位置
 ```
@@ -167,7 +173,8 @@ cat /opt/gitlab/embedded/service/gitlab-rails/VERSION
 ```
 
 * 查看是否有该版本的汉化补丁
-	* 查看`https://gitcafe.com/larryli/gitlab`, 看是否有该版本的分支(截止到今天, 最新的汉化包是8.8.5版本)
+	* 查看`https://gitlab.com/larryli/gitlab.git`, 看是否有该版本的分支(截止到今天, 最新的汉化包是8.8.5版本)
+	* 查看`https://gitlab.com/xhang/gitlab.git`, 延续Larry Li项目的8-8-zh中文版本进行更新，目前最新版本是9.3.0 
 	* 如果没有就不能汉化, 有的话即可汉化
 
 * 新建一个文件夹并进入
@@ -177,7 +184,7 @@ mkdir -p /root/gitlab_cn
 cd /root/gitlab_cn
 ```
 
-* 克隆GitLab仓库
+* 克隆GitLab仓库, 根据版本选择对应的仓库
 
 ```
 git clone https://gitlab.com/larryli/gitlab.git
@@ -187,14 +194,21 @@ git clone https://gitcafe.com/larryli/gitlab.git
 * 获取汉化补丁(注意版本)
 
 ```
+#根据分支
 git diff origin/8-8-stable origin/8-8-zh > /tmp/8.8.diff
+
+#根据tag
+# 查看tag版本，选择合适的汉化版本
+git tag
+# 对比不同，这里比较的是tag，v9.3.0为英文原版，v9.3.0-zh为汉化版本。diff结果是汉化补丁。
+git diff v9.3.0..v9.3.0-zh > /tmp/9.3.0.diff
 ```
 
 * 停止GitLab并执行汉化
 ```
 gitlab-ctl stop
 cd /opt/gitlab/embedded/service/gitlab-rails
-git apply /tmp/8.8.diff
+git apply --whitespace=warn /tmp/8.8.diff
 ```
 * 启动gitlab
 
@@ -222,10 +236,67 @@ yes|cp -rf ../gitlab-L-zh/* /opt/gitlab/embedded/service/gitlab-rails/
 gitlab-ctl start
 ```
 
-## <font color=orange>GitLab的备份、恢复和卸载</font>
+## <font color=orange>GitLab的备份、恢复、卸载和一些问题</font>
 待续
 
-* 卸载GitLab
+### <font color=orange>验证码邮箱配置是否正确</font>
+* 进入控制台: 运行`gitlab-rails console`
+* 出现`Loading production environment (Rails 4.2.8)
+irb(main):001:0>`之后执行`Notify.test_email('收件人邮箱', '邮件标题', '邮件正文').deliver_now`
+
+### <font color=orange>备份</font>
+* 配置文件
+	* 运行: `sh -c 'umask 0077; gitlab_version=$(sudo cat /opt/gitlab/embedded/service/gitlab-rails/VERSION); tar Pcf /var/opt/gitlab/backups/$(date "+etc-gitlab${gitlab_version}-%s.tar") /etc/gitlab'`
+	* 上面命令会把`/etc/gitlab`中文件、版本号和时间戳备份在: `/var/opt/gitlab/backups/etc-gitlabx.x.x-xxxxxx.tar`中
+* 数据文件
+	* 默认备份地址是: `/var/opt/gitlab/backups`
+	* 手动创建备份: `sudo gitlab-rake gitlab:backup:create`
+	* 日常备份: 添加`crontab`
+		* 1、运行`crontab -e`
+		* 2、如下配置:
+```
+# 每天5点执行备份
+0 5 * * * /opt/gitlab/bin/gitlab-rake gitlab:backup:create CRON=1
+```
+	* 修改备份周期和备份目录
+		* 修改配置文件: `vi /etc/gitlab/gitlab.rb`
+		* 修改下面配置文件: 
+```
+# 设置备份周期为7天 - 604800秒
+gitlab_rails['backup_keep_time'] = 604800
+# 备份目录
+gitlab_rails['backup_path'] = '/var/opt/gitlab/backups'
+```
+		* 修改完配置文件后还需要重新加载文件,重启
+
+### <font color=orange>恢复</font>
+确保备份的Gitlab版本和需要恢复的Gitlab版本一致才能恢复.
+
+* 恢复配置文件
+	* 运行: `sudo tar -xvf /var/opt/gitlab/backups/etc-gitlab-1511768198.tar -C  /etc/gitlab`
+	* 该命令会把tar压缩文件解压到`/etc/gitlab`中, 注意替换你的备份文件地址
+
+* 恢复数据文件
+	* 停止连接数据库的进程
+```
+sudo gitlab-ctl stop unicorn
+sudo gitlab-ctl stop sidekiq
+```
+	* 恢复备份数据文件, 将覆盖GitLab数据库！
+```
+#1512314152是1512314152_gitlab_backup.tar中的前面时间戳
+sudo gitlab-rake gitlab:backup:restore BACKUP= 1512314152
+```
+	* 启动GitLab
+```
+sudo gitlab-ctl start
+```
+	* 检查 GitLab
+```
+sudo gitlab-rake gitlab:check SANITIZE=true
+```
+
+### <font color=orange>卸载</font>
 
 ```
 sudo gitlab-ctl uninstall
@@ -236,3 +307,7 @@ find / -name gitlab|xargs rm -rf
 	* 解决方法
 		* 执行:`systemctl restart gitlab-runsvdir`
 		* 运行: `gitlab-ctl reconfigure`
+	
+### <font color=orange>项目的git地址不对问题</font>
+* 运行: `vi /var/opt/gitlab/gitlab-rails/etc/gitlab.yml`
+* 修改里面的host地址为服务器ip地址

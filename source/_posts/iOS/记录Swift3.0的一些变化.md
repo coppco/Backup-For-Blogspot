@@ -4,7 +4,7 @@ title: 记录Swift3.0的一些变化
 comments: true
 date: 2016-10-08 09:18:38
 tags:
-    - Swift3.0
+    - Swift
     - iOS
     - Xcode
     - 资料整理

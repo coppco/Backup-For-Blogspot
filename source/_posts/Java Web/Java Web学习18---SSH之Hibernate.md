@@ -134,17 +134,17 @@ SSH（Struts，Spring，Hibernate） Struts进行流程控制，Spring进行业�
 ### <font color=orange> Hibernate配置文件之映射配置文件 </font>
 	
 * 映射文件，即Stu.hbm.xml的配置文件
-	* <class>标签		-- 用来将类与数据库表建立映射关系
+	* `<class>`标签		-- 用来将类与数据库表建立映射关系
 		* name			-- 类的全路径
 		* table			-- 表名.(类名与表名一致,那么table属性也可以省略)
 		* catalog		-- 数据库的名称，基本上都会省略不写
 		
-	* <id>标签			-- 用来将类中的属性与表中的主键建立映射，id标签就是用来配置主键的。
+	* `<id>`标签			-- 用来将类中的属性与表中的主键建立映射，id标签就是用来配置主键的。
 		* name			-- 类中属性名
 		* column 		-- 表中的字段名.(如果类中的属性名与表中的字段名一致,那么column可以省略.)
 		* length		-- 字段的程度，如果数据库已经创建好了，那么length可以不写。如果没有创建好，生成表结构时，length最好指定。
 		
-	* <property>		-- 用来将类中的普通属性与表中的字段建立映射.
+	* `<property>`		-- 用来将类中的普通属性与表中的字段建立映射.
 		* name			-- 类中属性名
 		* column		-- 表中的字段名.(如果类中的属性名与表中的字段名一致,那么column可以省略.)
 		* length		-- 数据长度
@@ -166,7 +166,7 @@ SSH（Struts，Spring，Hibernate） Struts进行流程控制，Spring进行业�
 		
 	* 第二种方式是XML文件的形式，开发基本都会选择这种方式<font color=red>(推荐)</font>
 		* hibernate.cfg.xml
-			* <property name="hibernate.connection.driver_class" >com.mysql.jdbc.Driver</property>
+			* `<property name="hibernate.connection.driver_class" >com.mysql.jdbc.Driver</property>`
 		* 优点
 			* 格式比较清晰
 			* 编写有提示
@@ -189,7 +189,7 @@ SSH（Struts，Spring，Hibernate） Struts进行流程控制，Spring进行业�
 			* update				-- 如果有表,使用原来的表.没有表,创建一个新的表.同时更新表结构.
 			* validate				-- 如果有表,使用原来的表.同时校验映射文件与表中字段是否一致如果不一致就会报错.
 	* 加载映射
-		* 如果XML方式：`<mapping resource="cn/itcast/hibernate/domain/User.hbm.xml" />`
+		* 如果XML方式：`<mapping resource="cn/coppco/hibernate/domain/User.hbm.xml" />`
 
 ### <font color=orange>Hibernate常用的接口和类 </font>
 
@@ -530,7 +530,7 @@ l2.setCustomer(c);
 
 <!--配置多方: name是当前的JavaBean中的s属性, 当前属性的全路径, column: 外键字段-->
         <many-to-one name="customer" class="com.coppco.domain.Customer" column="lkm_cust_id" cascade="save-update,delete" />
-```	
+```
 	* 一对多时, 让一方放弃主键维护, 减少SQL语句. 添加`interse="true"`, true是放弃主键维护.
 ```
 <!--配置一方-->
@@ -624,6 +624,6 @@ l2.setCustomer(c);
 * 类级别的延迟加载
 	* Session对象的load方法默认就是延迟加载
 	* 使类级别的延迟加载失效
-		* 在<class>标签上配置lazy=”false”
+		* 在`类名.hbm.xml`的`<class>`标签上配置lazy=”false”
 		* Hibernate.initialize(Object proxy);
 * 关联级别默认是延迟加载

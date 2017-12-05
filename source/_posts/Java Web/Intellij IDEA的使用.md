@@ -1,6 +1,7 @@
 layout: Intellij
 title: Intellij IDEA的使用
 date: 2017-03-20 17:51:47
+toc: true
 tags:
 	- Java
 	- IDE
@@ -21,6 +22,7 @@ tags:
 		
 ## <font color=orange>Mac下Intellij IDEA相关快捷键</font>
 
+### <font color=green> Mac键盘符号和修饰键说明</font>
 * Mac键盘符号和修饰键说明
 	* `⌘`: Command
 	* `⇧`:  Shift
@@ -40,6 +42,8 @@ tags:
 	* `⇥`:  右制表符（Tab键）
 	* `⇤`:  左制表符（Shift+Tab）
 	* `⎋`:  Escape (Esc)
+### <font color=green>Editing（编辑）</font>
+	
 * Editing（编辑）
 	* `⌃ Space`: 基本的代码补全（补全任何类、方法、变量）
 	* `⌃ ⇧ Space`: 智能代码补全（过滤器方法列表和变量的预期类型）
@@ -83,6 +87,10 @@ tags:
 	* `⌘ ⇧ +`: 展开所以代码块
 	* `⌘ ⇧ -`: 折叠所有代码块
 	* `⌘ W`: 关闭活动的编辑器选项卡
+	* `⌥ ⇧ ↑`: 向上移动代码
+	* `⌥ ⇧ ↓ `: 向下移动代码
+
+### <font color=green>Search/Replace（查询/替换）</font>
 * Search/Replace（查询/替换）
 	* `Double ⇧`: 查询任何东西
 	* `⌘ F`: 文件内查找
@@ -93,11 +101,15 @@ tags:
 	* `⌘ ⇧ R`: 全局替换（根据路径）
 	* `⌘ ⇧ S`: 查询结构（Ultimate Edition 版专用，需要在Keymap中设置）
 	* `⌘ ⇧ M`: 替换结构（Ultimate Edition 版专用，需要在Keymap中设置）
+
+### <font color=green>Usage Search（使用查询）	</font>
 * Usage Search（使用查询）	
 	* `⌥ F7`: 在文件中查找用法 
 	* `⌘ F7`: 在类中查找用法
 	* `⌘ ⇧ F7`: 在文件中突出显示的用法
 	* `⌘ ⌥ F7`: 显示用法
+
+### <font color=green>Compile and Run（编译和运行）</font>
 * Compile and Run（编译和运行）
 	* `⌘ F9`: 编译Project
 	* `⌘ ⇧ F9`: 编译选择的文件、包或模块
@@ -106,6 +118,8 @@ tags:
 	* `⌃ R`: 运行
 	* `⌃ D`: 调试
 	* `⌃ ⇧ R`, `⌃ ⇧ D`: 从编辑器运行上下文环境配置
+
+### <font color=green>Debugging（调试）</font>
 * Debugging（调试）
 	* `F8`: 进入下一步，如果当前行断点是一个方法，则不进入当前方法体内
 	* `F7`: 进入下一步，如果当前行断点是一个方法，则进入当前方法体内，如果该方法体还有方法，则不会进入该内嵌的方法中
@@ -116,6 +130,8 @@ tags:
 	* `⌘ ⌥ R`: 恢复程序运行，如果该断点下面代码还有断点则停在下一个断点上
 	* `⌘ F8`: 切换断点（若光标当前行有断点则取消断点，没有则加上断点）
 	* `⌘ ⇧ F8`: 查看断点信息
+
+### <font color=green>Navigation（导航）</font>
 * Navigation（导航）
 	* `⌘ o`: 查找类文件
 	* `⌘ ⇧ o`: 查找所有类型文件、打开文件、打开目录，打开目录需要在输入的内容前面或后面加一个反斜杠/
@@ -148,6 +164,9 @@ tags:
 	* `⌥ F3`: 选中文件/文件夹/代码行，使用助记符添加/取消书签
 	* `⌃0...⌃9`: 定位到对应数值的书签位置
 	* `⌘ F3`: 显示所有书签
+
+
+### <font color=green>Refactoring（重构）</font>
 * Refactoring（重构）
 	* `F5`: 复制文件到指定目录
 	* `F6`: 移动文件到指定目录
@@ -160,14 +179,20 @@ tags:
 	* `⌘ ⌥`F`: 提取字段
 	* `⌘ ⌥ C`: 提取常量
 	* `⌘ ⌥ P`: 提取参数
+	
+### <font color=green>VCS/Local History（版本控制/本地历史记录）</font>
 * VCS/Local History（版本控制/本地历史记录）
 	* `⌘ K`: 提交代码到版本控制器
 	* `⌘ T`: 从版本控制器更新代码
 	* `⌥ ⇧ C`: 查看最近的变更记录
 	* `⌃ C`: 快速弹出版本控制器操作面板
+
+### <font color=green>Live Templates（动态代码模板）</font>
 * Live Templates（动态代码模板）
 	* `⌘ ⌥ J`: 弹出模板选择窗口，将选定的代码使用动态模板包住
 	* `⌘ J`: 插入自定义动态代码模板
+
+### <font color=green>General（通用）</font>
 * General（通用）
 	* `⌘ 1...⌘ 9`: 打开相应编号的工具窗口
 	* `⌘ S`: 保存所有
@@ -181,5 +206,8 @@ tags:
 	* `⌘ ;`: 打开项目结构对话框
 	* `⇧ ⌘ A`: 查找动作（可设置相关选项）
 	* `⌃ ⇥`: 编辑窗口标签和工具窗口之间切换（如果在切换的过程加按上delete，则是关闭对应选中的窗口）
+
+### <font color=green>Other（一些官方文档上没有体现的快捷键）</font>
 * Other（一些官方文档上没有体现的快捷键）
 	* `⌘ ⇧ 8`: 竖编辑模式
+

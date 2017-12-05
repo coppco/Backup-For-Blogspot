@@ -3,6 +3,7 @@ layout: post
 title: Xcode中快捷键、设置和Mac系统中的命令、快捷键
 comments: true
 date: 2015-11-16 17:36:01
+toc: true
 tags:
     - Xcode
     - iOS
@@ -102,3 +103,14 @@ tags:
 
 * __<font size=5>隐藏隐藏文件：<font color=red>defaults write com.apple.finder AppleShowAllFiles -bool false </font></font>__
 上面两个命令执行后需要重启Finder
+
+
+# <font color=orange>Xcode官网下载地址</font>
+该地址是Apple官网提供的下载地址, 可以使用迅雷等下载工具下载.安全可靠.[官网下载地址](https://developer.apple.com/download/more/), 需要登录开发者账号.
+* Xcode 8之前的版本下载完成的是`dmg`格式的文件, 空格使用`_`替换
+	* Xcode 8之前的版本有: `Xcode 7.3.1`、`Xcode 7.3`、`Xcode 7.2.1`、`Xcode 7.2`、`Xcode 7.1.1`、`Xcode 7.1`、`Xcode 7.0.1`、`Xcode 7`、`Xcode 6.4`、`Xcode 6.3.2`、`Xcode 6.3.1`、`Xcode 6.3`、`Xcode 6.2`、`Xcode 6.1.1`、`Xcode 6.1`、`Xcode 6.0.1`等
+		* 例如Xcode 7.3.1版本的下载地址是: `https://download.developer.apple.com/Developer_Tools/Xcode_7.3.1/Xcode_7.3.1.dmg`
+* Xcode 8以及以后的版本下载的`xip`压缩包
+	* 主要版本有: `Xcode 8`、`Xcode 8.1`、`Xcode 8.2`、`Xcode 8.2.1`、`Xcode 8.3`、`Xcode 8.3.1`、`Xcode 8.3.2`、`Xcode 8.3.3`、`Xcode 9`
+		* 例如Xcode 8.3.1的下载地址是: `https://download.developer.apple.com/Developer_Tools/Xcode_8.3.1/Xcode_8.3.1.xip`
+	

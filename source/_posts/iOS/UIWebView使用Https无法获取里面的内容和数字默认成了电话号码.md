@@ -9,7 +9,7 @@ tags:
     - Objective-C
     - 资料整理
 ---
-从iOS9.0开始, 苹果默认网络请求使用https, 对于使用http网络请求的App可以通过Info.plist添加字段来解决.
+由于当前项目需要适配iOS7.0,所以使用了UIWebView来加载网页,从iOS9.0开始, 苹果默认网络请求使用https, 对于使用http网络请求的App可以通过Info.plist添加字段来解决.
 
     <key>NSAppTransportSecurity</key>
     <dict>
