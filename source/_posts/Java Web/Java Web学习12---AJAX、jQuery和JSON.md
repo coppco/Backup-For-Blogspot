@@ -2,7 +2,7 @@
 layout: post
 title: Java Web学习12---AJAX、jQuery中的AJAX和JSON
 comments: true
-date: 2017-02-05 14:11:37
+date: 2016-10-11 14:11:37
 tags:
 	- AJAX
 	- Java

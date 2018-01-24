@@ -2,7 +2,7 @@
 layout: post
 title: Java Web学习06---JDBC、连接池和dbUtils
 comments: true
-date: 2016-12-10 18:14:25
+date: 2016-08-10 18:14:25
 tags:
     - Java
     - JDBC

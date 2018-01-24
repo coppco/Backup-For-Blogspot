@@ -2,7 +2,7 @@
 layout: post
 title: REMOTE HOST IDENTIFICATION HAS CHANGED的解决方法
 comments: true
-date: 2017-03-14 15:28:29
+date: 2016-01-14 15:28:29
 tags:
 	- Linux
 	- SSH

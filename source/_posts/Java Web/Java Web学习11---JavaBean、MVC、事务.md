@@ -2,7 +2,7 @@
 layout: post
 title: Java Web学习11---JavaBean、MVC、事务
 comments: true
-date: 2017-02-01 09:42:02
+date: 2016-09-29 09:42:02
 tags:
 	- Java
 	- 事务

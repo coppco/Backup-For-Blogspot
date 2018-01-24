@@ -2,7 +2,7 @@
 layout: post
 title: Java的第一个程序HelloWorld
 comments: true
-date: 2016-08-04 09:42:28
+date: 2016-05-04 09:42:28
 tags:
 	- Java
 ---

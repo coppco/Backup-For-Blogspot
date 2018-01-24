@@ -1,6 +1,6 @@
 layout: java
 title: Java Web学习04---jQuery_validate和BootStrap
-date: 2016-10-18 16:30:38
+date: 2016-07-18 16:30:38
 tags:
     - JavaScript
     - Java

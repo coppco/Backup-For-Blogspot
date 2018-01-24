@@ -2,7 +2,8 @@
 layout: post
 title: Java Web学习15---Linux
 comments: true
-date: 2017-02-25 09:04:52
+toc: true
+date: 2016-11-05 09:04:52
 tags:
 	- Java
 	- Linux
@@ -247,6 +248,12 @@ tar命令位于/bin目录下，它能够将用户所指定的文件或目录打�
 		* `-A行数`: 后面显示多少行
 		* `-B行数`: 前面显示多少行
 	* `grep url yum.conf --color -A4`: 在文件中查找符合条件的字符串, 高亮显示, 后面显示4行
+* 防火墙
+	* 永久开启8080端口: firewall-cmd --add-port=8080/tcp --zone=public --permanent
+	* 查询所有已经开启的端口: firewall-cmd --zone=public --list-ports
+	* 移除8080端口:firewall-cmd --permanent --zone=public --remove-port=8080/tcp
+	* 刷新防火墙使设置生效: firewall-cmd --reload
+	* 重启防火墙: sudo systemctl restart firewalld
 	
 ### <font color=orange> Vi和Vim编辑器 </font>
 在Linux下一般使用vi编辑器来编辑文件。vi既可以查看文件也可以编辑文件。默认系统没有安装 VIM ，你可以自己安装,<font color=red>在终端以root身份输入`yum install -y vim`等待安装完成即可</font>.

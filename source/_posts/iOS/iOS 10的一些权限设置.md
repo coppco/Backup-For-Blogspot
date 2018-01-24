@@ -3,7 +3,7 @@ title: iOS 10的一些权限设置
 date: 2016-09-18 09:00:33
 tags:
     - Xcode
-    - iOS 10
+    - iOS
     - Objective-C
     - Swift3.0
 ---

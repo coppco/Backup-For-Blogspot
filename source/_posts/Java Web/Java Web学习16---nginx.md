@@ -2,7 +2,8 @@
 layout: post
 title: Java Web学习16---nginx
 comments: true
-date: 2017-03-02 10:24:53
+toc: true
+date: 2016-11-13 10:24:53
 tags:
 	- RPM
 	- Java

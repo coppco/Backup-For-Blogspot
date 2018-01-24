@@ -2,7 +2,7 @@
 layout: post
 title: Java Web学习05---SQL语言、数据库和MySQL
 comments: true
-date: 2016-11-02 16:13:35
+date: 2016-08-02 16:13:35
 tags:
     - Java
     - MySQL

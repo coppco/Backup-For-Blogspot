@@ -2,7 +2,8 @@
 layout: post
 title: Java Web学习18---SSH之Hibernate
 comments: true
-date: 2017-03-30 11:42:54
+toc: true
+date: 2016-11-25 11:42:54
 tags:
 	- Java
 	- Hibernate

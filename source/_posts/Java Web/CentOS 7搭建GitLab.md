@@ -3,7 +3,7 @@ layout: post
 title: CentOS 7搭建GitLab
 comments: true
 toc: true
-date: 2017-07-07 17:06:02
+date: 2017-04-07 17:06:02
 tags:
 	- Java
 	- Linux
