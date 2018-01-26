@@ -40,6 +40,7 @@ tags:
 		* [1.4.3、------ 目录](#1.4.3) 
 * [2、------ hexo的一些命令](#2)
 * [3、------ 后记: 备份博客](#3)
+* [4、------ 后记: 发布到自己的域名](#4)
 
 <h1 id='1' style='color: orange'> 1、 Markdown的基本语法 </h1>
 <h2 id='1.1' style='color: green'> 1.1、 兼容HTML代码 </h2>
@@ -485,3 +486,57 @@ Mac下:
 
 备注: 详情参考这里---->[国内优秀npm镜像推荐及使用](http://riny.net/2014/cnpm/)
 第一次使用markdown写这个,还是比较生疏!
+
+<h1 id='4' style='color: orange'> 4、 博客后记: 发布到自己的域名 </h1>
+博客搭建好了之后, 我们可以通过`your username.github.io`来访问你的博客了.如果我们想发布到自己的域名中, 但是又不想自己买服务器, 可以将自己的域名解析到自己的github page.这样通过Github page或者自己的域名都访问博客.
+
+### 1、购买域名
+域名名称和注册商自己选择, 但是有一个坑点, 就是如果你选择的是`预释放域名`和`释放域名`, 有可能这个域名比尔已经拿来做坏事了, 所以GFW就拦截, 简单的讲就是被`墙`了.
+
+<font color=red>这里提供几个网站来查询域名或者IP是否被墙的检查网站</font>
+
+* [checkgfw: 目前国内无法访问](http://www.checkgfw.com)
+* [ym77: 目前国内可以访问](https://ym77.com/#08123)
+* [jianzhanfuwu: 目前国内可以访问](http://jianzhanfuwu.com)
+
+### 2、配置Github page
+* 2.1、在你的博客的github项目中----`setting`----`GitHub Pages`----`Custom domain`中填写你自己的域名.----`Save`
+	* 2.1.1、域名没有前缀`http://`, 可以带`www.`, 也可以没有.
+	* 2.2.2、github会自动帮我们跳转, 我们设置了`www.example.com`, 那么`example.com`会自定跳转到`www.example.com`, 反之亦然.
+* 2.2、做完这一步之后, 我们就会在项目的根目录中看到一个`CNAME`的文件, 里面的内容就是你刚刚填写的你域名.
+* 2.3、这样设置有一个弊端: 当我们每次运行`hexo d`的时候会把这个`CNAME`文件删除掉, 所以我们可以在自己的博客项目的`source/`下, 添加这个`CNAME`的文件.(注意名称必须一样, 大写,没有后缀名称)
+
+<center>
+<img src="http://oak4eha4y.bkt.clouddn.com/9590B1C2-2D11-471D-B2EC-E49B86920207.png" alt="hello" style="width: 80%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
+</center>
+
+### 3、解析域名到github page
+由于我的域名服务商是万网, 这里我就以万网的设置为例.
+* 3.1、首先我们登录阿里云, 在`控制台`----`域名`----`域名列表`中选择自己的域名----`解析`
+* 3.2 配置`CNAME`解析: 解析到一个域名
+<center>
+<img src="http://oak4eha4y.bkt.clouddn.com/cname1.png" alt="hello" style="width: 80%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
+</center>
+
+	* 3.2.1、主机记录, 一般我们配置`@`和`www`即可, 如果想访问其他二级域名也调到博客页面, 可以配置个`*`
+<center>
+<img src="http://oak4eha4y.bkt.clouddn.com/%E8%AE%B0%E5%BD%95.png" alt="hello" style="width: 50%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
+</center>
+
+* 3.3 配置`A`解析: 解析到一个IP地址
+	* 获取自己博客的地址: 运行`ping your username.github.io`
+	* 例如: `ping coppco.github.io`返回
+```
+64 bytes from 151.101.1.147: icmp_seq=0 ttl=51 time=188.671 ms
+64 bytes from 151.101.1.147: icmp_seq=1 ttl=51 time=190.510 ms
+64 bytes from 151.101.1.147: icmp_seq=2 ttl=51 time=250.248 ms
+64 bytes from 151.101.1.147: icmp_seq=3 ttl=51 time=181.147 ms
+64 bytes from 151.101.1.147: icmp_seq=4 ttl=51 time=183.807 ms
+```
+	* 那么你就可以使用A解析到`151.101.1.147`这个IP地址
+	* 主机记录也可以配置`CNAME`中的三个`@`、`www`和`*`
+
+### 参考文档
+[Using a custom domain with GitHub Pages](https://help.github.com/articles/using-a-custom-domain-with-github-pages/)
+
+
