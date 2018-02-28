@@ -100,10 +100,18 @@ SSM（Spring，Spring MVC，MyBatis）其中Spring是一个轻量级的控制反
   
 <servlet-mapping>
     <servlet-name>springMVC</servlet-name>
+    <!--可以设置
+        /         拦截所有(除了jsp)
+        /*        拦截所有(包含jsp)
+        *.action  拦截.action结尾
+    -->
     <url-pattern>*.action</url-pattern>
 </servlet-mapping>
 ```
-
+ * SpringMVC的url-pattern设置值有
+ 	* `/`: 拦截所有(除了jsp)
+ 	* `/*`: 拦截所有(包含jsp)
+ 	* `*.action`: 拦截.action结尾
 * 四、Controller类(SpringMVC可以使用注解开发)
 ```java
 
@@ -1048,7 +1056,7 @@ public class ItemController {
 
 ### <font color=orange> 直接在方法中获取传递的参数(简单类型) </font>
 简单参数类型, 名称必须和页面传递的名称一致,不一致可以通过`@RequestParam("xxx")`注解类重新命名
-此方法会出现乱码问题, 需要设置编码问题.
+此方法会出现乱码问题, 需要设置编码问题. <font color=red>传递简单类型, 如果不传递会报错, 使用包装类不传递则为null</font>
 ```java
 @Controller
 public class ItemController {
@@ -1058,6 +1066,8 @@ public class ItemController {
         //code
     }
 }
+//传递的参数是price 转成 price, required=true, 表示参数必须传递, 否则报错, defaultValue默认值
+@RequestParam(value="price", required=true, defaultValue="100") Float price11
 ```
 
 ### <font color=orange> 直接在方法中获取传递的Pojo对象 </font>
@@ -1411,4 +1421,67 @@ public class LoginInterceptor implements HandlerInterceptor {
         <bean class="com.coppco.interceptor.LoginInterceptor2"></bean>
     </mvc:interceptor>
 </mvc:interceptors>
+```
+
+## <font color=orange> Quartz实现定时任务调度 </font>
+### <font color=orange> Quartz框架</font>
+
+Quartz是一个开源你的作业调度框架, 它完全由Java开发, 它提供了巨大的灵活性而不牺牲简单性, 它可以创建一个简单的或复杂的调度.
+* Job: 表示一个任务(工作), 要执行的具体内容
+* JobDetail: 表示一个具体的可执行的调度程序, Job是这个可执行调度程序所执行的内容.
+* Trigger: 表示一个调度参数的配置, 什么时候去调
+* Scheduler: 表示一个调度容器, 一个调度容器可以注册多个JobDetail和Trigger.
+
+### <font color=orange> 测试Quartz </font>
+
+#### <font color=orange> 一、引入Quertz框架 </font>
+
+```xml
+<dependency>
+    <groupId>org.quartz-scheduler</groupId>
+    <artifactId>quartz</artifactId>
+    <version>2.2.3</version>
+</dependency>
+```
+
+#### <font color=orange> 二、编写Job类 </font>
+
+```java
+public class JobTest {
+    public void execute() {
+    	System.out.println("执行了调度");
+    }
+}
+```
+#### <font color=orange> 三、编写配置文件 </font>
+* 创建spring配置文件`applicationContext-job.xml`
+
+```xml
+<!--定义任务类-->
+<bean id="jobBean" class="com.coppco.job.JobTest" />
+
+<!--任务描述-->
+<bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    <property name="targetObject" ref="jobBean" />
+    <property name="targetMethod" ref="execute" />
+</bean>
+<!--触发器-->
+<bean id="mailTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <property name="jobDetail" ref="jobDetail" />
+    <!--每10秒执行一次-->
+    <property name="cronExpression" value="0/10 * * * * ?"/>
+</bean>
+
+<!--总管理容器-->
+<bean id="startQuartz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="triggers">
+        <list>
+            <ref bean="mailTrigger" />
+        </lsit>
+    </property>
+</bean>
+```
+* 并在主配置文件中引入
+```xml
+<import resource="classpath*:applicationContext-job.xml"/>
 ```

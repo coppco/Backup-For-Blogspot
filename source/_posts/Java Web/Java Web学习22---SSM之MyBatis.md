@@ -880,3 +880,123 @@ public class MyTest {
 
 ## <font color=orange> MyBatis之逆向工程 </font>
 使用MyBatis的逆向工程可以自动生成Mapper接口和Sql映射文件.
+
+### <font color=orange> 1、导入相关jar包 </font>
+* log4j-1.2.16.jar
+* mybatis-3.2.3.jar
+* mybatis-generator-core-1.3.2.jar
+* mysql-connector-java-5.1.28.jar
+### <font color=orange> 2、log4j.propertiesl </font>
+```xml
+log4j.rootLogger=DEBUG, Console
+#Console
+log4j.appender.Console=org.apache.log4j.ConsoleAppender
+log4j.appender.Console.layout=org.apache.log4j.PatternLayout
+log4j.appender.Console.layout.ConversionPattern=%d [%t] %-5p [%c] - %m%n
+log4j.logger.java.sql.ResultSet=INFO
+log4j.logger.org.apache=INFO
+log4j.logger.java.sql.Connection=DEBUG
+log4j.logger.java.sql.Statement=DEBUG
+log4j.logger.java.sql.PreparedStatement=DEBUG
+```
+### <font color=orange> 3、配置generatorConfig.xml </font>
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="testTables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/taotao" userId="root"
+                        password="123456">
+        </jdbcConnection>
+        <!-- <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
+            connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:yycg"
+            userId="yycg"
+            password="yycg">
+        </jdbcConnection> -->
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
+            NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- targetProject:生成PO类的位置, targetProject: 存放生成文件的目录  -->
+        <javaModelGenerator targetPackage="com.coppco.po"
+                            targetProject="./src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- targetProject:mapper映射文件生成的位置 -->
+        <sqlMapGenerator targetPackage="com.coppco.mapper"
+                         targetProject="./src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <!-- targetPackage：mapper接口生成的位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.coppco.mapper"
+                             targetProject="./src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+        <!-- 指定数据库表 -->
+        <table schema="" tableName="user">
+            //重新命名
+            <columnOverride column="create_time" property="createTime" />
+		 </table>
+        <table schema="" tableName="tb_content_category"></table>
+        <table schema="" tableName="tb_item"></table>
+        <table schema="" tableName="tb_item_cat"></table>
+        <table schema="" tableName="tb_item_desc"></table>
+        <table schema="" tableName="tb_item_param"></table>
+        <table schema="" tableName="tb_item_param_item"></table>
+        <table schema="" tableName="tb_order"></table>
+        <table schema="" tableName="tb_order_item"></table>
+        <table schema="" tableName="tb_order_shipping"></table>
+        <table schema="" tableName="tb_user"></table>
+        <!-- 有些表的字段需要指定java类型
+         <table schema="" tableName="">
+            <columnOverride column="" javaType="" />
+        </table> -->
+    </context>
+</generatorConfiguration>
+
+```
+### <font color=orange> 4、生成mapper文件和接口 </font>
+```java
+Public static void main(String[] args) throws Exception {
+    try {
+        List<String> warnings = new ArrayList<String>();
+            boolean overwrite = true;
+            File configFile = new File("generatorConfig.xml"); 
+            ConfigurationParser cp = new ConfigurationParser(warnings);
+            Configuration config = cp.parseConfiguration(configFile);
+            DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+            MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config,callback, warnings);
+            myBatisGenerator.generate(null);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+```
+### <font color=orange> 注意事项 </font>
+* Mapper文件内容不覆盖而是追加
+	* mapper.xml文件存在时会追加在文件后面, 需要删除文件后重新运行
+* Table schema问题
+Schma即数据库模式，oracle中一个用户对应一个schema，可以理解为用户就是schema。
+当Oralce数据库存在多个schema可以访问相同的表名时，使用mybatis生成该表的mapper.xml将会出现mapper.xml内容重复的问题，结果导致mybatis解析错误。
+解决方法：在table中填写schema，如下：
+`<table schema="XXXX" tableName=" " >`
+XXXX即为一个schema的名称，生成后将mapper.xml的schema前缀批量去掉，如果不去掉当oracle用户变更了sql语句将查询失败。
+快捷操作方式：mapper.xml文件中批量替换：“from XXXX.”为空
+
+Oracle查询对象的schema可从dba_objects中查询，如下：
+`select * from dba_objects`

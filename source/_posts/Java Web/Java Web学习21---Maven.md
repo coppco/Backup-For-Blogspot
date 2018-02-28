@@ -107,28 +107,13 @@ Maven项目管理所依赖的jar包不需要手动向工程添加jar包，只需
 * 添加下面的内容
 ```xml
 <!-- 阿里云仓库 -->
-        <mirror>
-            <id>alimaven</id>
-            <mirrorOf>central</mirrorOf>
-            <name>aliyun maven</name>
-            <url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
-        </mirror>
-        
-        <!-- 中央仓库1 -->
-        <mirror>
-            <id>repo1</id>
-            <mirrorOf>central</mirrorOf>
-            <name>Human Readable Name for this Mirror.</name>
-            <url>http://repo1.maven.org/maven2/</url>
-        </mirror>
-        
-        <!-- 中央仓库2 -->
-        <mirror>
-            <id>repo2</id>
-            <mirrorOf>central</mirrorOf>
-            <name>Human Readable Name for this Mirror.</name>
-            <url>http://repo2.maven.org/maven2/</url>
-        </mirror>    
+<mirror>
+    <id>nexus-aliyun</id>
+    <mirrorOf>*</mirrorOf>
+    <name>Nexus aliyun</name>
+    <!--使用那个public的地址, 导致Intellij IDEA中更新索引失败-->
+    <url>http://maven.aliyun.com/nexus/content/repositories/central</url>
+</mirror>   
 ```
 * 字段说明
 	* id，name：镜像的唯一标识和用户友好的名称；
