@@ -1172,7 +1172,9 @@ public class GlobalStringToDateConverter implements Converter<String, Date> {
 可以通过Vo类来接受参数, 私有一个数组或者List属性, input的name是数组的名称或者list的名称[index].属性即可.
 
 ## <font color=orange> 解决SpringMVC编码问题 </font>
+
 ### <font color=green> Post请求 </font>
+
 在`web.xml`中配置过滤器: 
 ```xml
 <filter>
@@ -1198,6 +1200,15 @@ public class GlobalStringToDateConverter implements Converter<String, Date> {
 String userName = new 
 String(request.getParamter("userName").getBytes("ISO8859-1"),"utf-8")
 ```
+
+## <font color=orange> springMVC资源映射 </font>
+我们配置拦截`/`, 拦截除了jsp的所有请求, 但是一些资源文件例如css和js会放在`src/main/resources`中也会拦截, 所以需要在springmvc的配置文件中配置`资源映射`:
+```xml
+<!--配置资源映射-->
+<mvc:resources location="/css/" mapping="/css/**"/>
+<mvc:resources location="/js/" mapping="/js/**"/>
+```
+
 ## <font color=orange> @RequestMapper注解的使用 </font>
 
 ### <font color=orange> URL路径映射 </font>

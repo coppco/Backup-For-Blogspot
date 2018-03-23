@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 使自己的Github项目支持Cocoapods
+title: 使自己的Github项目支持Cocoapods以及私有远程Repo仓库
 comments: true
 toc: true
 date: 2017-08-12 17:27:17
@@ -16,6 +16,8 @@ tags:
 <img src="http://oak4eha4y.bkt.clouddn.com/github_cocoapods.jpg" alt="hello" style="width: 50%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
 <!--more-->
 
+# <font color=orange>项目支持Cocoapods</font>
+这里演示的是Githu项目, 可以视自己的情况时有Coding、开源中国等Git服务器.
 ## 准备(安装Cocoapods和注册trunk)
 现在Cocoapods使用trunk方式, 并且需要版本在0.33以上.
 
@@ -57,7 +59,7 @@ Pod::Spec.new do |s|
 # 名称 使用的时候pod search [name]
 s.name = "WhatKeyboard"
 
-# 代码库的版本
+# 代码库的版本, 需要和代码仓库中的tag值一致
 s.version = "1.0.0"
 
 # 简介
@@ -85,7 +87,7 @@ s.platform = :ios, "7.0"
 # 代码的Clone 地址 和 tag 版本
 s.source = { :git => "https://github.com/coppco/WhatKeyboard.git", :tag => "#{s.version}" }
 
-#新建目录
+#新建目录, 如果有多个表示可以分库, 引入时也可以单独引入分库
 s.default_subspec = 'Core'
 
 s.subspec 'Core' do |ss|
@@ -116,7 +118,10 @@ end
 ```
 * 验证配置文件是否正确
 ```
-pod lib lint
+#本地验证
+pod lib lint xxx.podspec
+#远程验证
+pod spec lint xxx.podspec
 ```
 如果提示`WhatKeyboard passed validation`, 即表示正确.
 
@@ -170,3 +175,95 @@ Cocoapods是根据仓库中的tag值进行安装的, 所以必须打tag, `.podsp
 ```
 pod trunk delete WhatKeyboard 1.0.0
 ```
+
+# <font color=orange>搭建远程私有Repo库</font>
+
+有时候公司有多个项目, 每个项目都用到相同的组件, 但是我们又不希望开源这些组件, 我们可以创建私有远程Repo库, 它有点类似于Maven私服.
+
+* 1、创建一个远程私有Spec库, 可以在远程的git服务器上
+* 2、将远程私有Spec库的git地址加入repo, 注意修改xxx名称
+```
+pod repo add xxx 远程私有repo的git地址
+```
+	* 执行完之后会在`/Users/用户名/.cocoapods/repos/`下会生成`xxx`文件夹.
+		* 验证是否正确: 在`/Users/用户名/.cocoapods/repos/xxx`目录下运行: 
+```
+pod repo lint .
+```
+		* 如果出现`All the specs passed validation.`即表示添加成功.
+		* 显示本地repo列表: `pod repo list`
+		* 删除本地私有repo: `pod repo remove xxx`
+		* 更新某个repo: `pod repo update xxx`
+* 3、创建一个代码git仓库, 并克隆到本地, 然后在代码仓库中运行
+```
+pod spec create 你的项目名
+```
+	* 修改`你的项目名.podspec`文件, 根据实际情况修改
+```
+Pod::Spec.new do |s|
+    #搜索时名称
+    s.name                = 'WhatKeyboard'
+    #tag值
+    s.version             = '1.1.2'
+    #描述
+    s.summary          = '自定义密码输入键盘'
+    #主页
+    s.homepage         = 'https://github.com/coppco/WhatKeyboard'
+    #开源协议
+    s.license              = 'MIT'
+    #作者和邮箱
+    s.author               = { 'coppco' => 'coppco@qq.com' }      
+    #支持的系统和最低版本
+    s.platform           = :ios, '7.1'
+    #git地址和tag值
+    s.source               = { :git => 'https://github.com/coppco/WhatKeyboard.git', :tag => s.version}
+    #默认目录
+    s.default_subspec = 'Core'
+    #分目录
+    s.subspec 'Core' do |ss|
+        #代码路径
+        ss.source_files = 'WhatKeyboard-master/*.{h,m}'
+    end
+    #资源路径
+    s.resources           = 'WhatKeyboard-master/*.{xib,storyboard,nib,bundle}'
+    #是否ARC
+    s.requires_arc      = true
+    #依赖的其他库
+    #s.dependency  'AFNetworking','3.1.0'
+end
+```
+* 4、验证你的podspec文件
+	* 本地验证
+```
+pod lib lint 项目名.podspec --verbose --use-libraries --allow-warnings
+```
+	* 远程验证
+```
+pod spec lint 项目名.podspec --verbose --use-libraries --allow-warnings
+```
+	* `--verbose`: 查看详细的验证过程
+	* `--use-libraries`: 如果你的库使用了静态库或者引用的三方库使用了静态库, 验证无法通过
+	* `--allow-warnings`: 允许警告
+* 5、推送podspec文件到远程私有Cocoapods库
+```
+#名字xx必须和第二步名字一样
+pod repo push xxx spec文件名称.podspec
+```
+	* 推送成功之后, 远程的repo仓库会添加`/spec文件名称/tag/spec文件名称.podspec`文件夹和文件.
+* 6、修改工程podfile文件, 引入远程私有repo库的git地址
+```
+source 'https://xxx.xxx.xxx/xxx/xxx.git
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '9.0'
+
+target 'Example' do
+	pod 'xxx'
+end
+
+```
+* 7、后期更新远程私有repo
+	* 代码仓库打tag, 并推送到远程代码库
+	* 修改podspec文件, 将`s.version`改为代码仓库的tag值
+	* 验证podspec文件
+	* podspec文件验证通过, 更新本地远程私有仓库

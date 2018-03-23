@@ -7,6 +7,7 @@ date: 2017-01-13 11:52:55
 tags:
 	- Java
 	- Redis
+	- 策略模式
 ---
 
 Redis是用C语言开发的一个开源的高性能键值对（key-value）数据库。它通过提供多种键值数据类型来适应不同场景下的存储需求，目前为止Redis支持的键值数据类型如下：
@@ -66,9 +67,9 @@ Redis的应用场景:
 [官网下载地址](http://download.Redis.io/releases/), 这里我们使用3.0版本进行安装.
 一个Redis进程就是一个Redis实例，一台服务器可以同时有多个Redis实例，不同的Redis实例提供不同的服务端口对外提供服务，每个Redis实例之间互相影响。每个Redis实例都包括自己的数据库，数据库中可以存储自己的数据。一个Redis实例最多可提供16个数据库，下标从0到15，客户端默认连接第0号数据库，也可以通过select选择连接哪个数据库. 
 * 下载
-	* 运行: `wget http://download.Redis.io/releases/Redis-3.0.0.tar.gz`
+	* redis: `wget http://download.Redis.io/releases/Redis-3.0.0.tar.gz`
 * 解压
-	* 运行: `tar -zxvf Redis-3.0.0.tar.gz`
+	* 解压: `tar -zxvf Redis-3.0.0.tar.gz`
 * 安装
 	* 指定目录安装
 		* 创建安装目录: `mkdir -p /usr/local/Redis`
@@ -116,11 +117,11 @@ Redis不仅是使用命令来操作，现在基本上主流的语言都有客户
 Linux服务器中如果已经安装好Redis服务, 并已经启动, 如果Linux有防火墙, 需要先开启Redis端口, 默认: `6379`
 * 开启防火墙
 
->	永久开启8080端口: firewall-cmd --add-port=8080/tcp --zone=public --permanent
-	查询所有已经开启的端口: firewall-cmd --zone=public --list-ports
-	移除8080端口:firewall-cmd --permanent --zone=public --remove-port=8080/tcp
-	刷新防火墙使设置生效: firewall-cmd --reload
-	重启防火墙: sudo systemctl restart firewalld
+>	永久开启8080端口: `firewall-cmd --add-port=8080/tcp --zone=public --permanent`
+	查询所有已经开启的端口: `firewall-cmd --zone=public --list-ports`
+	移除8080端口:`firewall-cmd --permanent --zone=public --remove-port=8080/tcp`
+	刷新防火墙使设置生效: `firewall-cmd --reload`
+	重启防火墙: `sudo systemctl restart firewalld`
 
 * Maven: 
 ```xml
@@ -191,7 +192,7 @@ public class JedisTest {
 
         Jedis jedis = pool.getResource();
 
-        jedis.set("name", "向弘杰");
+        jedis.set("name", "JedisPool");
 
         System.out.println(jedis.get("name"));
 
@@ -357,11 +358,16 @@ save 60 10000
 * 存储速度快
 * 服务器断电会造成数据丢失(数据完整性不能保证)
 
-###<font color=orange> AOF持久化 </font>
+### <font color=orange> AOF持久化 </font>
+
 默认情况下Redis没有开启AOF（append only file）方式的持久化，可以通过appendonly参数开启：
+```
 appendonly yes
-开启AOF持久化后每执行一条会更改Redis中的数据的命令，Redis就会将该命令写入硬
-盘中的AOF文件。AOF文件的保存位置和RDB文件的位置相同，都是通过dir参数设置的，默认的文件名是appendonly.aof，可以通过appendfilename参数修改：appendfilename appendonly.aof
+```
+开启AOF持久化后每执行一条会更改Redis中的数据的命令，Redis就会将该命令写入硬盘中的AOF文件。AOF文件的保存位置和RDB文件的位置相同，都是通过dir参数设置的，默认的文件名是appendonly.aof，可以通过appendfilename参数修改：
+```
+appendfilename appendonly.aof
+```
 
 * 持久化良好, 能保证数据的完整性
 * 大大降低了redis的
@@ -382,4 +388,480 @@ appendonly yes
 ```
 #该redis对应的主redis服务器是192.168.1.111 端口是6379
 slaveof 192.168.1.111 6379
+```
+
+## <font color=orange> Redis集群 </font>
+
+### <font color=orange> 集群特点 </font>
+* 1、所有的redis节点彼此互联(PING-PONG机制),内部使用二进制协议优化传输速度和带宽.
+* 2、节点的fail是通过集群中超过半数的节点检测失效时才生效(所以集群数量最好是奇数).
+* 3、客户端与redis节点直连,不需要中间proxy层.客户端不需要连接集群所有节点,连接集群中任何一个可用节点即可
+* 4、redis-cluster把所有的物理节点映射到[0-16383]slot上,cluster 负责维护node<->slot<->value之间的存储. Redis 集群中内置了 16384 个哈希槽，当需要在 Redis 集群中放置一个 key-value 时，redis 先对 key 使用 crc16 算法算出一个结果，然后把结果对 16384 求余数，这样每个 key 都会对应一个编号在 0-16383 之间的哈希槽，redis会根据节点数量大致均等的将哈希槽映射到不同的节点.
+
+### <font color=orange> Redis集群的搭建</font>
+Redis集群中至少应该有三个节点。要保证集群的高可用，需要每个节点有一个备份机。Redis集群至少需要6台服务器。
+
+#### <font color=orange> 搭建redis实例 </font>
+注意需要开启Redis配置文件`redis.config`中的集群设置
+```
+ cluster-enabled yes
+```
+还需要开启对应Redis服务器的对应端口.
+```
+#开启redis默认6379端口
+firewall-cmd --add-port=6379/tcp --zone=public --permanent
+#刷新防火墙并生效
+firewall-cmd --reload
+```
+
+然后启动每个实例
+```
+cd redis安装目录
+./redis-server redis.conf
+```
+
+#### <font color=orange> 集群搭建环境 </font>
+* 使用ruby脚本搭建集群。需要ruby的运行环境。
+```
+yum install ruby
+yum install rubygems
+```
+* 安装ruby脚本运行使用的包
+```
+wget https://rubygems.global.ssl.fastly.net/gems/redis-3.0.0.gem
+gem install redis-3.0.0.gem 
+```
+* 在redis的`源码/src/redis-trib.rb`这个就是搭建redis集群的脚本, 使用ruby脚本搭建集群
+```
+./redis-trib.rb create --replicas 1 xxx.xxx.xxx.xxx:6379 xxx.xxx.xxx.xxx:6379 xxx.xxx.xxx.xxx:6379 xxx.xxx.xxx.xxx:6379 xxx.xxx.xxx.xxx:6379 xxx.xxx.xxx.xxx:6379
+```
+#### <font color=orange> 连接集群</font>
+```
+#-c：代表连接的是redis集群
+Redis-cli [-h host] [-p port] -c
+```
+
+### <font color=orange> 使用Jedis测试 </font>
+* spring配置文件
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+    <!-- Redis连接池配置 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!-- 最大连接数 -->
+        <property name="maxTotal" value="30" />
+        <!-- 最大空闲连接数 -->
+        <property name="maxIdle" value="10" />
+        <!-- 每次释放连接的最大数目 -->
+        <property name="numTestsPerEvictionRun" value="1024" />
+        <!-- 释放连接的扫描间隔（毫秒） -->
+        <property name="timeBetweenEvictionRunsMillis" value="30000" />
+        <!-- 连接最小空闲时间 -->
+        <property name="minEvictableIdleTimeMillis" value="1800000" />
+        <!-- 连接空闲多久后释放, 当空闲时间>该值 且 空闲连接>最大空闲连接数 时直接释放 -->
+        <property name="softMinEvictableIdleTimeMillis" value="10000" />
+        <!-- 获取连接时的最大等待毫秒数,小于零:阻塞不确定的时间,默认-1 -->
+        <property name="maxWaitMillis" value="1500" />
+        <!-- 在获取连接的时候检查有效性, 默认false -->
+        <property name="testOnBorrow" value="true" />
+        <!-- 在空闲时检查有效性, 默认false -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true -->
+        <property name="blockWhenExhausted" value="false" />
+    </bean>
+
+    <!--Redis集群版-->
+    <bean id="jedisCluster" class="redis.clients.jedis.JedisCluster">
+        <constructor-arg>
+            <set>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.1.181"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.1.182"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.1.183"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.1.184"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.1.185"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.1.186"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+            </set>
+        </constructor-arg>
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
+    </bean>
+</beans>
+```
+* 测试类
+```java
+package com.coppco.test;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import redis.clients.jedis.HostAndPort;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisCluster;
+import redis.clients.jedis.JedisPool;
+
+import javax.annotation.Resource;
+import java.util.HashSet;
+import java.util.Set;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:applicationContext-dao.xml")
+public class TestJedis {
+	
+    @Resource
+    private JedisCluster jedisCluster;
+
+    /**
+     * 测试直接连接
+     */ 
+    @Test
+    public void testJedisCluster() {
+        //创建Cluster对象, 构造参数是Set类型, 每个元素是HostAndPort类型
+        Set<HostAndPort> hostAndPorts = new HashSet<>();
+        hostAndPorts.add(new HostAndPort("192.168.1.181", 6379));
+        hostAndPorts.add(new HostAndPort("192.168.1.182", 6379));
+        hostAndPorts.add(new HostAndPort("192.168.1.183", 6379));
+        hostAndPorts.add(new HostAndPort("192.168.1.184", 6379));
+        hostAndPorts.add(new HostAndPort("192.168.1.185", 6379));
+        hostAndPorts.add(new HostAndPort("192.168.1.186", 6379));
+        JedisCluster cluster = new JedisCluster(hostAndPorts);
+        //直接使用JedisCluster操作redis, 自带连接池, JedisCluster对象可以是单例
+
+        cluster.set("name", "集群");
+
+        System.out.println(cluster.get("name"));
+        cluster.close();
+    }
+    
+    /**
+     * 测试通过spring连接
+     */ 
+    @Test
+    public void testJedisClusterSpring() {
+        jedisCluster.set("name", "jedisCluster");
+        System.out.println(jedisCluster.get("name"));
+    }
+}
+```
+
+## <font color=orange> 策略模式 </font>
+实际项目中, 无可避免的使用到单机版和集群的Redis, 这就需要我们来回切换单机版和集群版的Redis, 如果每次更换代码, 风险比较大.我们可以使用策略模式.
+### <font color=orange> 策略模式定义 </font>
+策略模式是指对一系列的算法定义，并将每一个算法封装起来，而且使它们还可以相互替换。策略模式让算法独立于使用它的客户而独立变化。
+* 它的组成
+	* 一个抽象类
+	* 具体的实现类
+	* 一个抽象类的引用, 给客户端使用
+
+### <font color=orange> JedisClient的使用 </font>
+#### <font color=orange> 抽象类 </font>
+```java
+package com.coppco.jedis;
+
+public interface JedisClient {
+	String set(String key, String value);
+	String get(String key);
+	Boolean exists(String key);
+	Long expire(String key, int seconds);
+	Long ttl(String key);
+	Long incr(String key);
+	Long hset(String key, String field, String value);
+	String hget(String key, String field);
+	Long hdel(String key, String... field);
+}
+```
+#### <font color=orange> 单机版 </font>
+* spring配置文件`applicationContent.xml`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+    <!--注解扫描器-->
+    <context:component-scan/>
+    <!-- Redis连接池配置 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!-- 最大连接数 -->
+        <property name="maxTotal" value="30" />
+        <!-- 最大空闲连接数 -->
+        <property name="maxIdle" value="10" />
+        <!-- 每次释放连接的最大数目 -->
+        <property name="numTestsPerEvictionRun" value="1024" />
+        <!-- 释放连接的扫描间隔（毫秒） -->
+        <property name="timeBetweenEvictionRunsMillis" value="30000" />
+        <!-- 连接最小空闲时间 -->
+        <property name="minEvictableIdleTimeMillis" value="1800000" />
+        <!-- 连接空闲多久后释放, 当空闲时间>该值 且 空闲连接>最大空闲连接数 时直接释放 -->
+        <property name="softMinEvictableIdleTimeMillis" value="10000" />
+        <!-- 获取连接时的最大等待毫秒数,小于零:阻塞不确定的时间,默认-1 -->
+        <property name="maxWaitMillis" value="1500" />
+        <!-- 在获取连接的时候检查有效性, 默认false -->
+        <property name="testOnBorrow" value="true" />
+        <!-- 在空闲时检查有效性, 默认false -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true -->
+        <property name="blockWhenExhausted" value="false" />
+    </bean>
+
+    <!-- Redis单机(非集群) 通过连接池 -->
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="close">
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
+        <constructor-arg name="host" value="192.168.1.184"/>
+        <constructor-arg name="port" value="6379"/>
+    </bean>
+</beans>
+    <bean id="jedisClientPool" class="com.coppco.jedis.JedisClientPool"/>
+```
+* 实现类
+```java
+package com.coppco.jedis;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+
+public class JedisClientPool implements JedisClient {
+	
+	@Autowired
+	private JedisPool jedisPool;
+
+	@Override
+	public String set(String key, String value) {
+		Jedis jedis = jedisPool.getResource();
+		String result = jedis.set(key, value);
+		jedis.close();
+		return result;
+	}
+
+	@Override
+	public String get(String key) {
+		Jedis jedis = jedisPool.getResource();
+		String result = jedis.get(key);
+		jedis.close();
+		return result;
+	}
+
+	@Override
+	public Boolean exists(String key) {
+		Jedis jedis = jedisPool.getResource();
+		Boolean result = jedis.exists(key);
+		jedis.close();
+		return result;
+	}
+
+	@Override
+	public Long expire(String key, int seconds) {
+		Jedis jedis = jedisPool.getResource();
+		Long result = jedis.expire(key, seconds);
+		jedis.close();
+		return result;
+	}
+
+	@Override
+	public Long ttl(String key) {
+		Jedis jedis = jedisPool.getResource();
+		Long result = jedis.ttl(key);
+		jedis.close();
+		return result;
+	}
+
+	@Override
+	public Long incr(String key) {
+		Jedis jedis = jedisPool.getResource();
+		Long result = jedis.incr(key);
+		jedis.close();
+		return result;
+	}
+
+	@Override
+	public Long hset(String key, String field, String value) {
+		Jedis jedis = jedisPool.getResource();
+		Long result = jedis.hset(key, field, value);
+		jedis.close();
+		return result;
+	}
+
+	@Override
+	public String hget(String key, String field) {
+		Jedis jedis = jedisPool.getResource();
+		String result = jedis.hget(key, field);
+		jedis.close();
+		return result;
+	}
+
+	@Override
+	public Long hdel(String key, String... field) {
+		Jedis jedis = jedisPool.getResource();
+		Long result = jedis.hdel(key, field);
+		jedis.close();
+		return result;
+	}
+
+}
+```
+#### <font color=orange> 集群版 </font>
+* spring配置文件`applicationContent.xml`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+    <!--注解扫描器-->
+    <context:component-scan/>
+    <!-- Redis连接池配置 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!-- 最大连接数 -->
+        <property name="maxTotal" value="30" />
+        <!-- 最大空闲连接数 -->
+        <property name="maxIdle" value="10" />
+        <!-- 每次释放连接的最大数目 -->
+        <property name="numTestsPerEvictionRun" value="1024" />
+        <!-- 释放连接的扫描间隔（毫秒） -->
+        <property name="timeBetweenEvictionRunsMillis" value="30000" />
+        <!-- 连接最小空闲时间 -->
+        <property name="minEvictableIdleTimeMillis" value="1800000" />
+        <!-- 连接空闲多久后释放, 当空闲时间>该值 且 空闲连接>最大空闲连接数 时直接释放 -->
+        <property name="softMinEvictableIdleTimeMillis" value="10000" />
+        <!-- 获取连接时的最大等待毫秒数,小于零:阻塞不确定的时间,默认-1 -->
+        <property name="maxWaitMillis" value="1500" />
+        <!-- 在获取连接的时候检查有效性, 默认false -->
+        <property name="testOnBorrow" value="true" />
+        <!-- 在空闲时检查有效性, 默认false -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true -->
+        <property name="blockWhenExhausted" value="false" />
+    </bean>
+
+    <!--Redis集群版-->
+    <bean id="jedisCluster" class="redis.clients.jedis.JedisCluster">
+        <constructor-arg name="nodes">
+            <set>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.1.181"/>
+                    <constructor-arg name="port" value="6397"/>
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.1.182"/>
+                    <constructor-arg name="port" value="6397"/>
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.1.183"/>
+                    <constructor-arg name="port" value="6397"/>
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.1.184"/>
+                    <constructor-arg name="port" value="6397"/>
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.1.185"/>
+                    <constructor-arg name="port" value="6397"/>
+                </bean>
+                <bean class="redis.clients.jedis.HostAndPort">
+                    <constructor-arg name="host" value="192.168.1.186"/>
+                    <constructor-arg name="port" value="6397"/>
+                </bean>
+            </set>
+        </constructor-arg>
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
+    </bean>
+    <bean id="jedisClientCluster" class="com.coppco.jedis.JedisClientCluster"/>
+</beans>
+
+```
+* 实现类
+```java
+package com.coppco.jedis;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import redis.clients.jedis.JedisCluster;
+
+public class JedisClientCluster implements JedisClient {
+	
+	@Autowired
+	private JedisCluster jedisCluster;
+
+	@Override
+	public String set(String key, String value) {
+		return jedisCluster.set(key, value);
+	}
+
+	@Override
+	public String get(String key) {
+		return jedisCluster.get(key);
+	}
+
+	@Override
+	public Boolean exists(String key) {
+		return jedisCluster.exists(key);
+	}
+
+	@Override
+	public Long expire(String key, int seconds) {
+		return jedisCluster.expire(key, seconds);
+	}
+
+	@Override
+	public Long ttl(String key) {
+		return jedisCluster.ttl(key);
+	}
+
+	@Override
+	public Long incr(String key) {
+		return jedisCluster.incr(key);
+	}
+
+	@Override
+	public Long hset(String key, String field, String value) {
+		return jedisCluster.hset(key, field, value);
+	}
+
+	@Override
+	public String hget(String key, String field) {
+		return jedisCluster.hget(key, field);
+	}
+
+	@Override
+	public Long hdel(String key, String... field) {
+		return jedisCluster.hdel(key, field);
+	}
+}
 ```

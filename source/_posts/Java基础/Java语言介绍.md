@@ -42,6 +42,33 @@ tags:
 # <font color=orange>JDK、JRE的下载</font>
 [官网下载地址](https://www.oracle.com/downloads/index.html)
 
+# <font color=orange> Linux安装JDK </font>
+
+* 检查是否安装了JDK
+	* `java -version`: 如果未找到命令, 那么就没有安装, 有版本信息那么久已经安装了
+* 查看安装了哪些JDK版本
+	* `rpm -qa | grep java`
+* 卸载JDK
+	* `rpm -e --nodeps 卸载的包`: `-e`是卸载, `--nodeps`是不验证软件包的依赖关系
+* 安装JDK(tar.gz压缩包), 如果是rpm包直接运行`rpm -ivh rpm包`即可, rpm包默认安装在`/usr/java`目录下
+	* 1、通过scp命令把文件传递到Linux服务器: `scp 文件路径 用户名@服务器ip地址:路径`, 输入密码后即可开始传递
+	* 2、先把文件拷贝到`/usr/local/java`目录下
+	* 3、解压tar压缩包: `tar -xvf tar包名`
+	* 4、安装插件: `yum install glibc.i686`
+	* 5、配置环境变量
+		* 5.1、编辑`/etc/profile`文件, 运行`vi /etc/profile`命令
+		* 5.2、在末尾添加一下内容
+		>	#set java environment
+		#JAVA_HOME后面是你的JDK安装路径, 路径和版本不一样可能不同
+		JAVA_HOME=/usr/local/java/jdk1.7.0_72
+		CLASSPATH=.:$JAVA_HOME/lib.tools.jar
+		PATH=$JAVA_HOME/bin:$PATH
+		export JAVA_HOME CLASSPATH PATH
+		* 5.3、使更改的配置立即生效: `source /etc/profile`
+	* 6、运行: `java -version`如果可以看到版本信息即可
+		* `echo ＄JAVA_HOME`: 查看JAVA_HOME环境变量
+		* `echo ＄CLASSPATH`: 查看CLASSPATH环境变量
+		* `echo ＄PATH`: 查看PATH环境变量
 
 # <font color=orange>Java开发工具</font>
 * notepad    window系统记事本

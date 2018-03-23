@@ -971,6 +971,7 @@ log4j.logger.java.sql.PreparedStatement=DEBUG
 
 ```
 ### <font color=orange> 4、生成mapper文件和接口 </font>
+* 可以通过Java代码的方式生成
 ```java
 Public static void main(String[] args) throws Exception {
     try {
@@ -987,6 +988,46 @@ Public static void main(String[] args) throws Exception {
     }
 }
 ```
+* 也可以通过Maven插件来生成
+	* 添加插件的pom信息
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-maven-plugin</artifactId>
+            <version>1.3.3</version>
+            <configuration>
+                <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
+                    <verbose>true</verbose>
+                    <overwrite>true</overwrite>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>Generate MyBatis Artifacts</id>
+                    <goals>
+                        <goal>generate</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <dependencies>
+                <dependency>
+                    <groupId>org.mybatis.generator</groupId>
+                    <artifactId>mybatis-generator-core</artifactId>
+                    <version>1.3.3</version>
+                </dependency>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>5.1.35</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </plugin>
+    </plugins>
+</build>
+```
+	* 双击Plugins中的`mybatis-generator:generate`即可
 ### <font color=orange> 注意事项 </font>
 * Mapper文件内容不覆盖而是追加
 	* mapper.xml文件存在时会追加在文件后面, 需要删除文件后重新运行

@@ -311,3 +311,82 @@ find / -name gitlab|xargs rm -rf
 ### <font color=orange>项目的git地址不对问题</font>
 * 运行: `vi /var/opt/gitlab/gitlab-rails/etc/gitlab.yml`
 * 修改里面的host地址为服务器ip地址
+
+## <font color=orange>配置SSH</font>
+
+### <font color=orange>Mac新建SSH</font>
+1、在终端运行下面的命令: 注意邮箱换成你自己的邮箱
+```
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+```
+2、会让你输入SSH的存储地方以及安全密钥, 我们使用默认好了, 直接回车下一步
+3、最后会在`/Users/你的用户名/.ssh`下生成`id_rsa`、`id_rsa.public`
+4、如果你之前运行过上面的命令, 该目录中会存在上诉文件, 可以直接使用`id_rsa.public`中的内容
+
+### <font color=orange>Window新建SSH</font>
+1、安装git, Open Git Bash, 运行下面的命令: 注意邮箱换成你自己的邮箱
+```
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+```
+2、会让你输入SSH的存储地方以及安全密钥, 我们使用默认好了, 直接回车下一步
+3、最后会在`c:/Users/你的用户名/.ssh`下生成`id_rsa`、`id_rsa.public`
+4、如果你之前运行过上面的命令, 该目录中会存在上诉文件, 可以直接使用`id_rsa.public`中的内容
+
+## <font color=orange>git用户名和邮箱配置</font>
+### <font color=orange>全局配置</font>
+```
+git config --global user.name "xxxxx"
+git config --global user.email "xxxxx@xx.com"
+```
+Mac会在`/Users/你的用户名`下生成`.gitconfig`的文件.
+### <font color=orange>单个项目配置</font>
+```
+git config user.name "xxxxx"
+git config user.email "xxxxx@xx.com"
+```
+### <font color=orange>查看配置</font>
+```
+#查看当前配置, 在当前项目下面查看的配置是全局配置+当前项目的配置, 使用的时候会优先使用当前项目的配置
+git config --list
+```
+
+# <font color=orange>通过SSH连接gitlab时报如下错误</font>
+
+```
+ssh_exchange_identification: read: Connection reset by peer
+```
+
+## <font color=orange>解决方案</font>
+```
+1) 修改/etc/ssh/sshd_config中#MaxStartups 10:30:60，将其改为MaxStartups 1000
+
+2) 重启SSH服务，/etc/init.d/ssh restart或者service ssh restart
+
+Centos系统默认连接时间120秒，如果远程终端连接数过多，则会出现超时连接，解决办法如下：
+
+1) 修改/etc/ssh/sshd_config中LoginGraceTime 120,将其改为LoginGraceTime 0，其中0表示不限制连接时间
+
+2) 重启SSH服务，/etc/init.d/ssh restart或者service ssh restart
+```
+
+## <font color=orange>如果gitlab装在阿里云服务器上面</font>
+
+有的时候阿里云检测到我们的gitlab某个ip流量过大会认为是Web攻击, 所以需要为相应的阿里云ECS添加我们的公网ip地址.
+或者在阿里云的Linux服务器中, 编辑`/etc/hosts.allow`和`/etc/hosts.deny`这两个文件, 出现
+```
+all:all:deny
+```
+需要注释掉, 或者直接在`/etc/hosts.allow`中添加
+```
+sshd:all
+#或者
+all:允许的ip地址
+```
+在`/etc/hosts.deny`中添加的ip地址为对应解决的ip地址.
+
+# <font color=orange>gitlab服务器占内存过大</font>
+可以参考[官网配置](https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/doc/settings/unicorn.md), 把进程数改小点, 最低需要2个.
+```
+unicorn['worker_processes'] = 2
+unicorn['worker_timeout'] = 60
+```
