@@ -211,3 +211,18 @@ tags:
 * Other（一些官方文档上没有体现的快捷键）
 	* `⌘ ⇧ 8`: 竖编辑模式
 
+## <font color=orange> Maven项目调试 </font>
+
+* 对于打包成jar的项目或者模块
+```
+#clean: 清理
+#install: 打包jar
+#-DskipTests: 跳过测试
+clean install -DskipTests
+```
+* 对于war包的项目或模块
+```
+#clean: 清理
+#tomcat7:run: 使用Apache提供的插件运行
+clean tomcat7:run
+```

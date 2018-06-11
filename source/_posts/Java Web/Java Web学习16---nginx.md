@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Java Web学习16---nginx
+title: Java Web学习16---Linux下安装JDK、MySQL、Tomcat和nginx
 comments: true
 toc: true
 date: 2016-11-13 10:24:53
@@ -8,6 +8,9 @@ tags:
 	- RPM
 	- Java
 	- nginx
+	- JDK
+	- MySQL
+	- Tomcat
 ---
 
 ## <font color=orange> RPM </font>
@@ -189,21 +192,23 @@ Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及
 	* 刷新防火墙使设置生效: `firewall-cmd  --reload`
 	* 重启防火墙: `sudo systemctl restart firewalld`
 
-#### <font color=orange> war包 </font>
+### <font color=orange> war包 </font>
 war包在tomcat/webapps目录中, tomcat启动时,会自动解压
+
 
 ## <font color=orange> nginx </font>
 Nginx (engine x) 是一个高性能的HTTP和反向代理服务器，也是一个IMAP/POP3/SMTP服务器。其特点是占有内存少，并发能力强，负载均衡,动静分离.事实上nginx的并发能力确实在同类型的网页服务器中表现较好.
 
 * 反向代理（Reverse Proxy）: 是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。
+* 虚拟主机: 可以在一台服务器虚拟出多个网站
 * 负载均衡服务器（load-balancing server）: 是进行负载分配的服务器。通过负载均衡服务器，将服务请求均衡分配到实际执行的服务中，从而保证整个系统的响应速度。
 * 集群: 集群通信系统是一种用于集团调度指挥通信的移动通信系统，主要应用在专业移动通信领域。该系统具有的可用信道可为系统的全体用户共用，具有自动选择信道功能，它是共享资源、分担费用、共用信道设备及服务的多用途、高效能的无线调度通信系统。
 
 * Linux安装 Nginx
-	* 下载nginx: [下载地址](http://nginx.org/)
-	* 将nginx包拷贝到服务器
-	* 新建文件夹: `mkdir -p /usr/local/nginx`
-	* 将nginx拷贝到该文件夹并解压
+	* nginx官网: [官网地址](http://nginx.org/)
+	* 下载nginx源码到服务器
+		* `wget http://nginx.org/download/nginx-1.8.1.tar.gz`
+	* 解压压缩包
 	* 安装依赖包: 
 		* gcc: `yum -y install gcc-c++`
 		* pcre: `yum install -y pcre pcre-devel`
@@ -211,12 +216,28 @@ Nginx (engine x) 是一个高性能的HTTP和反向代理服务器，也是一�
 		* openssl: `yum install -y openssl openssl-devel`
 	* 编译运行
 		* 进入nginx文件夹
-		* 执行编译: `./configure`
-	* 安装
-		* 运行: `make`
-		* 运行: `make install`
+		* 使用configure命令创建一makeFile文件, prefix是安装路径, 临时文件目录是`/var/temp/nginx`
+```
+./configure \
+--prefix=/usr/local/nginx \
+--pid-path=/var/run/nginx/nginx.pid \
+--lock-path=/var/lock/nginx.lock \
+--error-log-path=/var/log/nginx/error.log \
+--http-log-path=/var/log/nginx/access.log \
+--with-http_gzip_static_module \
+--http-client-body-temp-path=/var/temp/nginx/client \
+--http-proxy-temp-path=/var/temp/nginx/proxy \
+--http-fastcgi-temp-path=/var/temp/nginx/fastcgi \
+--http-uwsgi-temp-path=/var/temp/nginx/uwsgi \
+--http-scgi-temp-path=/var/temp/nginx/scgi
+```
+		* 确认运行前 `/var/temp/nginx/client`目录已经创建
+			* 创建文件夹: `mkdir -p /var/temp/nginx/client`
+	* 编译、安装
+		* 编译运行: `make`
+		* 安装运行: `make install`
 	* 运行
-		* 在nginx目录有一个同级sbin目录，sbin目录下有一个nginx可执行程序。
+		* 前面confingure中`prifix`就是nginx的安装目录, 它里面的`sbin`下有一个nginx可执行程序
 		* 进入该文件夹
 		* 运行: `./nginx`
 		* 打开该服务器ip地址, 出现 `Welcome to nginx!`表示已经成功开启, 如果不能访问, 还需要把80端口添加到防火墙中.
@@ -225,14 +246,335 @@ Nginx (engine x) 是一个高性能的HTTP和反向代理服务器，也是一�
 		* 退出: `./nginx -s quit`
 	* 不关闭nginx的情况下更新配置文件
 		* `./nginx -s reload`
-	* <font color=red>修改配置文件</font>
-		* 修改`nginx-1.8.0\conf\nginx.conf`的配置文件
-		* 在http标签下面添加服务器列表
-		>	upstream server_qcm{
-			server 127.0.0.1:8080;
-			server 127.0.0.1:8081;
-			#添加ip_hash;可以保证同一个ip进入同一台服务器, 解决session共享问题
-			ip_hash;
-		}
-		* 在http标签--server标签--location标签下面添加反向代理
-		>	proxy_pass http://server_qcm;
+
+### <font color=orange> 配置虚拟主机</font>
+#### <font color=orange> 通过端口区分不同虚拟机 </font>
+在nginx安装目录下有一个`conf`文件夹里面的`nginx.conf`就是配置文件
+```xml
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+    
+    server {
+        #监听的端口
+        listen       80; 
+        #监听的域名
+        server_name  localhost;
+   
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+        #访问路径
+        location / {
+            #路径  相对于nginx安装目录下的html路径
+            root   html;
+            #欢迎语
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+    
+        # redirect server error pages to the static page /50x.html
+        #错误页面
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+         }
+    }
+}
+```
+* 通过端口区分就是添加一个server标签, 然后修改不同的端口
+```xml
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+    
+    server {
+        #监听的端口
+        listen       80; 
+        #监听的域名
+        server_name  localhost;
+   
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+        #访问路径
+        location / {
+            #路径  相对于nginx安装目录下的html路径
+            root   html;
+            #欢迎语
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+    
+        # redirect server error pages to the static page /50x.html
+        #错误页面
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+         }
+    }
+    
+    server {
+        #监听的端口
+        listen       81; 
+        #监听的域名
+        server_name  localhost;
+   
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+        #访问路径
+        location / {
+            #路径  相对于nginx安装目录下的html路径
+            root   html81;
+            #欢迎语
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+    
+        # redirect server error pages to the static page /50x.html
+        #错误页面
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html81;
+         }
+    }
+}
+```
+#### <font color=orange> 通过域名区分不同虚拟机 </font>
+通过域名区分就是添加一个server标签, 然后修改不同的hostname
+```xml
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+    
+    server {
+        #监听的端口
+        listen       80; 
+        #监听的域名
+        server_name  localhost;
+   
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+        #访问路径
+        location / {
+            #路径  相对于nginx安装目录下的html路径
+            root   html;
+            #欢迎语
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+    
+        # redirect server error pages to the static page /50x.html
+        #错误页面
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+         }
+    }
+    
+    server {
+        #监听的端口
+        listen       80; 
+        #监听的域名
+        server_name  www.coppco.com;
+   
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+        #访问路径
+        location / {
+            #路径  相对于nginx安装目录下的html路径
+            root   html-coppco;
+            #欢迎语
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+    
+        # redirect server error pages to the static page /50x.html
+        #错误页面
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html-coppco;
+         }
+    }
+}
+```
+### <font color=orange>反向代理</font>
+反向代理（Reverse Proxy）方式是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。
+
+```xml
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+    
+    #服务器列表, server_xxxx名称可以自己定义, 里面的ip和端口设置为自己的服务器的ip, weight是配置权重的, 权重却高请求越多
+    upstream server_xxxx{
+    	server 192.168.1.111:8080;
+    	server 192.168.1.222:8080 weight=2;
+    	#添加ip_hash;可以保证同一个ip进入同一台服务器, 解决session共享问题
+    	ip_hash;
+	}
+
+    
+    server {
+        #监听的端口
+        listen       80; 
+        #监听的域名
+        server_name  localhost;
+   
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+        #访问路径
+        location / {
+            #通过代理访问, server_xxxx
+            proxy_pass http://server_xxxx;
+            #欢迎语
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+    
+        # redirect server error pages to the static page /50x.html
+        #错误页面
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            proxy_pass http://server_xxxx;
+         }
+    } 
+}
+```
+### <font color=orange>负载均衡</font>
+可以根据服务器的实际情况调整服务器权重。权重越高分配的请求越多，权重越低，请求越少。默认是都是1
+
+```
+upstream server_xxxx{
+    server 192.168.1.111:8080;
+    server 192.168.1.222:8080 weight=2;
+    #添加ip_hash;可以保证同一个ip进入同一台服务器, 解决session共享问题
+    ip_hash;
+ }
+```

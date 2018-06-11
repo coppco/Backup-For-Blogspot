@@ -40,7 +40,7 @@ export PATH=${PATH}:${MAVEN_HOME}/bin
 ```
 		* 使文件生效: `source /etc/profile`
 	* Windows
-		* 需要配置`MAVEN_HOME`环境变量, 将`%JAVA_HOME%\bin`配置环境变量path中.
+		* 需要配置`MAVEN_HOME`环境变量, 将`%MAVEN_HOME%\bin`配置环境变量path中.
 	* 测试
 		* 运行`mvn -v`查看版本
 ## <font color=orange>项目构建</font>

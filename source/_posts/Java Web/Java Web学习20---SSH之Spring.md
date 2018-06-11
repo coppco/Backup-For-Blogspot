@@ -1286,3 +1286,69 @@ public BaseDaoImpl() {
     }
 }
 ```
+
+# <font color=orange>Spring中多Profile的使用</font>
+实际开发中, 环境可能有develop、product、test等, 如果每次发布手动更改麻烦不说, 而且很容易出错. 而Spring自带的Profile可以很好的解决这个问题.
+
+## <font color=orange>配置各个环境下的配置文件</font>
+例如:
+我们把develop环境的配置文件放在`resources/develop`目录下
+把product环境的配置文件放在`resources/product`目录下
+把test环境的配置文件放在`resources/test`目录下
+然后在Spring的配置文件的最下面添加如下配置: 
+```
+<!-- 开发环境配置文件 -->
+<beans profile="develop">
+    <context:property-placeholder
+            location="classpath:develop/*.properties" />
+</beans>
+ 
+<!-- 测试环境配置文件 -->
+<beans profile="test">
+    <context:property-placeholder
+            location="classpath:test/*.properties" />
+</beans>
+     
+<!-- 生产环境配置文件 -->
+<beans profile="product">
+    <context:property-placeholder
+            location=" classpath:product/*.properties" />
+</beans>
+```
+
+## <font color=orange>设置默认Profile</font>
+在`web.xml`中: 
+
+```
+<!-- 配置spring的默认profile, 没有active的profile时执行默认的profile -->  
+<context-param>  
+    <param-name>spring.profiles.default</param-name>  
+    <param-value>develop</param-value>  
+</context-param>  
+```
+
+## <font color=orange>激活Profile</font>
+### <font color=orange>在`web.xml`中</font>
+```
+<!-- 激活spring的profile --> 
+<context-param> 
+    <param-name>spring.profiles.active</param-name> 
+    <param-value>develop</param-value> 
+</context-param>
+```
+
+### <font color=orange>JVM参数</font>
+```
+-Dspring.profiles.active="product"
+```
+
+## <font color=orange>使用Junit激活指定Profile</font>
+使用注解`@ActiveProfiles`
+```
+@ActiveProfiles(value = "product") //激活product的配置文件
+@RunWith(SpringJUnit4ClassRunner.class) //整合Spring测试
+@ContextConfiguration("classpath:applicationContext.xml") //加载配置文件
+public class MyTest {
+
+}
+```

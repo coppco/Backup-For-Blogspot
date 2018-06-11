@@ -104,6 +104,7 @@ SSM（Spring，Spring MVC，MyBatis）其中Spring是一个轻量级的控制反
         /         拦截所有(除了jsp)
         /*        拦截所有(包含jsp)
         *.action  拦截.action结尾
+        *.html    拦截.html结尾, 伪静态化
     -->
     <url-pattern>*.action</url-pattern>
 </servlet-mapping>
@@ -112,6 +113,7 @@ SSM（Spring，Spring MVC，MyBatis）其中Spring是一个轻量级的控制反
  	* `/`: 拦截所有(除了jsp)
  	* `/*`: 拦截所有(包含jsp)
  	* `*.action`: 拦截.action结尾
+ 	* `*.html` : 拦截.html结尾, 默认返回一个网页
 * 四、Controller类(SpringMVC可以使用注解开发)
 ```java
 
@@ -432,6 +434,8 @@ jdbc.password=123456
         <property name="dataSource" ref="dataSource"/>
         <!--配置文件-->
         <property name="configLocation" value="classpath:SqlMapConfig.xml"/>
+        <!-- 配置pojo别名 -->
+        <property name="typeAliasesPackage" value="com.coppco.pojo"/>
         <!--映射文件-->
         <!--<property name="mapperLocations" value="classpath:com/coppco/**/*.xml" />-->
     </bean>

@@ -267,3 +267,14 @@ end
 	* 修改podspec文件, 将`s.version`改为代码仓库的tag值
 	* 验证podspec文件
 	* podspec文件验证通过, 更新本地远程私有仓库
+
+
+# <font color=orange>上传podspec到github时报错</font>
+今天更新项目的github时, 报如下错误: 
+
+>Encountered an unknown error (/usr/bin/xcrun simctl list -j devices
+xcrun: error: unable to find utility "simctl", not a developer tool or in PATH
+) during validation.
+
+* 解决办法
+>`Xcode`--------`Command + ,`--------`Locations`--------`Command Line Tools`设置一下即可
