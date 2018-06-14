@@ -508,7 +508,7 @@ public void addViewControllers(ViewControllerRegistry registry) {
 * 定义配置类继承`WebMvcConfigurerAdapter`重新相关方法(新版本实现`WebMvcConfigurer`接口), 无需`@EnableWebMvc`注解
 
 #### <font color=orange>注册Servlet、Filter、Listener</font>
-* 1、当时使用嵌入式Servlet容器时, 通过声明Spring Boot自动注册
+* 方式1、当时使用嵌入式Servlet容器时, 通过声明Spring Boot自动注册
 ```java
 @Bean
 pulic xxServlet xxServlet() {
@@ -519,7 +519,7 @@ pulic xxFilter xxFilter() {
     return new xxFilter();
 }
 ```
-* 2、注册ServletRegistrationBean、FilterRegistrationBean、ServletListenerRegistrationBean
+* 方式2、注册ServletRegistrationBean、FilterRegistrationBean、ServletListenerRegistrationBean
 ```java
 @Bean
 public ServletRegistrationBean servletRegistrationBean() {
@@ -568,6 +568,17 @@ public EmbeddedServletContainerFactory servletContainer() {
 }
 ```
 
+### <font color=orange>内置Tomcat不支持JSP</font>
+内置容器是Tomcat不支持JSP页面, 需要添加额外的包才能支持:
+```
+<dependency>
+    <groupId>org.apache.tomcat.embed</groupId>
+    <artifactId>tomcat-embed-jasper</artifactId>
+    <scope>provided</scope>
+</dependency>
+```
+
+
 ### <font color=orange>替换Tomcat</font>
 Spring Boot默认使用Tomcat作为内嵌Servlet容器, 如果需要替换其他容器, 那么可以在`pom.xml`移除Tomcat的依赖并添加其他容器的依赖.
 ```xml
@@ -587,6 +598,7 @@ Spring Boot默认使用Tomcat作为内嵌Servlet容器, 如果需要替换其他
     <!--<artifactId>spring-boot-starter-undertow</artifactId>-->
 </dependency>
 ```
+
 
 ### <font color=orange>配置证书SSL</font>
 * 生成证书

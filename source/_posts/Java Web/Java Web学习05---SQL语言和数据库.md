@@ -2,6 +2,7 @@
 layout: post
 title: Java Web学习05---SQL语言、数据库和MySQL
 comments: true
+toc: true
 date: 2016-08-02 16:13:35
 tags:
     - Java
@@ -357,7 +358,7 @@ MySQL中常用的约束有主键约束,非空约束,唯一约束,外键约束.
     * Java相关的数据库：MySQL，Oracle．
     * .Net、C++一般使用SQL Server.
 * 非关系型数据库
-    * 存放的是对象如: `redis`、`NO-sql(not only sql)`
+    * 存放的是对象如: `redis`、`NO-sql(not only sql)`、`MongodDB`等
 
 ## <font color=orange>MySQL</font>
 * [社区版下载地址](http://downloads.mysql.com/archives/community/)
