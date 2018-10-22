@@ -119,7 +119,7 @@ Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及
 	* 2、通过scp命令把文件传递到Linux服务器: `scp 文件路径 用户名@服务器ip地址:路径`, 输入密码后即可开始传递.可以通过windows下载, 然后通过scp命令传输到服务器, 也可以通过wget命令直接在Linux服务器上面下载(如果提示没有wget命令, 需要运行`yum -y install wget`).
 	* 3、创建目录: `/usr/local/mysql`, 并把MySQL的tar包拷贝到该目录
 	* 4、解压tar压缩包: `tar -xvf tar包名`
-	* 5、安装相关插件(如果需要): `yum -y install libaio.so.1`、`yum -y isntall libgcc_s.so.1`和`yum -y isntall libncurses.so.5`
+	* 5、安装相关插件(如果需要): `yum -y install libaio.so.1`、`yum -y install libgcc_s.so.1`和`yum -y install libncurses.so.5`
 	* 6、安装 对应的rpm包, 注意顺序
 		* 6.1、`rpm -ivh mysql-community-common-5.7.18-1.el7.x86_64.rpm`
 		* 6.2、`rpm -ivh mysql-community-libs-5.7.18-1.el7.x86_64.rpm`
@@ -158,22 +158,55 @@ Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及
 				*  `set global validate_password_special_char_count=0;`
 				*  `set global validate_password_length=3;`
 	* <font color=red>8、无法远程连接到Linux服务器上面的数据库</font>
-		* 8.1、首先登录到MySQL中: `mysql -uroot -p` 
-		* 8.2、然后运行 `grant all privileges on *.* to root@'%' identified by '123456';`
-			* `*.*`表示所有数据库的所有表
-			* `root`表示用户名
-			* `123456`: 表示使用该密码登录
-		* 8.3、刷新: `flush privileges;`
-		* 8.4、退出MySQL: `exit;`
-		* 8.5、重启MySQL: `systemctl restart mysqld.service`
-		* 8.6、如果服务器是 CentOS7，将 MySQL 服务加入防火墙: `sudo firewall-cmd --zone=public --permanent --add-service=mysql`
-		* 8.7、重启防火墙: `sudo systemctl restart firewalld`
-	* 9、查看MySQL服务状态: 老版本使用`service mysqld status`, 新版本使用`systemctl status mysqld.service`
-	* 10、启动MySQL: 老版本使用`service mysqld start`, 新版本使用`systemctl start mysqld.service`
-	* 11、停止MySQL: 老版本使用`service mysqld stop`, 新版本使用`systemctl stop mysqld.service`
-	* 12、重启MySQL: 老版本使用`service mysqld restart `, 新版本使用`systemctl restart mysqld.service`
-	* 13、设置mysql服务开机自启动: `systemctl enable mysqld.service`
-	* 13、停止mysql服务开机自启动: `systemctl disable mysqld.service`
+		* 方式1: 
+			* 8.1.1、首先登录到MySQL中: `mysql -uroot -p` 
+			* 8.1.2、然后运行 `grant all privileges on *.* to root@'%' identified by '123456';`
+				* `*.*`表示所有数据库的所有表
+				* `root`表示用户名
+				* `123456`: 表示使用该密码登录
+			* 8.1.3、刷新: `flush privileges;`
+			* 8.1.4、退出MySQL: `exit;`
+			* 8.1.5、重启MySQL: `systemctl restart mysqld.service`
+		* 方式2:
+			* 8.2.1、首先登录到MySQL中: `mysql -uroot -p` 
+			* 8.2.2、选择数据库: `use mysql`
+			* 8.2.3、查看mysql库中的user表的host值: `select 'host' from user where user='root';`
+			* 8.2.4、修改host值（以通配符%的内容增加主机/IP地址），当然也可以直接增加IP地址 : `update user set host = '%' where user ='root';`
+			* 8.2.5、刷新MySQL的系统权限相关表: `flush privileges;`
+			* 8.2.6、重起mysql服务即可
+		* 另外, 如果mysql装在阿里云服务器上, 请检查ECS的`安全组配置`
+			* 添加一个`出方向`的`Tcp`、端口`3306`授权对象为`0.0.0.0/0`的策略
+		* 8.3、如果服务器是 CentOS7，将 MySQL 服务加入防火墙: `sudo firewall-cmd --zone=public --permanent --add-service=mysql`
+		* 8.4、重启防火墙: `sudo systemctl restart firewalld`
+	* 9、字符集问题, 需要修改为utf8, 如果数据库要存储emoji表情, 那么需要使用`utf8mb4`, 它向下兼容utf8.
+		* 9.1.1、修改现有数据库和表
+```
+ALTER DATABASE `数据库名` CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+ALTER TABLE `表名` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+		* 9.1.2、运行`vi /etc/my.cnf`
+		* 9.1.3、在配置文件中添加一个字符集的配置
+```
+[client]
+# 客户端来源数据的默认字符集
+default-character-set= utf8mb4
+[mysqld]
+# 服务端默认字符集
+character-set-server=utf8mb4
+# 连接层默认字符集
+collation-server=utf8mb4_unicode_ci
+[mysql]
+# 数据库默认字符集
+default-character-set= utf8mb4
+```
+		* 9.1.4、重启mysql服务
+	* 10、查看MySQL服务状态: 老版本使用`service mysqld status`, 新版本使用`systemctl status mysqld.service`
+	* 11、启动MySQL: 老版本使用`service mysqld start`, 新版本使用`systemctl start mysqld.service`
+	* 12、停止MySQL: 老版本使用`service mysqld stop`, 新版本使用`systemctl stop mysqld.service`
+	* 13、重启MySQL: 老版本使用`service mysqld restart `, 新版本使用`systemctl restart mysqld.service`
+	* 14、设置mysql服务开机自启动: `systemctl enable mysqld.service`
+	* 15、停止mysql服务开机自启动: `systemctl disable mysqld.service`
 
 ## <font color=orange> Linux安装Tomcat </font>
 

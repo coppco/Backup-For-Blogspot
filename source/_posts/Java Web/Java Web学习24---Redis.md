@@ -108,6 +108,61 @@ Redis的应用场景:
 	* `Keys *`: 查看当前库中所有的key值
 	* `select 下标`: Redis最多可以提供16个数据库, 下标从0到15, 默认连接的是0号下标, 该命令可以切换数据库.
 	* `flushall`: 清空数据库, 会把该Redis实例下面的数据库都情况.<font color=red>所以不同应用应该使用不同的Redis实例, 而不是同一个Redis实例下的不同数据库.</font>
+* 设置开机启动
+	* 首先把redis解压目录中的`/redis-x.x.x/utils/redis_init_script`拷贝到`/etc/init.d/redis`
+```
+cp redis-4.0.0/utils/redis_init_script /etc/init.d/redis
+```
+	* 修改`/etc/init.d/redis`
+```
+#!/bin/sh
+#
+# Simple Redis init.d script conceived to work on Linux systems
+# as it does use of the /proc filesystem.
+# 这里两行不能少, 拷贝的没有需要添加上
+# chkconfig: 2345 90 10    
+# description: Start and Stop redis
+
+REDISPORT=6379
+#安装的启动路径
+EXEC=/usr/local/bin/redis-server
+CLIEXEC=/usr/local/bin/redis-cli
+PIDFILE=/var/run/redis_${REDISPORT}.pid
+#配置文件位置
+CONF="/usr/local/bin/redis.conf"
+case "$1" in
+    start)
+        if [ -f $PIDFILE ]
+        then
+                echo "$PIDFILE exists, process is already running or crashed"
+        else
+                echo "Starting Redis server..."
+                $EXEC $CONF
+        fi
+        ;;
+    stop)
+        if [ ! -f $PIDFILE ]
+        then
+                echo "$PIDFILE does not exist, process is not running"
+        else
+                PID=$(cat $PIDFILE)
+                echo "Stopping ..."
+                $CLIEXEC -p $REDISPORT shutdown
+                while [ -x /proc/${PID} ]
+                do
+"/etc/init.d/redis" 44L, 1155C
+```
+	* 开机启动设置
+		* 添加redis服务: `chkconfig --add redis`
+		* 设置为开机启动: `chkconfig redis on`
+		* 打开redis: `service redis start`
+		* 关闭redis: `service redis stop`
+* 阿里云ECS中需要额外设置
+	* 添加`安全组规则`, 开放`6379端口`
+	* 修改`redis.conf`文件, 找到`requirepass`字段, 去掉注释, 添加授权密码
+	* 修改`redis.conf`文件, 注释掉`/bind 127.0.0.1`以允许所有ip访问
+
+
 
 ## <font color=orange> Jedis </font>
 Redis不仅是使用命令来操作，现在基本上主流的语言都有客户端支持，比如java、C、C#、C++、php、Node.js、Go等。 

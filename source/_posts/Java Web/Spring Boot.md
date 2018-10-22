@@ -3,7 +3,7 @@ layout: post
 title: Spring Boot
 comments: true
 toc: true
-date: 2017-01-20 10:43:59
+date: 2018-03-20 10:43:59
 tags:
 	- Java
 	- Spring
@@ -17,6 +17,8 @@ tags:
 随着动态语言的流行(Ruby、Groovy、Scala、Node.js、Python),Java开发显得格外笨重: 繁多的配置、低下的开发效率、复杂的部署流程.
 
 Spring Boot应用而生, 它使用"习惯优于配置"的理念可以快速的搭建一个项目.使用Spring Boot很容易创建一个独立运行的(运行jar、内嵌Servlet容器)、基于Spring的项目.
+
+[官方文档](https://spring.io/projects/spring-boot#learn)
 
 <!--more-->
 
@@ -892,3 +894,547 @@ public class ServletInitializer extends SpringBootServletInitializer {
 }
 
 ```
+
+## <font color=orange>Spring Boot整合Mybatis</font>
+
+### <font color=orange>首先导入相关依赖以及Mybatis-generator插件</font>
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>JustChat</artifactId>
+        <groupId>com.coppco</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>JustChat-dao</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.coppco</groupId>
+            <artifactId>JustChat-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--druid-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <!-- 分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.5</version>
+        </dependency>
+        <!-- 热部署 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.5</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.39</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.mybatis.generator</groupId>
+                        <artifactId>mybatis-generator-core</artifactId>
+                        <version>1.3.5</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>Generate MyBatis Artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!--允许移动生成的文件 -->
+                    <verbose>true</verbose>
+                    <!-- 是否覆盖 -->
+                    <overwrite>true</overwrite>
+                    <!-- 自动生成的配置 -->
+                    <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>                        
+```
+### <font color=orange>在`src/main/resources/`中新建配置文件`generatorConfig.xml`</font>
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+
+    <!--导入properties文件-->
+    <!--<properties  resource="schemeone/properties/mysql/mysql.properties"/>-->
+
+    <context id="localTable" targetRuntime="MyBatis3">
+
+        <!--生成的Bean会实现Serializable接口-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+
+        <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/justchat" userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <!-- <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
+            connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:yycg"
+            userId="yycg"
+            password="yycg">
+        </jdbcConnection> -->
+
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
+            NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- targetProject:生成PO类的位置, targetProject: 存放生成文件的目录  -->
+        <javaModelGenerator targetPackage="com.coppco.common.pojo"
+                            targetProject="../JustChat-common/src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- targetProject:mapper映射文件生成的位置 -->
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="src/main/resources">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- targetPackage：mapper接口生成的位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.coppco.mapper"
+                             targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+        <!-- 指定数据库表 -->
+        <table schema="" tableName="user">
+            <!--重新命名-->
+            <!--<columnOverride column="create_time" property="createTime" />-->
+        </table>
+
+        <table schema="" tableName="userToken"></table>
+
+        <table schema="" tableName="userLogs"></table>
+        <!-- 有些表的字段需要指定java类型
+         <table schema="" tableName="">
+            <columnOverride column="" javaType="" />
+        </table> -->
+    </context>
+</generatorConfiguration>
+```
+### <font color=orange>在`application.properties`中添加数据源等相关配置</font> 
+```
+#####   datasource  #####
+spring.datasource.url=jdbc:mysql://localhost:3306/justchat
+spring.datasource.username=root
+spring.datasource.password=123456
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+#使用druid数据源
+spring.datasource.type=com.alibaba.druid.pool.DruidDataSource
+
+################               MyBatis               ################
+#配置模型包路径
+mybatis.type-aliases-package=com.coppco.common.pojo
+#配置.xml文件路径
+mybatis.mapper-locations=classpath:mapper/*.xml
+#配置自定义类型处理
+mybatis.type-handlers-package=com.coppco.common.messageHandle
+```
+### <font color=orange>在Spring Boot入口类添加Mapper扫描</font> 
+```
+@MapperScan("com.coppco.mapper")
+@SpringBootApplication
+public class JustChatServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(JustChatServiceApplication.class, args);
+    }
+}
+```
+
+### <font color=orange>MyBatis类型处理器</font>
+有时候, 我们希望从数据库里面读取数据时, 如性别等一些类型自动转成枚举, 此时我们可以使用MyBatis自带的类型处理器.
+* `org.apache.ibatis.type.EnumTypeHandler<E>`
+	* 直接存储枚举的name值
+* `org.apache.ibatis.type.EnumOrdinalTypeHandler<E>` 
+	* 直接存储枚举的顺序值
+* 自定义类型处理器继承`BaseTypeHandler<E>`
+	* 自定义存储值类型
+
+#### <font color=orange>MyBatis提供的枚举类型处理器</font> 
+当使用系统提供的类型处理器时, 需要我们在`XXXMapper.xml`中对应的类型添加`typeHandler`:
+```
+<insert id="insertUser" parameterType="User">
+    insert into user(id,userName,status)
+    values(#{id},  #{userName},#{status, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler})
+</insert>
+或者
+<resultMap id="BaseResultMap" type="User">
+    <id column="id" property="userId" jdbcType="INTEGER" />
+    <result column="status" property="status" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+</resultMap>
+```
+#### <font color=orange>自定义类型处理器</font> 
+##### <font color=orange>定义枚举</font> 
+```java
+package com.coppco.common.enums.message;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonValue;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * 聊天消息类型
+ */
+/**
+ * Jackson中 枚举和json相互转换
+ */
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
+public enum ChatMessageType {
+
+    text("01", "文本"),
+    image("02", "图片"),
+    location("03", "定位"),
+    audio("04", "音频"),
+    video("05", "视频");
+
+    private String messageType;
+
+    private String desc;
+
+    private ChatMessageType(String messageType, String desc) {
+        this.messageType = messageType;
+        this.desc = desc;
+    }
+    /**
+     * @JsonValue注释在枚举的属性上, 会转成该值, 注释在枚举的实例上, 会把该枚举属性值全部转换
+     */
+    @JsonValue
+    public String getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(String messageType) {
+        this.messageType = messageType;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    /**
+     * 解决MyBatis和枚举直接转换
+     */
+    private static Map<String, ChatMessageType> map = new HashMap<String, ChatMessageType>();
+    static {
+        for (ChatMessageType accountStatus : ChatMessageType.values()) {
+            map.put(accountStatus.getMessageType(), accountStatus);
+        }
+    }
+
+    public static ChatMessageType getEnumByValue(String value) {
+        return map.get(value);
+    }
+}
+```
+##### <font color=orange>定义枚举处理类</font> 
+```java
+package com.coppco.common.messageHandle;
+
+import com.coppco.common.enums.message.ChatMessageType;
+import org.apache.ibatis.type.BaseTypeHandler;
+import org.apache.ibatis.type.JdbcType;
+
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+/**
+ * MyBatis 枚举处理类
+ */
+public class ChatMessageTypeHandle extends BaseTypeHandler<ChatMessageType> {
+
+    public void setNonNullParameter(PreparedStatement preparedStatement, int i, ChatMessageType chatMessageType, JdbcType jdbcType) throws SQLException {
+        preparedStatement.setString(i, chatMessageType.getMessageType());
+    }
+
+    public ChatMessageType getNullableResult(ResultSet resultSet, String s) throws SQLException {
+        String value = resultSet.getString(s);
+
+        ChatMessageType type = null;
+
+        if (!resultSet.wasNull()) {
+            type = ChatMessageType.getEnumByValue(value);
+        }
+        return type;
+    }
+
+    public ChatMessageType getNullableResult(ResultSet resultSet, int i) throws SQLException {
+        String value = resultSet.getString(i);
+
+        ChatMessageType type = null;
+
+        if (!resultSet.wasNull()) {
+            type = ChatMessageType.getEnumByValue(value);
+        }
+        return type;
+    }
+
+    public ChatMessageType getNullableResult(CallableStatement callableStatement, int i) throws SQLException {
+        String value = callableStatement.getString(i);
+
+        ChatMessageType type = null;
+
+        if (!callableStatement.wasNull()) {
+            type = ChatMessageType.getEnumByValue(value);
+        }
+        return type;
+    }
+}
+```
+
+##### <font color=orange>注册自定义类型处理器</font> 
+* Spring MVC: 配置文件中添加
+```
+<!-- 注册自定义类型处理器 -->
+<typeHandlers>
+    <typeHandler handler="twm.mybatisdemo.type.CityTestTypeHandler" />
+</typeHandlers>
+```
+* Spring Boot: `application.properties`中添加
+```
+#配置自定义类型处理
+mybatis.type-handlers-package=com.coppco.common.messageHandle
+```
+
+
+## <font color=orange>Spring Boot整合Dubbo</font> 
+目前Dubbo已经加入Apache开源组织, 现在处于孵化期.参考[官方文档](http://dubbo.apache.org)
+### <font color=orange> provider和consumer相关依赖</font> 
+|版本|Java版本|Spring Boot版本|Dubbo版本|
+|:--:|:--:|:--:|:--:|
+|versions|	Java|	Spring Boot	|Dubbo|
+|0.2.0	|1.8+	|2.0.x|	2.6.2 +|
+|0.1.1	|1.7+|	1.5.x	|2.6.2 +|
+```
+<!--dubbo-springBoot依赖-->
+<dependency>
+    <groupId>com.alibaba.boot</groupId>
+    <artifactId>dubbo-spring-boot-starter</artifactId>
+    <version>0.2.0</version>
+</dependency>
+```
+### <font color=orange> provider服务提供者配置 </font> 
+#### <font color=orange> provider中`application.properties`配置</font> 
+```
+# 扫描Dubbo注解的包(@Service、@ Reference等)
+dubbo.scan.basePackages  = com.alibaba.boot.dubbo.demo.provider.service
+
+## 应用程序名称以及ID配置
+dubbo.application.id = provider
+dubbo.application.name = provider
+
+## 协议配置
+dubbo.protocol.id = dubbo
+dubbo.protocol.name = dubbo
+dubbo.protocol.port = 12345
+
+## 注册中心配置
+dubbo.registry.id = my-registry
+dubbo.registry.address = xxx.xxx.xxx.xxx
+
+##如果dubbo使用的注册中心是zookeeper, 上面注册中心的配置改成这样
+#dubbo.registry.id = zookeeper
+#dubbo.registry.address = xxx.xxx.xxx.xxx
+#dubbo.registry.port=2181
+#dubbo.registry.protocol=zookeeper
+```
+#### <font color=orange> 使用Dubbo注解标注发布的服务 </font> 
+* 新建interface
+```
+/**
+ * 用户相关接口
+ */
+public interface UserService {
+    /**
+     * 用户登录
+     * @param user
+     * @return
+     */
+    public Result login(User user);
+}
+```
+* 实现接口(<font color=red>注意这里的@Service不是Spring中的注解, 而是Dubbo中的注解</font>)
+```
+import com.alibaba.dubbo.config.annotation.Service;
+
+@Service(
+        version = "1.0.0",
+        application = "${dubbo.application.id}",
+        protocol = "${dubbo.protocol.id}",
+        registry = "${dubbo.registry.id}"
+)
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Override
+    public Result login(User user) {
+        //code
+    }
+```
+### <font color=orange> consumer服务消费者配置 </font>
+
+#### <font color=orange> consumer中`application.properties`配置</font> 
+```
+```
+#dubbo配置 ----  服务消费者
+## 应用程序配置
+dubbo.application.id = consumer
+dubbo.application.name = consumer
+
+## 协议配置
+dubbo.protocol.id = dubbo
+dubbo.protocol.name = dubbo
+dubbo.protocol.port = 12345
+
+##如果使用zookeeper作为注册中心, 需要添加下面配置
+#dubbo.registry.id = zookeeper
+#dubbo.registry.address = xxx.xxx.xxx.xxx
+#dubbo.registry.port = 2181
+#dubbo.registry.protocol = zookeeper
+```
+
+#### <font color=orange> 使用服务 </font> 
+```
+
+@RestController
+@RequestMapping("/user")
+public class UserController {
+
+    #使用zookeeper时, 需要去掉`url=xxxxx`
+    @Reference(version = "1.0.0",
+            application = "${dubbo.application.id}",
+            url = "dubbo://127.0.0.1:12345")
+    private UserService userService;
+
+    @PostMapping("/login")
+    public Result login(@RequestBody @Validated(value = {UserValidRegistGroup.class, UserValidLoginGroup.class}) User user) {
+        return userService.login(user);
+    }
+
+}
+```
+
+## <font color=orange>Spring Boot整合Redis</font>
+### <font color=orange>添加相关依赖</font>
+```
+<dependency>  
+    <groupId>org.springframework.boot</groupId>
+    <!--Spring Boot 1.4以前版本-->  
+    <!--<artifactId>spring-boot-starter-redis</artifactId>-->
+    <!--Spring Boot 1.4以后版本-->  
+    <artifactId>spring-boot-starter-data-redis</artifactId>  
+</dependency>
+```
+### <font color=orange>Reids相关的配置文件</font>
+在`application.properties`中添加redis相关配置, 以`
+spring.redis`开头
+```
+# Redis数据库索引（默认为0 redis有16个库）
+spring.redis.database=0
+# Redis服务器地址
+spring.redis.host=127.0.0.1
+# Redis服务器连接端口
+spring.redis.port=6379
+# Redis服务器连接密码（默认为空）
+spring.redis.password=
+# 连接池最大连接数（使用负值表示没有限制）
+spring.redis.pool.max-active=8
+# 连接池最大阻塞等待时间（使用负值表示没有限制）
+spring.redis.pool.max-wait=-1 
+# 连接池中的最大空闲连接
+spring.redis.pool.max-idle=8 
+# 连接池中的最小空闲连接
+spring.redis.pool.min-idle=0  
+# 连接超时时间（毫秒）
+spring.redis.timeout=2000
+```
+### <font color=orange>配置Redis</font>
+### <font color=orange>Spring Boot中Redis的自动配置</font>
+Spring Boot默认使用`RedisAutoConfiguration`类加载`application.properties`中前缀为`spring.redis`的属性配置, 并提供了`RedisTemplate<Object,Object>`和`StringRedisTemplate`这种Bean.
+* RedisTemplate<Object,Object>
+	* 可以对Redis中key和value都为object类型的数据进行操作,默认会将对象使用JdkSerializationRedisSerializer进行序列化
+* StringRedisTemplate
+	* 可以对Redis中key和value都是String类型的数据进行操作
+

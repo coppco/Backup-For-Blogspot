@@ -90,6 +90,33 @@ Zookeeper是Apache Hadoop的子项目, 是一个树形的目录服务, 支持变
 	* 开放2181端口: `firewall-cmd --add-port=2181/tcp --zone=public --permanent`, --permanent是永久有效参数
 	* 查询开放的端口: `firewall-cmd --zone=public --list-ports`
 	* 刷新防火墙使设置生效: `firewall-cmd --reload`
+* 8、设置开机启动
+	* 在`/etc/init.d`目录下新建一个zookeeper文件
+```
+vi /etc/init.d/zookeeper
+```
+	* 在zookeeper文件中写入, 注意里面的JAVA_HOME是必须的,写上你的安装路径, 还有Zookeeper的安装路径也要改成你的安装路径
+```
+#!/bin/bash  
+#chkconfig:2345 20 90  
+#description:zookeeper  
+#processname:zookeeper  
+export JAVA_HOME=/usr/java/jdk1.8.0_171
+case $1 in  
+        start) su root /usr/local/zookeeper/bin/zkServer.sh start;;  
+        stop) su root /usr/local/zookeeper/bin/zkServer.sh stop;;  
+        status) su root /usr/local/zookeeper/bin/zkServer.sh status;;  
+        restart) su /usr/local/zookeeper/bin/zkServer.sh restart;;  
+        *) echo "require start|stop|status|restart" ;  
+esac 
+```
+	* 修改权限: `chmod +x /etc/init.d/zookeeper`
+	* 开机启动设置
+		* 开机启动: `chkconfig --add zookeeper`
+		* 启动zookeeper: `service zookeeper start` 
+		* 停止zookeeper: `service zookeeper stop` 
+		* 重启zookeeper: `service zookeeper restart` 
+		* zookeeper状态: `service zookeeper status`  
 
 ## <font color=orange> 使用Dubbo </font>
 ### <font color=orange> 导入相关Dubbo和Zookeeper相关jar包 </font>

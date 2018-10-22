@@ -1133,6 +1133,34 @@ public class ItemController {
     }
 }
 ```
+### <font color=orange> 直接在方法中获取Header和Cookie中数据</font>
+`@RequestHeader`和`@CookieValue`
+```
+@Controller
+public class ItemController {
+
+    @RequestMapping("/updateitem/{id}")
+    public String update(@RequestHeader("Accept-Encoding") String encoding, Items item) throws Exception {
+        //code
+    }
+}
+```
+
+### <font color=orange> @RequestParam,@RequestBody,@Validated</font>
+
+* `@RequestParam`用于处理url中数据, 它和从URL模板中获取`@PathVariable`有区别, 如`http://127.0.0.1:8080?name=1234`
+```
+@Controller
+public class ItemController {
+
+    @RequestMapping("/updateitem/{id}")
+    public String update(@RequestHeader("Accept-Encoding") String encoding, @RequestParam(value="name") String name) throws Exception {
+        //code
+    }
+}
+```
+* `@RequestBody`用来接收request的body中的参数
+* `@Validated`用来接收地址栏中的参数
 
 ### <font color=orange> 自定义转换器 </font>
 有的类型无法转换成对象, 例如字符串转Date类型.
@@ -1499,4 +1527,171 @@ public class JobTest {
 * 并在主配置文件中引入
 ```xml
 <import resource="classpath*:applicationContext-job.xml"/>
+```
+
+## <font color=orange>SpringMVC参数校验</font>
+### <font color=orange>引入`hibernate-validator`依赖</font>
+```
+ <dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-validator</artifactId>
+    <version>5.4.2.Final</version>
+</dependency>
+```
+### <font color=orange>validator校验注解说明</font>
+| 注解 |验证的数据类型| 功能 |
+|:---:|:---:|:---:
+|@Null |任意类型|	验证对象是否为 null |
+|@NotNull	|任意类型|验证对象是否不为 null |
+|@AssertTrue	|Boolean, boolean|验证 Boolean 对象是否为 true |
+|@AssertTrue |Boolean, boolean|	验证 Boolean 对象是否为 false |
+|@Max(value)	|BigDecimal, BigInteger, byte, short, int, long等任何Number或者CharSequence(存储的是数字)子类型|验证 Number 和 String 对象是否小于等于指定值|
+|@Min(value)	|同@Max|验证 Number 和 String 对象是否大于等于指定值|
+|@DecimalMax(value)	|同@Max|验证注解的元素值小于等于 @DecimalMax 指定的 value 值|
+|@DecimalMin(value)	|同@Max|验证注解的元素值大于等于 @DecimalMin 指定的 value 值|
+|@Digits(integer,fraction)	|同@Max|验证字符串是否符合指定格式的数字，integer 指定整数精度，fraction 指定小数精度|
+|@Size(min,max)	|字符串, Collection, Map, 数组等|验证对象长度是否在给定的范围内|
+|@Past	|java.util.Date,java.util.Calendar, Joda Time类库的日期类型|验证 Date 和 Calendar 对象是否在当前时间之前|
+|@Future	|同@Past|验证 Date 和 Calendar 对象是否在当前时间之后|
+|@Pattern	|CharSequence子类型|验证 String 对象是否符合正则表达式的规则|
+|@NotBlank	|CharSequence子类型|检查字符串是不是 Null，被 Trim 的长度是否大于0，只对字符串，且会去掉前后空格|
+|@URL	|CharSequence子类型|验证是否是合法的 url |
+|@Email |CharSequence子类型|	验证是否是合法的邮箱|
+|@CreditCardNumber |CharSequence子类型|	验证是否是合法的信用卡号|
+|@Length(min,max)	|CharSequence子类型|验证字符串的长度必须在指定范围内|
+|@NotEmpty	|CharSequence, Collection, Map, 数组|检查元素是否为 Null 或 Empty |
+|@Range(min,max,message)	|BigDecimal, BigInteger, CharSequence, byte, short, int,long等原子类型和包装类|验证属性值必须在合适的范围内|
+|@Valid|任何非原子类型|指定递归验证关联的对象(如对象中有个地址对象属性, 想验证对象时同时验证该地址对象属性, 加上即可)
+
+### <font color=orange>注解的使用</font>
+
+#### <font color=orange>注解在实体类上</font>
+```
+public class User {
+  @NotBlank(message = "用户名不能为空")
+  private String username;
+  @NotBlank(message = "密码不能为空")
+  @Length(min = 6, max = 16, message = "密码长度在6-16位之间")
+  private String password;
+  @Range(min = 16, max = 60, message = "年龄必须在16到60岁之间")
+  private Integer age;
+  @Pattern(regexp = "^1[3|4|5|7|8][0-9]{9}$", message = "手机号格式不正确")
+  private String phone;
+  @Email(message = "邮箱格式不正确")
+  private String email;
+  
+  //other code
+}
+```
+
+#### <font color=orange>在Controller中开启校验</font>
+`@Valid`和`@Validated`都可以实现校验, 但是`@Validated`可以实现分组检验, 当校验不通过时会赋值给`BindingResult result`, 没有该参数校验失败时会抛出异常.它有两种校验方式:1、默认模式(全部校验)和2、快速模式(只要有一个校验不通过就返回), 可以参考[官网](https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#section-fail-fast), 其他的还有分组校验等.
+```
+@RestController
+@RequestMapping("/user")
+public Map UserController {
+
+    @RequestMapping(value = "/valid", method = RequestMethod.POST)
+    public String validUser(@Valid @RequestBody User user, BindingResult result) {
+        if(result.hasErrors()){
+            for (ObjectError error : result.getAllErrors()) {
+                return error.getDefaultMessage();
+            }
+        }
+        return user.getUsername();
+    }
+}
+```
+
+### <font color=orange>分组校验</font>
+#### <font color=orange>什么是分组校验</font>
+校验规则是在Bean中定义, 而Bean可能能在不同的Controller中使用, 校验规则也可能不一样, 使用分组校验可以很好的解决搞问题.
+
+#### <font color=orange>首先定义不同的场景接口</font>
+```
+/*登录的检验*/
+public interface UserValidLoginGroup {}
+/*注册的检验*/
+public interface UserValidRegistGroup {}
+```
+#### <font color=orange>在Bean中使用</font>
+```
+public class User {
+  @NotBlank(message = "用户名不能为空", groups = UserValidLoginGroup.class)
+  private String username;
+  @NotBlank(message = "密码不能为空")
+  @Length(min = 6, max = 16, message = "密码长度在6-16位之间", groups = {UserValidLoginGroup.class, UserValidRegistGroup.class})
+  private String password;
+  @Range(min = 16, max = 60, message = "年龄必须在16到60岁之间")
+  private Integer age;
+  @Pattern(regexp = "^1[3|4|5|7|8][0-9]{9}$", message = "手机号格式不正确")
+  private String phone;
+  @Email(message = "邮箱格式不正确")
+  private String email;
+  
+  //other code
+}
+```
+
+#### <font color=orange>在Controller中指定验证的group</font>
+* 标注了一个分组: 只会校验该分支的规则
+* 没有标注分组: 只会校验没有分组的规则
+* 如果标注了多个分组: or的关系, 只要满足一个就会校验
+
+```
+@RequestMapping(value = "/login", method = RequestMethod.POST)
+public GlobalResult login(@Validated(value = {UserValidLoginGroup.class, UserValidRegistGroup.class}) User user, BindingResult result) {
+    return userService.login(user);
+}
+```
+
+### <font color=orange>全局异常处理</font>
+#### <font color=orange>使用`@ExceptionHandler`注解</font>
+此种模式下, 每个Controller都必须使用该注解在一个方法上捕获异常, 相当分散
+```
+@Controller      
+public class UserController {               
+     
+    @ExceptionHandler({MyException.class})       
+    public String exception(MyException e) {       
+        System.out.println(e.getMessage());       
+        e.printStackTrace();       
+        return "exception";       
+    }       
+ 
+    @RequestMapping("test")       
+    public void test() {       
+        throw new MyException("出错了！");       
+    }                    
+ } 
+```
+#### <font color=orange>使用`@ControllerAdives`注解</font>
+```
+@ControllerAdvice
+public class AdviceController {
+
+	//也可以返回JSON
+    @ExceptionHandler(value = Exception.class)
+    public ModelAndView exception(Exception exception, WebRequest request) {
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("errorMessage", exception.getMessage());
+        return modelAndView;
+    }
+
+    @ModelAttribute
+    public void addAttributes(Model model) {
+        model.addAttribute("name", "Spring");
+    }
+}
+```
+#### <font color=orange>实现`HandlerExceptionResolver`接口</font>
+可以实现全局的异常处理
+```
+@Component  
+public class Test implements HandlerExceptionResolver {
+    @Override
+    public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
+        return null;
+    }
+}   
 ```

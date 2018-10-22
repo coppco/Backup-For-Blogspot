@@ -337,6 +337,7 @@ tar命令位于/bin目录下，它能够将用户所指定的文件或目录打�
 	* `date -s “2014-01-01 10:10:10“`:  设置系统时间
 * `df`: 显示磁盘信息
 	* `df –h`:  友好显示大小
+	* `df -T`: 显示磁盘类型已经使用情况
 * `free`:  显示内存状态
 	* `free –m`:  以mb单位显示内存组昂头
 * `fdisk -l`: 硬盘使用情况
@@ -350,6 +351,7 @@ tar命令位于/bin目录下，它能够将用户所指定的文件或目录打�
 	* `kill -9 2868`:  强制杀死进程
 * `du`:  显示目录或文件的大小。
 	* `du –h`: 显示当前目录的大小
+	* `du -sh *`: 显示当前文件所有文件大小
 * `who`:  显示目前登入系统的用户信息。
 * `hostname`:  查看当前主机名
 	* 修改主机名: `vi /etc/sysconfig/network`
@@ -406,3 +408,47 @@ Linux系统文件的权限由文件类型(第一个字符)、属主权限(第二
 	* `chown`:  变更文件或目录改文件所属用户和组
 		* `chown 用户名:组名 a.txt`: 变更当前的目录或文件的所属用户和组
 		* `chown -R 用户名:组名 dir`: 变更目录中的所有的子目录及文件的所属用户和组
+
+## <font color=orange> Linux安装git服务器 </font>
+
+### <font color=orange> 安装git </font>
+* CentOS: `yun -y install git`
+* ubuntu: `apt-get install git`
+### <font color=orange> 创建git用户以及权限 </font>
+* 创建用户git: `adduser git`
+	* git用户的文件夹在`/home/git`中
+* 禁止git用户通过ssh连接服务器: `vi /etc/passwd`
+```
+#这个是使用ssh登录, 修改为下面的git-shell
+git:x:1001:1001:,,,:/home/git:/bin/bash
+#更改为这个可以禁止ssh登录
+git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell
+```
+* 设置git用户密码: `passwd git`
+### <font color=orange> 设置SSH公钥(免密码登录) </font>
+* 在自己的电脑上面生成SSH公钥和私钥, 把公钥拷贝出来,然后在服务器上运行
+```
+echo "你的私钥" >> /home/git/.ssh/authorized_keys
+```
+### <font color=orange> 初始化git仓库 </font>
+* 新建一个目录存放git仓库
+```
+mkdir -p /var/gitResposity
+```
+* 初始化仓库
+```
+cd /var/gitResposity
+git init --bare 你的项目名字.git
+```
+* 修改权限, 如果没有写的权限只能pull不能push, 以后每次创建仓库都需要更改`xxx.git`的权限
+```
+cd /var
+chown -R git:git gitResposity
+chmod -R 777 gitResposity
+```
+
+### <font color=orange> git地址 </font>
+地址一般就是: `git@ip地址:仓库地址`, 如: 
+```
+git@127.0.0.1:/var/gitResposity/iOS.git
+```

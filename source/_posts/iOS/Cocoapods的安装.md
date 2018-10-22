@@ -3,7 +3,7 @@ layout: post
 title: Cocoapods的安装
 comments: true
 toc: true
-date: 2015-07-18 09:04:24
+date: 2015-10-20 09:04:24
 tags:
     - 杂谈
     - iOS
