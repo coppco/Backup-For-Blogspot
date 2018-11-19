@@ -105,7 +105,7 @@ override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath
 当然多行编辑也可以使用自定义cell,cell里面左侧添加一个按钮,当编辑的时候显示该按钮,然后里面控件整体右移,相比而言这个方法相对简单些.
 # 附上[Demo地址](https://github.com/coppco/UITableViewUesedDemo), 使用Xcode7.2 Swift2.1.1 版本编写.
 # 效果图:
-![效果图](http://oak4eha4y.bkt.clouddn.com/Simulator%20Screen%20Shot%202016%E5%B9%B47%E6%9C%8819%E6%97%A5%20%E4%B8%8B%E5%8D%886.29.07.png)
-![效果图](http://oak4eha4y.bkt.clouddn.com/Simulator%20Screen%20Shot%202016%E5%B9%B47%E6%9C%8819%E6%97%A5%20%E4%B8%8B%E5%8D%886.29.18.png)
+![效果图](http://47.96.147.179/images/iOS/cell_demo1.png)
+![效果图](http://47.96.147.179/images/iOS/cell_demo2.png)
 
 

@@ -15,7 +15,7 @@ tags:
 
 持续集成(Continuous Integration)是一种软件开发实践，即团队开发成员经常集成他们的工作，通过每个成员每天至少集成一次，也就意味着每天可能会发生多次集成。每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽早地发现集成错误。
 
-<img src="http://oak4eha4y.bkt.clouddn.com/gitlab-ci-iOS.jpg" alt="hello" style="width: 50%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
+<img src="http://47.96.147.179/images/iOS/gitlab-ci-iOS.jpg" alt="hello" style="width: 50%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
 
 <!--more-->
 

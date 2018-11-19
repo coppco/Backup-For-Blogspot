@@ -10,7 +10,7 @@ tags:
 	- WebSocket
 ---
 
-<img src="http://oak4eha4y.bkt.clouddn.com/moxie_WebSocket.jpg" alt="hello" style="width: 70%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
+<img src="http://47.96.147.179/images/java/moxie_WebSocket.jpg" alt="hello" style="width: 70%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
 
 
 以往在Web项目中, 如果要实现和服务器实时通讯可以通过轮询、长轮询来实现, 此时即浪费带宽又消耗服务器资源.但是使用WebSocket可以很好的解决该问题, 如果你担心不同浏览器不支持WebSocket, 那么[socketio](https://socket.io)是一个不错的选择, 它封装了WebSocket、轮询和其他一些实时通讯方式.

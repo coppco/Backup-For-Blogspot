@@ -91,4 +91,4 @@ NotificationCenter.default.post(name: NSNotification.Name(rawValue: customerDidL
 
 ### 3. Xcode8.0 项目默认会有很多系统打印, 可以在Edit Scheme---->Run---->Arguments---->Environment Variables里面添加OS_ACTIVITY_MODE, 值为disable, 注意前面需要勾选! 即可在控制台隐藏这些系统的输出打印.
 
-![如图](http://oak4eha4y.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-12%20%E4%B8%8B%E5%8D%886.49.04.png)
+![如图](http://47.96.147.179/images/iOS/xcode8_logs.png)

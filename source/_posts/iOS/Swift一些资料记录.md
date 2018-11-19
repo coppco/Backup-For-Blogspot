@@ -40,7 +40,7 @@ make.top.greaterThanOrEqualTo(self).offset(84).priorityHigh()
 # 小技巧
 __<font size=4 color=red>1. 使用Swift时,Release版本不希望打印输出,而Debug版本正常打印</font>__
 * __在Target--->Build Setting--->搜索Other Swift Flags--->在Debug 里面添加-D DEBUG__
-![添加步骤](http://oak4eha4y.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-23%20%E4%B8%8A%E5%8D%8811.06.10.png)
+![添加步骤](http://47.96.147.179/images/iOS/swift_debug.png)
 * 这样在项目中就可以使用下面的代码进行添加编译了
 ```
 #if DEBUG
@@ -66,7 +66,7 @@ func HJLog(items: Any..., file:String = __FILE__, line:Int = __LINE__, function:
 }
 ```
 
-效果图:![自定义打印](http://oak4eha4y.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-07-23%20%E4%B8%8A%E5%8D%8811.16.34.png)
+效果图:![自定义打印](http://47.96.147.179/images/iOS/xcode_debug_log.png)
 当切换到Release版本下,HJLog就不再会打印了.一劳永逸~~
 
 __<font size=4 color=red>2. 在Swift中获取实例的类型,除了使用Objective-C中的方法,还可以使用</font>__
@@ -81,7 +81,7 @@ HJLog(HJTabBarController.classForCoder())       //方法2:使用类名.classForC
 HJLog(self.classForCoder)                       //方法3:使用实例.classForCoder
 HJLog(self.dynamicType)                        //方法4:使用实例.dynamicType
 ```
-效果图:![获取类型](http://oak4eha4y.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-08-02%20%E4%B8%8A%E5%8D%8811.24.07.png)
+效果图:![获取类型](http://47.96.147.179/images/iOS/swift_type.png)
 
 
 __<font size=4 color=red>3. Swift闭包中解决循环引用问题</font>__

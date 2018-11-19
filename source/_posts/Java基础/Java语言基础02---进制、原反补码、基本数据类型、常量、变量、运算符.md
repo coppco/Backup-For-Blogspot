@@ -135,7 +135,7 @@ System.out.println('a' + 1 + "hello"); //98hello
 `System.out.println("5 + 5 =" + (5 + 5)); //5 + 5 = 10
 
 * ASCII码表
-![ASCII](http://oak4eha4y.bkt.clouddn.com/ASCII.jpg)
+![ASCII](http://47.96.147.179/images/java/ASCII.jpg)
 
 ## <font color=orange>运算符</font>
 * 运算符分类

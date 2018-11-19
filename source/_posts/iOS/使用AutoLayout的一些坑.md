@@ -60,7 +60,7 @@ cell.autoresizingMask = UIViewAutoresizingNone
 * <font size=3>command + 7 打开断点调试器</font>
 * <font size=3>点击左下方的+号,选择 Add Symbolic Breakpoint...</font>
 * <font size=3>在symbol里面添加 UIViewAlertForUnsatisfiableConstraints</font>
-如图:![添加symbolic breakpoint](http://oak4eha4y.bkt.clouddn.com/%E6%96%AD%E7%82%B9.png)
+如图:![添加symbolic breakpoint](http://47.96.147.179/images/iOS/point_iOS.png)
 * <font size=3>在控制台会打印类似错误:SnapKit.LayoutConstraint:0x7f8b1588b150@/Users/xxx/View/Cell.swift#121 PictureView:0x7f8b15892b70.height == 374.0</font>
 * <font size=3>使用po 0x7f8b15892b70 查看相关信息</font>
 * <font size=3>po [0x7fc82aba1210 recursiveDescription] 可以看到层级关系</font>

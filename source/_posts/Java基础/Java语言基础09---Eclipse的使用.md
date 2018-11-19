@@ -90,7 +90,7 @@ IDE是集成开发环境(Integrated Development Environment)
     * Mac
         * Command + Shift + F
 	* PS : 有时候按了无效是因为 输入法的快捷键冲突导致的, 可以修改输入法的快捷键.
-	* 如搜狗输入法修改如下 : ![去掉快捷键](http://oak4eha4y.bkt.clouddn.com/formatterCodeFail.png)
+	* 如搜狗输入法修改如下 : ![去掉快捷键](http://47.96.147.179/images/java/formatterCodeFail.png)
 * 代码缩进
 	* Windows
 		* 选中代码块, 使用tab缩进
@@ -218,7 +218,7 @@ IDE是集成开发环境(Integrated Development Environment)
 * 删除项目
 	* 选中项目---右键---delete---(慎重选择是否勾选从本地移除)
 	* 不勾选---本地文件还在
-	* 勾选---本地文件被删除,回收站也没有(慎重)![删除](http://oak4eha4y.bkt.clouddn.com/delete1.png)
+	* 勾选---本地文件被删除,回收站也没有(慎重)![删除](http://47.96.147.179/images/java/delete1.png)
 * 导入项目
 	* 包资源管理器---右键---import---general---Existing projects into workspace---选中项目所在路径---finish
 
@@ -238,4 +238,4 @@ IDE是集成开发环境(Integrated Development Environment)
 	* F6 : 可以一步一步往下走
 	* F5 : 进入方法
 
-* 新建类的时候说明:![新建类](http://oak4eha4y.bkt.clouddn.com/eclipse.png)
+* 新建类的时候说明:![新建类](http://47.96.147.179/images/java/eclipse.png)

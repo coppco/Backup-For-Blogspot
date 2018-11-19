@@ -166,3 +166,5 @@ WKWebView提供了下面的方法, 弥补了UIWebView类似方法返回值类型
 ```
 修改上面代码为: 
 [WKWebView.configuration.userContentController addScriptMessageHandler:[[HJWeakScriptMessageDelegate alloc] initWithDelegate:self] name:@"webViewHandles"];
+
+#### <font color=red>正确的做法: 新建一个代理类来处理</font>

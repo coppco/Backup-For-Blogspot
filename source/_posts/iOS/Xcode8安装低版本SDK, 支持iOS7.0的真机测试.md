@@ -18,7 +18,7 @@ tags:
 <!--more-->
 
 # <font color=orange>一、Deployment Target最低为7.0并且可以在iOS 7.0版本真机测试
-![真机测试报错](http://oak4eha4y.bkt.clouddn.com/Xcode8_iOS7.png)
+![真机测试报错](http://47.96.147.179/images/iOS/Xcode8_iOS7.png)
 
 * 1、从Xcode7或者更低版本的Xcode里面提取DeviceSupport支持文件
 >   Finder------右键------前往文件夹
@@ -32,10 +32,10 @@ tags:
 >	//修改配置文件
 * 注意拷贝进去几个文件夹就新增几个字段, 而且要按从小到大的顺序排列
 * 另外有的系统可能无法修改, 可以先把文件拷贝出来, 修改后再覆盖进去(需要输入管理员密码鉴定)
-![真机测试报错](http://oak4eha4y.bkt.clouddn.com/SDKSetting.png)
+![真机测试报错](http://47.96.147.179/images/iOS/SDKSetting.png)
 
 * 4、最后Deploymeng Target最低可以选择iOS7.0, 并且在iOS7.0的手机上面也可以真机了.
-![真机测试报错](http://oak4eha4y.bkt.clouddn.com/DeploymentTarget_7.0.png)
+![真机测试报错](http://47.96.147.179/images/iOS/DeploymentTarget_7.0.png)
 * 5、百度云下载密码:6g6j[下载地址](https://pan.baidu.com/s/1o7TJ6zw)
 
 # <font color=orange>二、为Xcode8添加iPhone 4S模拟器
@@ -51,7 +51,7 @@ Xcode -- Product -- Scheme -- Edit Scheme -- Run -- Environment Variables 中添
 进入快捷键：`command  + shift + <`
 
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/xcode8_log.png" alt="主设置界面" style="width: 80%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/iOS/xcode8_log.png" alt="主设置界面" style="width: 80%; text-align: center; display: block;"/>
 </center>
 
 

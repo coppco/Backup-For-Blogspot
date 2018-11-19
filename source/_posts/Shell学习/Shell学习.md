@@ -13,7 +13,7 @@ tags:
 
 最近希望可以一键自动打包iOS App Store上传的ipa包, 所有来学习一下Shell脚本.
 
-<img src="http://oak4eha4y.bkt.clouddn.com/shell_top.jpg" alt="hello" style="width: 50%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
+<img src="http://47.96.147.179/images/others/shell_top.jpg" alt="hello" style="width: 50%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
 
 <!--more-->
 

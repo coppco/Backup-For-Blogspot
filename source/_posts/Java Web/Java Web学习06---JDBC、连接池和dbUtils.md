@@ -19,7 +19,7 @@ JDBC是接口，而JDBC驱动才是接口的实现，没有驱动无法完成数
 * <font color=orange>JDBC的优点</font>
 &emsp;&emsp;只需用JDBC API写一个程序，就可以向相应数据库发送SQL调用, 不管数据库是Oracle、MySQL等.
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/my_jdbc.jpeg" alt="JDBC关系图" style="width: 40%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/my_jdbc.jpeg" alt="JDBC关系图" style="width: 40%; text-align: center; display: block;"/>
 JDBC关系图
 </center>
 * <font color=orange>JDBC的作用</font>
@@ -142,9 +142,9 @@ JDBC关系图
 &emsp;&emsp;数据库连接是一种关键的有限的昂贵的资源，这一点在多用户的网页应用程序中体现得尤为突出。对数据库连接的管理能显著影响到整个应用程序的伸缩性和健壮性，影响到程序的性能指标。数据库连接池正是针对这个问题提出来的。
 &emsp;&emsp;数据库连接池负责分配、管理和释放数据库连接，它允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个；释放空闲时间超过最大空闲时间的数据库连接来避免因为没有释放数据库连接而引起的数据库连接遗漏。这项技术能明显提高对数据库操作的性能。
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/no_servlet.jpeg" alt="没有连接池" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/no_servlet.jpeg" alt="没有连接池" style="width: 70%; text-align: center; display: block;"/>
 没有连接池
-<img src="http://oak4eha4y.bkt.clouddn.com/has_servlet.jpeg" alt="有连接池" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/has_servlet.jpeg" alt="有连接池" style="width: 70%; text-align: center; display: block;"/>
 有连接池
 </center>
 * 连接池的优点

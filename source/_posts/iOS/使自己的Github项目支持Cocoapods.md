@@ -13,7 +13,7 @@ tags:
 ---
 
 很早之前就想做的事情之一, 刚好最近有个新功能需要添加到项目中, 于是就想顺便上传到github, 使用Cocoapods来管理.
-<img src="http://oak4eha4y.bkt.clouddn.com/github_cocoapods.jpg" alt="hello" style="width: 50%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
+<img src="http://47.96.147.179/images/iOS/github_cocoapods.jpg" alt="hello" style="width: 50%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
 <!--more-->
 
 # <font color=orange>项目支持Cocoapods</font>

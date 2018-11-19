@@ -14,7 +14,7 @@ tags:
 	- npm
 ---
 
-<img src="http://oak4eha4y.bkt.clouddn.com/mirror.jpg" alt="hello" style="width: 70%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
+<img src="http://47.96.147.179/images/others/mirror.jpg" alt="hello" style="width: 70%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
 
 最近学习JAVA不得不从网外下载一些东西, 但是由于GFW的缘故导致下贼慢, 所有整理了一下目前国内的一些开源Mirror镜像站.
 

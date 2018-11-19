@@ -16,7 +16,7 @@ tags:
 <!--more-->
 
 实际图:
-![实际图](http://oak4eha4y.bkt.clouddn.com/progress_2017_05_24.jpeg)
+![实际图](http://47.96.147.179/images/iOS/progress_iOS.jpeg)
 
 先来说下我的实现
 * <font color=orange size=4>一、首先画背景灰色的圆弧</font>

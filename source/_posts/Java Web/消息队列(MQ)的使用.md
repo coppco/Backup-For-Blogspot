@@ -1,6 +1,6 @@
 ---
 layout: post
-title: MQ的使用
+title: 消息队列(MQ)的使用
 comments: true
 toc: true
 date: 2017-06-23 13:49:48
@@ -9,7 +9,7 @@ tags:
 	- MQ
 ---
 
-<img src="http://oak4eha4y.bkt.clouddn.com/mq.jpg" alt="hello" style="width: 80%; text-align: center; display: block; margin-top:0px; margin-bottom:0px"/>
+<img src="http://47.96.147.179/images/java/MQ_header.jpg" alt="hello" style="width: 80%; text-align: center; display: block; margin-top:0px; margin-bottom:0px"/>
 
 ## <font color=orange>什么是MQ</font>
 消息队列（MQ）是一种应用程序对应用程序的通信方法。应用程序通过写和检索出入列队的针对应用程序的数据（消息）来通信，而无需专用连接来链接它们。消息传递指的是程序之间通过在消息中发送数据进行通信，而不是通过直接调用彼此来通信，直接调用通常是用于诸如远程过程调用的技术。排队指的是应用程序通过队列来通信。队列的使用除去了接收和发送应用程序同时执行的要求。
@@ -66,7 +66,7 @@ ActiveMQ 是Apache出品，最流行的，能力强劲的开源消息总线。Ac
 如果服务器安装了防火墙请开放`8161`端口, 该端口是ActiveMQ默认的管理端口.
 然后浏览器打开`http://服务器ip地址:8161/admin`, 用户名和密码默认是`admin`
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/activeMQ.png" alt="hello" style="width: 100%; text-align: center; display: block; margin-top:0px; margin-bottom:0px"/>
+<img src="http://47.96.147.179/images/java/activeMQ.png" alt="hello" style="width: 100%; text-align: center; display: block; margin-top:0px; margin-bottom:0px"/>
 </center>
 
 ## <font color=orange> ActiveMQ的使用 </font>

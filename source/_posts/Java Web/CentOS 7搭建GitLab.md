@@ -154,10 +154,10 @@ gitlab_rails['gitlab_email_from'] = "xxx@163.com"
 		* 设置不能注册后, 可以配置好邮箱设置, 创建用户不设置密码, 那么会自动发送注册邮件到设置的邮箱, 让用户设置密码.
 		* 对于人员想对较多的可以打开注册, 设置注册域的白名单
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_gitlab_setting.png" alt="进入设置" style="width: 70%; height:100px; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_gitlab_setting.png" alt="进入设置" style="width: 70%; height:100px; text-align: center; display: block;"/>
 </center>
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_gitlab_disableSignUp.png" alt="去掉Sign-up enabled前面的勾" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_gitlab_disableSignUp.png" alt="去掉Sign-up enabled前面的勾" style="width: 70%; text-align: center; display: block;"/>
 </center>
 	* 5.6、修改配置文件后需要重新加载配置文件和重启
 ```

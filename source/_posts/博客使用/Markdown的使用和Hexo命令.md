@@ -507,7 +507,7 @@ Mac下:
 * 2.3、这样设置有一个弊端: 当我们每次运行`hexo d`的时候会把这个`CNAME`文件删除掉, 所以我们可以在自己的博客项目的`source/`下, 添加这个`CNAME`的文件.(注意名称必须一样, 大写,没有后缀名称)
 
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/9590B1C2-2D11-471D-B2EC-E49B86920207.png" alt="hello" style="width: 80%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
+<img src="http://47.96.147.179/images/others/github_page.png" alt="hello" style="width: 80%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
 </center>
 
 ### 3、解析域名到github page
@@ -515,12 +515,12 @@ Mac下:
 * 3.1、首先我们登录阿里云, 在`控制台`----`域名`----`域名列表`中选择自己的域名----`解析`
 * 3.2 配置`CNAME`解析: 解析到一个域名
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/cname1.png" alt="hello" style="width: 80%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
+<img src="http://47.96.147.179/images/others/cname1.png" alt="hello" style="width: 80%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
 </center>
 
 	* 3.2.1、主机记录, 一般我们配置`@`和`www`即可, 如果想访问其他二级域名也调到博客页面, 可以配置个`*`
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/%E8%AE%B0%E5%BD%95.png" alt="hello" style="width: 50%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
+<img src="http://47.96.147.179/images/others/host_regex.png" alt="hello" style="width: 50%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
 </center>
 
 * 3.3 配置`A`解析: 解析到一个IP地址

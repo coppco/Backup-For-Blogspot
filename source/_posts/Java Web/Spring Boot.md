@@ -10,7 +10,7 @@ tags:
 	- Spring Boot
 ---
 
-<img src="http://oak4eha4y.bkt.clouddn.com/Spring_Boot_pic.jpg" alt="hello" style="width: 40%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
+<img src="http://47.96.147.179/images/java/Spring_Boot_pic.jpg" alt="hello" style="width: 40%; text-align: center; display: block; margin-top:30px; margin-bottom:30px"/>
 
 ## <font color=orange>什么是Spring Boot</font>
 

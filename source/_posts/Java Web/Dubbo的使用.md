@@ -41,7 +41,7 @@ Dubbo就是资源调度和治理中心的管理工具.
 
 ## <font color=orange> Dubbo的架构 </font>
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/dubbo1.png" alt="dubbo" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/dubbo1.png" alt="dubbo" style="width: 70%; text-align: center; display: block;"/>
 </center>
 
 * 节点角色说明

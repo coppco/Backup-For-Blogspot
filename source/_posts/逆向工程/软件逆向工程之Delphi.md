@@ -37,7 +37,7 @@ tags:
 其他查壳工具还有: `Fi`、`GetTyp`和`pe-scan`等.
 
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/peid.png" alt="使用PEiD查壳" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/others/peid.png" alt="使用PEiD查壳" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 
 运气比较好, 如上图所示这个exe文件是没有壳的,而且是使用Delhpi编写的, 如果红圈里面是`Not Found`就是加过壳的, 如果后面有[Overlay]可能是加了伪装成对应语言的壳.
@@ -83,46 +83,46 @@ tags:
 
 #### 将可执行文件拖入软件或者从文件菜单打开
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/ollydbg%E4%B8%BB%E7%9B%AE%E5%BD%95.png" alt="ollydbg主目录" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/others/ollydbg_main.png" alt="ollydbg主目录" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 
 #### 通过`查找------所有参考文本字符串`快速查找
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/ollydbg_search.png" alt="快速查找" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/others/ollydbg_search.png" alt="快速查找" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 
 #### 在汇编窗口查看, 双击该字符串行或者选择`反汇编窗口中跟随`
 
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/ollydbg_search.png" alt="快速查找" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/others/ollydbg_search.png" alt="快速查找" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/ollydbg_search2.png" alt="反汇编窗口查看" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/others/ollydbg_search2.png" alt="反汇编窗口查看" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 
 #### 修改汇编语言以及相关文字
 * 修改汇编语言, 双击汇编区域的一行
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/ollydbg_edtingCode.png" alt="修改汇编语言" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/others/ollydbg_edtingCode.png" alt="修改汇编语言" style="width: 70%; text-align: center; display: block;"/>
 </center>
 * 修改文字, `右键`------`数据窗口中跟随`------`选择`
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/ollydbg_edtingWord.png" alt="修改文字1" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/others/ollydbg_edtingWord.png" alt="修改文字1" style="width: 70%; text-align: center; display: block;"/>
 </center>
 双击`HEX数据`中的数据位置, 即可更改文字, 需要注意的是: <font color=red>保持大小</fong>需要勾选.
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/ollydbg_edting_word2.png" alt="修改文字2" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/others/ollydbg_edting_word2.png" alt="修改文字2" style="width: 70%; text-align: center; display: block;"/>
 </center>
 
 #### 保存修改保存到可执行文件
 `右键`------`复制到壳执行文件`------`全部复制`------`新窗口右键`------`保存`
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/ollydbg_saving1.png" alt="保存" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/others/ollydbg_saving1.png" alt="保存" style="width: 70%; text-align: center; display: block;"/>
 </center>
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/ollydbg_saving2.png" alt="全部复制" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/others/ollydbg_saving2.png" alt="全部复制" style="width: 70%; text-align: center; display: block;"/>
 </center>
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/ollydbg_saving3.png" alt="保存到文字即可" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/others/ollydbg_saving3.png" alt="保存到文字即可" style="width: 70%; text-align: center; display: block;"/>
 </center>

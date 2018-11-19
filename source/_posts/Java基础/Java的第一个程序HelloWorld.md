@@ -59,8 +59,8 @@ tags:
 
 ### EditPlus的使用
 在EditPlus-----工具----参数设置------工具----用户工具----添加工具----选择应用程序----->分别欠添加javac和java的快捷方式
-如图所示: ![说明](http://oak4eha4y.bkt.clouddn.com/EditPlus%E8%AF%B4%E6%98%8E.png)
-快捷方式如下: ![快捷方式](http://oak4eha4y.bkt.clouddn.com/EditPlus%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F.png)
+如图所示: ![说明](http://47.96.147.179/images/java/EditPlus_desc.png)
+快捷方式如下: ![快捷方式](http://47.96.147.179/images/java/EditPlus_quick.png)
 
 #### EditPlus模板的设置
 1. 在EditPlus-----工具----参数设置-----文件----模板----Java----template.java载入修改为Java的格式

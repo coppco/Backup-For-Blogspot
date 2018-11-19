@@ -65,7 +65,7 @@ if ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0) {
 }
 ```
 <font color=green>__预览__:</font>
-![应用图标3D Touch](http://oak4eha4y.bkt.clouddn.com/3dtouch_icon.png)
+![应用图标3D Touch](http://47.96.147.179/images/iOS/3dtouch1.png)
 
 ## <font color=orange>二、Peek and Pop使用</font>
 当在一个控制器上使用3D Touch的时候, 会经历三个步骤
@@ -121,8 +121,6 @@ if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable
 }
 ```
 <font color=green>__预览__:</font>
-![应用图标3D Touch](http://oak4eha4y.bkt.clouddn.com/peek-pop.png)
-
-
+![应用图标3D Touch](http://47.96.147.179/images/iOS/3dtouch2.png)
 
 

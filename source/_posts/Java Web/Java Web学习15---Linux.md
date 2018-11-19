@@ -59,14 +59,14 @@ Linux是基于Unix的一种自由和开放源码的操作系统，存在着许�
 * 安装 CentOS
 	* <font color=orange>选择`Install CentOS 7`</font>
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centOS_1.png" alt="选择Install CentOS 7" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centOS_1.png" alt="选择Install CentOS 7" style="width: 70%; text-align: center; display: block;"/>
 </center>
 	* <font color=orange>语言选择</font>`中文`----`简体中文(中国)`----`继续`, <font color=red>在此选择的语言会称为操作系统的默认语言</font>
 <center>	
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_2.png" alt="语言选择" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_2.png" alt="语言选择" style="width: 70%; text-align: center; display: block;"/>
 </center>
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_5.png" alt="主设置界面" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_5.png" alt="主设置界面" style="width: 70%; text-align: center; display: block;"/>
 </center>
 
 	* <font color=orange>日期和时间</font>
@@ -74,33 +74,33 @@ Linux是基于Unix的一种自由和开放源码的操作系统，存在着许�
 		* 可以使用上面的列表来选择, 也可以鼠标选择图中区域来选择
 		* 使用网络时间, 首先需要当前系统已经联网, 并且点击后面的设置按钮`添加并标记为使用NTP服务器`
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_3.png" alt="日期和时间" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_3.png" alt="日期和时间" style="width: 70%; text-align: center; display: block;"/>
 </center>
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_4.png" alt="设置NTP" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_4.png" alt="设置NTP" style="width: 70%; text-align: center; display: block;"/>
 </center>
 	* <font color=orange>键盘</font>(K), 添加一个或多个键盘类型作为系统键盘, 第一个位置将作为默认键盘.
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_6.png" alt="键盘设置" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_6.png" alt="键盘设置" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 	* <font color=orange>语言支持</font>(L), 选择需要安装的额外支持语言	
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_7.png" alt="语言支持" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_7.png" alt="语言支持" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 	* <font color=orange>安装源</font>, 选择安装源安装系统的位置
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_8.png" alt="安装源" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_8.png" alt="安装源" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 
 		* 自动检测安装介质: 使用完整DVD或者USB驱动器启动安装时, 安装程序会检查到它, 并显示在此选项下的基本信息. 点击`验证`以确保适合于安装.
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_9.png" alt="安装源" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_9.png" alt="安装源" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 		* iSO文件: 如果安装程序检测到一个分区的硬盘驱动器挂载的文件系统, 此选项会出现.选择ISO文件,  点击`验证`以确保适合于安装.
 		* 在网络上: 从网络上选择下载地址, 可以选择`http://`、`https://`、`ftp://`和`nfs`
 	* <font color=orange>软件选择</font>, 选择一个软件包, 默认是`最小安装`
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_10.png" alt="软件选择" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_10.png" alt="软件选择" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 	
 		* 最小安装: 这个选项只提供运行CentOS 的基本软件包。最小安装为单一目的服务器提供基本需要，并可在这样的安装中最大化性能和安全性
@@ -116,16 +116,16 @@ Linux是基于Unix的一种自由和开放源码的操作系统，存在着许�
 		* 主机名可以是完全限定域名（FQDN）格式hostname.domainname或主机名格式 的短主机名.
 		* 许多网络有动态主机配置协议（DHCP）服务，它提供自动连接系统与域名。要允许DHCP服务的域名分配给这台机器，只有指定的短主机名.
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_11.png" alt="网络和主机名" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_11.png" alt="网络和主机名" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 		
 		* 如果需要手动配置网络
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_12.png" alt="手动配置网络" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_12.png" alt="手动配置网络" style="width: 70%; text-align: center; display: block;"/>
 </center>				
 	* <font color=orange>安装位置</font>
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_13.png" alt="安装位置" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_13.png" alt="安装位置" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 	
 		* 本地标准磁盘: 本地的硬盘
@@ -134,12 +134,12 @@ Linux是基于Unix的一种自由和开放源码的操作系统，存在着许�
 			* 自动配置分区: 系统自动分区
 			* 我想让额外空间可用: 只能在自动配置分区中使用, 但是空间不足, 可以使用这个来释放空间.
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_14.png" alt="我想让额外空间可用" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_14.png" alt="我想让额外空间可用" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 
 			* <font color=red>我要配置分区</font>: 手动分区
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_17.png" alt="手动分区" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_17.png" alt="手动分区" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 				* `/root`: 挂载在/boot中的分区, 包含操作系统内核以及自我引导过程中的文件, 一般是xfs格式的分区, 500M足够大多数用户使用.
 				* `/`: 根目录, 默认情况下所有文件都会写入该分区
@@ -149,16 +149,16 @@ Linux是基于Unix的一种自由和开放源码的操作系统，存在着许�
 		* <font color=red>加密</font>, 对`/root`以外的分区进行加密
 	* 开始安装
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_15.png" alt="开始安装" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_15.png" alt="开始安装" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 
 		* 安装过程中可以设置root用户密码和创建新用户, 安装的时间取决于选择的软件安装包多少
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_16.png" alt="安装过程中" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_16.png" alt="安装过程中" style="width: 70%; text-align: center; display: block;"/>
 </center>	
 	* 安装完成后重启, 需要LICENSING
 <center>
-<img src="http://oak4eha4y.bkt.clouddn.com/centos_18.png" alt="LICENSING" style="width: 70%; text-align: center; display: block;"/>
+<img src="http://47.96.147.179/images/java/centos_18.png" alt="LICENSING" style="width: 70%; text-align: center; display: block;"/>
 </center>		
 * `ssh 用户名@host`, 例如: `ssh root@1.2.3.4`
 * 使用VirtualBox安装虚拟机后, 网络需要选择`桥接网卡`方式, 才能正确获取虚拟机的IP地址

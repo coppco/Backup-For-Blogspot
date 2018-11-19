@@ -25,7 +25,7 @@ tags:
 * 本地构建版本号
     * [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]
 
-![版本号和构建版本号](http://oak4eha4y.bkt.clouddn.com/version_build.png)
+![版本号和构建版本号](http://47.96.147.179/images/iOS/version_build.png)
 
 ## 3、判断版本是否需要提示(这里是关键, 需要进行判断才显示, 不然会被拒)
 

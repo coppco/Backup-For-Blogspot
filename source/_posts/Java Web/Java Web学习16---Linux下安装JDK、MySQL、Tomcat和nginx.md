@@ -611,3 +611,83 @@ upstream server_xxxx{
     ip_hash;
  }
 ```
+
+### <font color=orange>Center OS下nginx开机启动</font>
+
+#### <font color=orange>一、使用yum命令安装的</font>
+如果用yum install命令安装的，yum命令会自动创建nginx.service文件，直接用命令
+
+> systemcel enable nginx.service
+
+#### <font color=orange>二、源码编译安装的</font>
+编译安装的需要在`/lib/systemd/system/`中手动新建`nginx.service`文件, 并配置相关参数, 可以参考[NGINX systemd service file](https://www.nginx.com/resources/wiki/start/topics/examples/systemd/)
+
+#### <font color=orange>新建nginx.service文件</font>
+
+```
+vi /lib/systemd/system/nginx.service
+```
+
+#### <font color=orange>配置相关参数</font>
+注意这里的参数路径: 和使用.configuartion参数配置时的路径一致
+```
+[Unit]
+Description=The NGINX HTTP and reverse proxy server
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/nginx/nginx.pid
+ExecStart=/usr/local/nginx/sbin/nginx
+ExecReload=/usr/local/nginx/sbin/nginx -s reload
+ExecStop=/bin/kill -s QUIT $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+```
+
+> [Unit]:服务的说明
+Description:描述服务
+After:描述服务类别
+[Service]服务运行参数的设置
+Type=forking是后台运行的形式
+ExecStart为服务的具体运行命令
+ExecReload为重启命令
+ExecStop为停止命令
+PrivateTmp=True表示给服务分配独立的临时空间
+注意：[Service]的启动、重启、停止命令全部要求使用绝对路径
+[Install]运行级别下服务安装的相关设置，可设置为多用户，即系统运行级别为3
+
+#### <font color=orange>开机启动相关命令</font>
+
+> 设置开机启动: systemctl enable nginx.service
+> 启动nginx服务: systemctl start nginx.service　
+> 停止开机启动: systemctl disable nginx.service
+> 查看服务当前状态: systemctl status nginx.service
+> 重新启动服务: systemctl restart nginx.service
+> 查看所有已启动的服务: systemctl list-units --type=service
+
+### <font color=orange>搭建图片服务器</font>
+
+#### <font color=orange>新增location</font>
+
+在 nginx 的配置文件 `/安装路径/conf/nginx.conf`中添加
+
+```
+location /images/ {
+	#将/images路径映射到实际路径/home/images
+	root /home;
+	#开启预览功能
+	autoindex on;
+}
+```
+
+#### <font color=orange>重新启动nginx, 访问图片</font>
+* 重新启动nginx, 新建`/home/images`文件夹, 并更改`/home/images`文件夹权限, 阿里云EOS用户还需要注意在控制台开启80端口
+```
+mkdir -p /home/images
+chown 777 -R /home/images
+```
+* 将图片拷贝到服务器`/home/images`目录中
+* 通过`服务器ip/images/图片名称`访问
