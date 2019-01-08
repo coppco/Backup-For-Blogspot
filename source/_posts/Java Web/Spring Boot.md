@@ -824,6 +824,7 @@ java -jar xx.jar
 ```
 rpm -ivh jdk-8u51-linux-x64.rpm
 ```
+	* 参考[官方文档设置](https://docs.spring.io/spring-boot/docs/2.0.0.M7/reference/htmlsingle/#deployment-service)
 	* 基于`init.d`(CentOS 6.6)注册服务
 		* 注册服务, springbootDemo就是服务名, 项目日志在`/home/log/springbootDemo.log`下
 ```
@@ -848,7 +849,8 @@ Description=springbootDemo
 After=syslog.target
 
 [service]
-ExexStart= /usr/bin/java -jar /home/apps/springbootDemo-0.0.1-SNAPSHOT.jar
+User=root
+ExexStart=/home/apps/springbootDemo-0.0.1-SNAPSHOT.jar
 
 [Install]
 WantedBy=multi-user.target
