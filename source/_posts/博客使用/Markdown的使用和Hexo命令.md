@@ -469,21 +469,24 @@ Mac下:
     3. 然后进入博客文件夹使用sudo npm install hexo -server
     4. npm install(主要是.gitignore忽略了node_modules文件夹, 需要重新安装)  
 温馨提示: 有时候执行npm install非常慢, 可以把npm换成淘宝镜像
-`
+
 1.通过config命令(永久)
->npm config set registry https://registry.npm.taobao.org 
->npm info express  或者 npm config get registry 来验证（如果上面配置正确这个命令会有字符串response）
-
+```
+npm config set registry https://registry.npm.taobao.org 
+npm info express  或者 npm config get registry 来验证（如果上面配置正确这个命令会有字符串response）
+```
 2.命令行指定(临时)
->npm --registry https://registry.npm.taobao.org install express
-
+```
+npm --registry https://registry.npm.taobao.org install express
+```
 3.编辑 ~/.npmrc 加入下面内容,  这个是写死的,下次打开配置还在
->registry = https://registry.npm.taobao.org
-
+```
+registry = https://registry.npm.taobao.org
+```
 4.改回官方地址可以使用
->npm config set registry https://registry.npmjs.org/
->`
-
+```
+npm config set registry https://registry.npmjs.org/
+```
 备注: 详情参考这里---->[国内优秀npm镜像推荐及使用](http://riny.net/2014/cnpm/)
 第一次使用markdown写这个,还是比较生疏!
 
