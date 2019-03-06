@@ -318,15 +318,15 @@ java -jar xx.jar --service.port=9090
 #### <font color=orange>常规属性配置</font>
 
 ##### <font color=orange>Spring Boot导入资源文件方式1</font>
-直接在`application.properties`中添加字段即可, 然后使用`@Value`取即可
+直接在`application.properties`中添加字段即可, 然后使用`@Value("${key}")`取即可
 ##### <font color=orange>Spring Boot导入资源文件方式2</font>
-新建xxx.properties, 使用`@PropertySource`注解导入, 然后再使用`@Value`取即可
+新建xxx.properties, 使用`@PropertySource`注解导入, 然后再使用`@Value("${key}")`取即可
 ```java
 @PropertySource("classpath:xxx.properties")
 ```
 
 #### <font color=orange>类型安全的配置</font>
-除了`@Value`注解注入每个值外, Spring Boot还提供使用`@ConfigurationProperties`将properties中的属性和一个Bean及其属性关联.
+除了`@Value("${key}")`注解注入每个值外, Spring Boot还提供使用`@ConfigurationProperties`将properties中的属性和一个Bean及其属性关联.
 
 * 首先在入口类添加哪个类进行配置
 ```java
