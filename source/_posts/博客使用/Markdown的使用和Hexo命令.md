@@ -464,10 +464,11 @@ Windows下:
     3. 进入微博备份目录 使用右键----> Git Bash,  输入命令:npm install -g hexo-cli  
     4. npm isntall(主要是.gitignore忽略了node_modules文件夹, 需要重新安装)  
 Mac下:
-    1. 安装node.js , 可以去[官网](https://nodejs.org/en/)下载Mac版本  
-    2. 安装git   安装了Xcode, 默认会安装好了
-    3. 然后进入博客文件夹使用sudo npm install hexo -server
-    4. npm install(主要是.gitignore忽略了node_modules文件夹, 需要重新安装)  
+    1. 安装node.js: 可以去[官网](https://nodejs.org/en/)下载Mac版本  
+    2. 安装git: 安装了Xcode, 默认会安装好了
+    3. 安装hexo: ``npm install hexo-cli -g``
+    4. 如果安装时出现权限问题, 请授权: ``sudo chown -R `whoami` /usr/local/lib/node_modules``
+    5. npm install(主要是.gitignore忽略了node_modules文件夹, 需要重新安装), 如果存在权限问题, 请运行``sudo chown -R `whoami` 你的博客路径``后再次安装
 温馨提示: 有时候执行npm install非常慢, 可以把npm换成淘宝镜像
 
 1.通过config命令(永久)
@@ -475,14 +476,17 @@ Mac下:
 npm config set registry https://registry.npm.taobao.org 
 npm info express  或者 npm config get registry 来验证（如果上面配置正确这个命令会有字符串response）
 ```
+
 2.命令行指定(临时)
 ```
 npm --registry https://registry.npm.taobao.org install express
 ```
+
 3.编辑 ~/.npmrc 加入下面内容,  这个是写死的,下次打开配置还在
 ```
 registry = https://registry.npm.taobao.org
 ```
+
 4.改回官方地址可以使用
 ```
 npm config set registry https://registry.npmjs.org/

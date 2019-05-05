@@ -17,6 +17,7 @@ var count: UInt32 = 0
 let properties = class_copyPropertyList(className, &count) //属性列表
 ```   
 
+<!--more-->
 
 # 总结
 * <font color=black size=4>纯Swift类型无法使用runtime运行时, 可以在属性、函数前面添加__@objc__, 它看可以把纯Swift的API导出给Objecttive-C使用</font>
