@@ -42,13 +42,16 @@ git clone https://github.com/你的用户名/你的项目名.git
 
 ## 将你的代码拷贝到该仓库中
 
-将你的项目添加到仓库中
+将你的项目添加到仓库中, 或者使用下面命令创建新项目
+
+> pod lib create 项目名称
 
 ## 配置 .podspec文件
-* 在仓库中新建配置文件(推荐使用`你的项目名`)
+使用上一步的命令创建的项目会自动创建`xxx.podspec`, 如果是自己新建的项目则没有, 需要自己创建。
+* 在仓库中新建配置文件
 
 ```
-pod spec create 你的项目名
+pod spec create 项目名称
 ```
 
 * 配置文件中字段说明, [官方文档](http://guides.cocoapods.org/syntax/podspec.html)
@@ -278,3 +281,45 @@ xcrun: error: unable to find utility "simctl", not a developer tool or in PATH
 
 * 解决办法
 >`Xcode`--------`Command + ,`--------`Locations`--------`Command Line Tools`设置一下即可
+
+
+
+# <font color=orange> CocoaPods和SVN配合使用 </font>
+
+2019年, 新入职公司代码控制工具使用的是SVN, 所以又研究了一下CocoaPods和SVN结合使用。
+
+* 1、首先在SVN服务器创建项目目录
+	* 需要包含正确的目录: `branches`、`tags`、`trunk`
+* 2、在`trunk`目录中添加项目以及`xxx.podspec`
+	* 也可以使用`pod lib create xxx`自动生成
+* 3、添加代码并配置好`xxx.podspec`
+	* 这里需要注意的是`xxx.podspec`里面的配置
+	> Pod::Spec.new do |s|
+	> s.name         = "xxx"
+	> #<font color=red>注意这里的version必须是SVN中该项目存在的tag值</font>
+	> s.version      = "1.0.0"
+	> s.summary      = "封装xxx"
+	> s.homepage     = "http://www.xxx.com"
+	> s.license      = "MIT"
+	> s.author             = { "xxx" => "xxx@xxx.com" }
+	> s.ios.deployment_target = "7.0"
+	> s.platform           = :ios, '7.0'
+	> 
+	> #<font color=red>这里需要修改为你项目所在SVN的地址</font>
+	> s.source       = { :git => "http://192.168.1.100/iOSComponent/xxx", :tag => "#{s.version}" }
+	> 
+	> s.public_header_files = 'xxx/*.h'
+	>
+	> s.source_files = 'xxx/*.{h,m}'
+	> 
+	> s.requires_arc      = true
+	> 
+	> end
+
+* 4、代码提交到SVN服务器
+* 5、选中`trunk`文件夹, 添加tag
+	* 添加完成之后, 会在`tags`文件夹下面自动生成对应的tag文件夹
+* 6、在`Profile`文件中添加私有库的引用
+	> #<font color=red>这里注意SVN地址是项目所在的SVN地址,tag就是项目中已经添加的tag</font>
+	> pod 'xxx',:svn =>'http://192.168.1.100/iOSComponent/xxx',:tag =>'1.0.0'
+* 7、执行`pod install`完成导入
