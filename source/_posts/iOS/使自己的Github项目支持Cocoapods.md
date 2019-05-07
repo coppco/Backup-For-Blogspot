@@ -323,3 +323,4 @@ xcrun: error: unable to find utility "simctl", not a developer tool or in PATH
 	> #<font color=red>这里注意SVN地址是项目所在的SVN地址,tag就是项目中已经添加的tag</font>
 	> pod 'xxx',:svn =>'http://192.168.1.100/iOSComponent/xxx',:tag =>'1.0.0'
 * 7、执行`pod install`完成导入
+	* <font color=red>这里需要注意的是: 由于SVN一般有权限, 所以在第一次执行之前需要我们手动`svn check`一次, 然后输入有该项目权限的用户名和密码</font>
