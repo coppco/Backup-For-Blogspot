@@ -7,54 +7,105 @@ tags:
 	- Java
 ---
 
-## <font color=orange>键盘录入</font>
-1. 导入包
-	* 格式: import java.util.Scanner;
-	* 位置: 在class上面
-2. 创建键盘录入对象
-	* 格式: Scanner sc = new Scanner(System.in);
-3. 通过对象获取数据
-	* 格式: int x = sc.nextInt();
-4. OC和Swift使用UITextField控件实现键盘输入
-<!--more-->
+## 键盘录入
 
-## <font color=orange>流程控制语句</font>
+1. 导入包
+  * 格式: import java.util.Scanner;
+  * 位置: 在class上面
+
+2. 创建键盘录入对象
+
+  * 格式: Scanner sc = new Scanner(System.in);
+
+3. 通过对象获取数据
+
+  * 格式: int x = sc.nextInt();
+
+  
+
+  <!--more-->
+
+## 流程控制语句
+
 * 顺序结构
-	* 语句从上自下依次执行
+
+  * 语句从上自下依次执行
 * 选择结构
-	* if语句
-		* if (表达式) { //code
-		* if (表达式) { //code } else { //code }
-		* if (表达式1) { //code } else if (表达式2) { //code }
-		* if语句使用注意
-			* 表达式无论复杂还是简单,结果必须是boolean类型
-				* OC中非0即是真,Swift和Java一样
-			* 如果语句体里面只有一条语句,大括号可以不写(int x = 10; 其实是两句话,先声明后赋值)
-				* OC和Java一致, 表达式括号不能省略
-				* Swift大括号已经不能省略, 但是表达式的括号可以省略
-			* 一般if语句有左大括号就没有分号,右分号就没有左大括号
-	* switch语句
-		* 格式
->switch (表达式) {
- case 值1:
-	//code1;
- 	break;   
- case 值2: 
-	//code2;
-	break; 
- default:
-	//code3; 
-	break;
-}		
-		* OC中表达式可以为基本数据类型, 枚举,字符串
-		* Swift中表达式类型比较多, 而且case里面的值还可以添加条件、区间等, break默认会自动添加.不需要手动添加,如果需要向下执行可以添加fallthrough关键字
-		* Java中switch的表达式可以接受哪些类型
-			* byte、char、short、int
-			* long类型不可以
-			* JDK1.5之后可以接受枚举
-			* JDK1.7之后可以接受字符串
-		* case里面的值必须是常量
-		* Java中Switch遇到Switch右大括号和break会跳出,否则会继续向下执行语句(和OC一样, Swift中每个case默认会加break)
+  * if语句
+    * 格式1
+
+      ```
+      if (关系表达式) {
+          语句体;	
+      }
+      ```
+
+    * 格式2
+
+      ```
+      if (关系表达式) {
+          语句体1;	
+      } else {
+          语句体2;	
+      }
+      ```
+
+    * 格式3
+
+      ```
+      if (关系表达式1) {
+          语句体1;	
+      } else if (关系表达式2) {
+          语句体2;	
+      } 
+      …
+      else {
+          语句体n+1;
+      }
+      ```
+
+    * if语句使用注意
+      * 表达式无论复杂还是简单,结果必须是boolean类型
+      * 如果语句体里面只有一条语句,大括号可以不写(int x = 10; 其实是两句话,先声明后赋值)
+      * 一般if语句有左大括号就没有分号,有分号就没有左大括号
+
+  * switch语句
+
+    ```
+    switch (表达式) {
+    	case 1:
+    		语句体1;
+    		break;
+    	case 2:
+    		语句体2;
+    		break;
+    	...
+    	default:
+    		语句体n+1;
+    		break;
+    }
+    ```
+
+    * 表达式类型
+      * byte、char、short、int
+      * long类型不可以
+      * JDK1.5之后可以接受枚举
+      * JDK1.7之后可以接受字符串
+    * case里面的值必须是常量
+    * 在执行的过程中，遇到break或者switch的右大括号就会结束
+
+  * 循环结构
+
+​	
+>	* OC中表达式可以为基本数据类型, 枚举,字符串
+>	* Swift中表达式类型比较多, 而且case里面的值还可以添加条件、区间等, break默认会自动添加.不需要手动添加,如果需要向下执行可以添加fallthrough关键字
+>	* Java中switch的表达式可以接受哪些类型
+>		* byte、char、short、int
+>		* long类型不可以
+>		* JDK1.5之后可以接受枚举
+>		* JDK1.7之后可以接受字符串
+>	* case里面的值必须是常量
+>	* Java中Switch遇到Switch右大括号和break会跳出,否则会继续向下执行语句(和OC一样, Swift中每个case默认会加break)
 * 循环结构
 	* for 循环语句
 >	for (初始表达式; 条件表达式; 循环后的操作表达式) {
@@ -92,7 +143,7 @@ tags:
 		}
 		System.out.println();
 	}
-
+	
 	* 其中'\t'或者"\t"是制表符, \是转义字符
 	* '\t' 制表符
 	* '\r' 回车

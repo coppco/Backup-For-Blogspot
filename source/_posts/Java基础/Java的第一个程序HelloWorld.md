@@ -9,13 +9,27 @@ tags:
 
 在JDK/bin安装目录下面新建一个文本文件, 命名为HelloWorld.java,  里面写上代码
 
-	class HelloWorld {
-		public static void main(String[] args) {// main函数
-			System.out.println("我的第一个Java程序") //打印函数
-		}
+```java
+class HelloWorld {
+	public static void main(String[] args) {// main函数
+		System.out.println("我的第一个Java程序") //打印函数
 	}
+}
+```
+
+### Java语言跨平台原理
+
+Java程序并非是直接运行的，Java编译器将Java源程序编译成与平台无关的字节码文件(class文件)，然后由Java虚拟机（JVM）对字节码文件解释执行。所以在不同的操作系统下，只需安装不同的Java虚拟机即可实现java程序的跨平台。
 
 <!--more-->
+
+### JVM、JRE和JDK
+
+* JVM（Java Virtual Machine），Java虚拟机
+* JRE（Java Runtime Environment），Java运行环境，包含了JVM和Java的核心类库（Java API）
+* JDK（Java Development Kit）称为Java开发工具，包含了JRE和开发工具
+
+
 
 ### 在当前目录打开命令行:Windows 7和8下面按住Shift, 右键点击'在此处点击打开命令窗口'
 
@@ -52,7 +66,18 @@ tags:
 		* 右键点击桌面计算机→选择属性→选择高级系统设置→选择高级选项卡→点击环境变量→下方系统变量中查找path→双击path→将jdk安装目录下的bin目录添加到最左边并添加分号。
 	* 先配置JAVA_HOME, 在系统变量里面添加变量名为JAVA_HOME, 变量值为D:\Program Files\Java\jdk1.7.0_72的系统变量, 之后在Path里面新增%JAVA_HOME%\bin添加到最左边并添加分号。这样就可以动态获取JAVA_HOME里面的值,这样就可以在自己的代码工作区域书写代码了.(推荐)
 
+### 命令行中编译与运行
+
+```
+#编译
+javac 文件名.java
+
+# 运行
+java 类名
+```
+
 ### classpath环境变量的配置和作用
+
 * classpath是配置Java的类文件路径, 在任何目录下面运行都是在该目录下面查找class文件, JDK1.5以后版本可以不用配置,默认当前目录
 * path配置的是可执行的文件.exe,配置后可以在不同的盘符下访问path路径下的可执行文件
 
